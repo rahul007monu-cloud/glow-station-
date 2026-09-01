@@ -13,10 +13,10 @@ export default function MirrorStation() {
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 1, delay: 0.25, ease: [0.21, 0.6, 0.35, 1] }}
-      className="relative mx-auto w-full max-w-md"
+      className="relative mx-auto w-full max-w-[19rem] sm:max-w-sm"
     >
       {/* ── Mirror ─────────────────────────────────────────── */}
-      <div className="relative mx-auto aspect-[4/5] w-full">
+      <div className="relative mx-auto aspect-[4/4.6] w-full">
         <div className="gold-frame absolute inset-0 overflow-hidden rounded-[14rem_14rem_2rem_2rem] border border-gold-300/50">
           {/* glass */}
           <div
@@ -79,12 +79,15 @@ export default function MirrorStation() {
       </div>
 
       {/* ── Marble counter with tools ──────────────────────── */}
-      <div className="relative mx-auto -mt-2 h-24 w-[112%] max-w-none -translate-x-[5%]">
-        <div className="marble absolute inset-x-0 top-0 h-6 rounded-t-md shadow-[0_16px_40px_-14px_rgba(0,0,0,0.9)]" />
-        <div className="absolute inset-x-0 top-6 h-10 bg-gradient-to-b from-[#1b1220] to-transparent" />
+      <div className="relative mx-auto mt-3 h-24 w-[108%] max-w-none -translate-x-[4%]">
+        {/* thin polished marble top with a lit front edge */}
+        <div className="marble absolute inset-x-0 top-0 h-2.5 rounded-full opacity-[0.72] shadow-[0_18px_44px_-16px_rgba(0,0,0,0.95)]" />
+        <div className="absolute inset-x-4 top-[11px] h-px bg-gradient-to-r from-transparent via-gold-200/50 to-transparent" />
+        {/* cabinet body fading into the floor */}
+        <div className="absolute inset-x-2 top-[18px] h-12 rounded-b-xl bg-gradient-to-b from-[#1c1322] via-[#150e1b]/80 to-transparent" />
 
         {/* tools resting on the counter */}
-        <div className="absolute -top-7 left-[12%] flex items-end gap-3">
+        <div className="absolute -top-8 left-[14%] flex items-end gap-3">
           {/* scissors */}
           <svg viewBox="0 0 24 24" className="h-8 w-8 text-gold-200/85" aria-hidden>
             <g fill="none" stroke="currentColor" strokeWidth="1.3">
@@ -105,14 +108,14 @@ export default function MirrorStation() {
         </div>
 
         {/* product bottles */}
-        <div className="absolute -top-12 right-[12%] flex items-end gap-2.5">
-          <span className="h-12 w-5 rounded-t-sm rounded-b bg-gradient-to-b from-rose-400/80 to-rose-500/40 shadow-float" />
-          <span className="h-14 w-5 rounded-t-sm rounded-b bg-gradient-to-b from-gold-200/90 to-gold-500/40 shadow-float" />
-          <span className="h-10 w-5 rounded-t-sm rounded-b bg-gradient-to-b from-lilac-300/80 to-lilac-500/40 shadow-float" />
+        <div className="absolute -top-14 right-[14%] flex items-end gap-2">
+          <span className="h-10 w-4 rounded-t-sm rounded-b bg-gradient-to-b from-rose-400/80 to-rose-500/40 shadow-float" />
+          <span className="h-12 w-4 rounded-t-sm rounded-b bg-gradient-to-b from-gold-200/90 to-gold-500/40 shadow-float" />
+          <span className="h-8 w-4 rounded-t-sm rounded-b bg-gradient-to-b from-lilac-300/80 to-lilac-500/40 shadow-float" />
         </div>
 
         {/* reflection under the counter */}
-        <div className="absolute inset-x-6 top-16 h-8 rounded-[100%] bg-[radial-gradient(closest-side,rgba(231,195,93,0.22),transparent)] blur-md" />
+        <div className="absolute inset-x-8 top-12 h-7 rounded-[100%] bg-[radial-gradient(closest-side,rgba(231,195,93,0.20),transparent)] blur-md" />
       </div>
     </motion.div>
   );
