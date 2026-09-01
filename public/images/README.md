@@ -1,28 +1,47 @@
 # Photos yahan upload karein
 
-Site in **exact filenames** ko khud pick kar leti hai — koi code change nahi
-chahiye. File na ho to styled placeholder dikhta hai, layout kabhi nahi tootta.
+**Naam ki tension mat lo** — jaise naam hain waise hi saari photos ek saath
+drag-drop karke commit kar do. Baaki main set kar dunga.
 
-| Filename | Kahan dikhega | Best size |
-| --- | --- | --- |
-| `gallery-1.jpg` | Lookbook, bada tile (balayage / hair colour) | 800 × 1000 |
-| `gallery-2.jpg` | Lookbook (bridal look) | 800 × 600 |
-| `gallery-3.jpg` | Lookbook (keratin / smooth hair) | 800 × 600 |
-| `gallery-4.jpg` | Lookbook, bada tile (facial / skin) | 800 × 1000 |
-| `gallery-5.jpg` | Lookbook (nails) | 800 × 600 |
-| `gallery-6.jpg` | Lookbook (men's grooming) | 800 × 600 |
-| `team-1.jpg` … `team-4.jpg` | Stylist ke round photos | 400 × 400 (square) |
+## Upload kaise karein (browser se, 30 second)
 
-## GitHub se upload kaise karein (phone/laptop, browser se)
+1. Repo → `public/images` folder → **Add file → Upload files**
+2. Saari photos drag karo (`WhatsApp Image 2026-...jpeg` bhi chalega)
+3. **Commit changes** dabao
 
-1. Repo kholo → `public/images` folder
-2. **Add file → Upload files**
-3. Photos drag karo, naam upar wali table ke hisaab se rakho
-4. **Commit changes** dabao — 2 minute me site par live ho jayengi
+## HD / 4K conversion — automatic hai
 
-## Tips
+Upload ke baad build khud `npm run photos` chalata hai, jo har photo ke liye
+banata hai:
 
-- Har photo **200 KB se kam** rakho (site fast rahegi). jpg ya webp best hai.
-- Salon interior ki photo bhi bhejo — reception, mirror wall, chair — hum use
-  hero/walkthrough me laga denge.
-- Client photos sirf permission lekar hi use karein.
+- **480 · 768 · 1200 · 1600 · 2400 · 3200 px** — jitne pixel original me hain
+  wahan tak (isse zyada upscale nahi karte, warna photo blur hoti hai)
+- **WebP + JPEG** dono — WebP 30–40% halki hoti hai, JPEG purane browsers ke liye
+- **Light unsharp mask** — resize ke baad wali softness hat jaati hai, photo crisp lagti hai
+- EXIF rotation theek, metadata strip, JPEG 4:4:4 chroma (gold/skin tones saaf)
+
+Browser khud screen ke hisaab se sahi size uthata hai: 4K monitor par 3200px
+wali, phone par 480px wali. Isliye photo **sharp** dikhti hai aur site **fast**
+rehti hai.
+
+> Best result ke liye: phone se original quality me bhejein (WhatsApp se aayi
+> compressed photo pehle se hi ~1000px ki hoti hai — usme 4K detail nahi hoti).
+> Camera roll se seedha upload karein.
+
+## Naam pata ho to ye rakhein (turant lag jayengi)
+
+| Filename | Kahan lagegi |
+| --- | --- |
+| `interior.jpg` | hero background (jab video na ho) |
+| `reception.jpg` | walkthrough — Reception |
+| `hair.jpg` | walkthrough + HAIR card |
+| `colour.jpg` | hair colour card |
+| `skin.jpg` | Skin Bar |
+| `nails.jpg` | Nail Lounge |
+| `makeup.jpg` | Makeup card |
+| `bridal.jpg` | Bridal Suite |
+| `academy.jpg` | Academy card |
+| `gallery-1.jpg` … `gallery-6.jpg` | 3D rotating lookbook |
+| `team-1.jpg` … `team-4.jpg` | stylists ke round photos |
+
+Client photos sirf permission lekar use karein.

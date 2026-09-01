@@ -6,12 +6,13 @@
   "description": "Website + PWA for Glow Station Luxe Salon",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/postbuild.mjs",
+    "build": "npm run photos && tsc -b && vite build && node scripts/postbuild.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit false --emitDeclarationOnly false",
     "lint": "tsc -b",
     "icons": "node scripts/generate-icons.mjs",
-    "stock": "node scripts/fetch-stock.mjs"
+    "stock": "node scripts/fetch-stock.mjs",
+    "photos": "node scripts/process-photos.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.11.17",
