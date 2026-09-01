@@ -1,8 +1,9 @@
 import { animate, motion, useMotionValue, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
 
-type Item = { id: string; label: string; tag: string; src?: string; stock: string };
+type Item = { id: string; label: string; tag: string; src: string };
 
 /**
  * A true 3D carousel: the photos are arranged on the surface of a cylinder and
@@ -61,9 +62,9 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
             <figure className="gold-frame group h-full w-full overflow-hidden rounded-xl bg-ivory-50">
               <SmartImage
                 src={item.src}
-                fallbackSrc={item.stock}
                 alt={item.label}
                 className="h-full w-full object-cover"
+                fallback={<PhotoPlaceholder label={item.label} hint={item.tag} />}
               />
               <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-3 pb-2.5 pt-8">
                 <span className="block text-[0.55rem] uppercase tracking-[0.25em] text-gold-200">

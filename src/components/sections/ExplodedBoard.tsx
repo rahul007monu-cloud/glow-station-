@@ -2,6 +2,7 @@ import { motion, useScroll, useSpring, useTransform, type MotionValue } from 'fr
 import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 import Logo from '@/components/layout/Logo';
+import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
 import { useBooking } from '@/context/BookingProvider';
 import { categories, formatINR, salon, scenery } from '@/data/salon';
@@ -19,7 +20,7 @@ type Part = {
   /** Matches a plate on the real signboard. */
   label: string;
   categoryId: string;
-  photo: { own: string; stock: string };
+  photo: { own: string; label: string };
   /** Final resting position, in percent of the stage. */
   to: { x: number; y: number; z: number; rx: number; ry: number };
 };
@@ -201,9 +202,9 @@ function PartPanel({
         <span className="block aspect-[4/5] overflow-hidden">
           <SmartImage
             src={part.photo.own}
-            fallbackSrc={part.photo.stock}
             alt={`${part.label} at ${salon.legalName}`}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            fallback={<PhotoPlaceholder label={part.label} hint={part.photo.label} />}
           />
         </span>
         {cheapest !== undefined && (

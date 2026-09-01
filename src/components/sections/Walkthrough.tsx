@@ -7,6 +7,7 @@ import {
 import { ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
 import { VanityBulbs } from '@/components/fx/SalonArt';
+import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
 import { Button } from '@/components/ui/Button';
 import { useBooking } from '@/context/BookingProvider';
@@ -20,7 +21,7 @@ type Room = {
   detail: string;
   /** Which service category this room books. */
   categoryId?: string;
-  photo: { own: string; stock: string };
+  photo: { own: string; label: string };
 };
 
 const rooms: Room[] = [
@@ -209,9 +210,9 @@ function RoomScene({
         <figure className="gold-frame relative h-full w-full overflow-hidden rounded-2xl bg-ivory-100">
           <SmartImage
             src={room.photo.own}
-            fallbackSrc={room.photo.stock}
             alt={`${room.name} at ${salon.legalName}`}
             className="h-full w-full object-cover"
+            fallback={<PhotoPlaceholder label={room.name} hint={room.photo.label} />}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
           <VanityBulbs count={6} className="absolute inset-x-8 top-2 opacity-80" />

@@ -1,9 +1,10 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown, MessageCircle, Phone, Star } from 'lucide-react';
 import { useRef } from 'react';
-import Signboard from '@/components/fx/Signboard';
+import Logo from '@/components/layout/Logo';
 import { Button, LinkButton } from '@/components/ui/Button';
 import ScrollScrubVideo from '@/components/fx/ScrollScrubVideo';
+import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
 import { useBooking } from '@/context/BookingProvider';
 import { MEDIA } from '@/data/media';
@@ -58,7 +59,6 @@ export default function Entrance() {
             /* Salon footage, scrubbed by the scroll position. */
             <ScrollScrubVideo
               src={MEDIA.hero}
-              poster={scenery.interior.stock}
               progress={p}
               className="h-full w-full object-cover"
             />
@@ -66,9 +66,9 @@ export default function Entrance() {
             <SmartImage
               priority
               src={scenery.interior.own}
-              fallbackSrc={scenery.interior.stock}
               alt={`Inside ${salon.legalName}`}
               className="h-full w-full object-cover"
+              fallback={<PhotoPlaceholder showLogo={false} />}
             />
           )}
         </motion.div>
@@ -101,8 +101,19 @@ export default function Entrance() {
           style={{ y: contentY, opacity: contentOpacity }}
           className="relative z-10 flex h-full flex-col items-center justify-center px-4 pb-16 pt-28 sm:px-6 sm:pt-32"
         >
-          <div className="w-full max-w-xl">
-            <Signboard compact />
+          {/* Brand mark straight over the footage — no fake board panel */}
+          <Logo className="h-16 w-16 drop-shadow-[0_10px_24px_rgba(32,37,43,0.35)] sm:h-20 sm:w-20" />
+          <p className="sign-letters mt-3 text-center text-[1.75rem] leading-none sm:text-[3rem]">
+            Glow Station
+          </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+            <span className="plate">Luxe Salon</span>
+            <span className="plate">{salon.audience}</span>
+            {salon.boardPlates.map((label) => (
+              <span key={label} className="plate hidden sm:inline-flex">
+                {label}
+              </span>
+            ))}
           </div>
 
           <span className="chip mt-6 bg-white shadow-card">
