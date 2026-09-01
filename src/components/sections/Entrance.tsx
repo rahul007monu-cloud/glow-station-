@@ -3,13 +3,14 @@ import { ChevronDown, MessageCircle, Phone, Star } from 'lucide-react';
 import { useRef } from 'react';
 import Signboard from '@/components/fx/Signboard';
 import { Button, LinkButton } from '@/components/ui/Button';
+import ScrollScrubVideo from '@/components/fx/ScrollScrubVideo';
 import SmartImage from '@/components/ui/SmartImage';
 import { useBooking } from '@/context/BookingProvider';
 import { MEDIA } from '@/data/media';
 import { salon, scenery } from '@/data/salon';
 import { track } from '@/lib/analytics';
 import { telLink, waLink } from '@/lib/booking';
-import { asset, useMediaExists } from '@/lib/media';
+import { useMediaExists } from '@/lib/media';
 
 /**
  * Arrival scene.
@@ -33,30 +34,33 @@ export default function Entrance() {
   const bgY = useTransform(p, [0, 1], ['0%', '6%']);
 
   /* Doors part in the first half of the scroll. */
-  const leftDoor = useTransform(p, [0, 0.55], ['0%', '-102%']);
-  const rightDoor = useTransform(p, [0, 0.55], ['0%', '102%']);
-  const doorFade = useTransform(p, [0.35, 0.6], [1, 0]);
+  const leftDoor = useTransform(p, [0, 0.4], ['0%', '-102%']);
+  const rightDoor = useTransform(p, [0, 0.4], ['0%', '102%']);
+  const doorFade = useTransform(p, [0.28, 0.45], [1, 0]);
 
   /* Content lifts away as the room takes over. */
   const contentY = useTransform(p, [0, 1], [0, -90]);
-  const contentOpacity = useTransform(p, [0, 0.6, 0.85], [1, 1, 0]);
+  const contentOpacity = useTransform(p, [0, 0.45, 0.7], [1, 1, 0]);
   const hintOpacity = useTransform(p, [0, 0.12], [1, 0]);
+  /* Footage gets brighter as the copy clears, so the salon is actually visible. */
+  const washOpacity = useTransform(p, [0, 0.5, 1], video === 'found' ? [1, 0.5, 0.35] : [1, 1, 1]);
 
   return (
-    <section id="top" ref={ref} className="relative h-[200vh]">
+    <section
+      id="top"
+      ref={ref}
+      className={`relative ${video === 'found' ? 'h-[320vh]' : 'h-[200vh]'}`}
+    >
       <div className="sticky top-0 h-[100dvh] overflow-hidden">
         {/* ── Background: salon footage or photo ─────────────── */}
         <motion.div style={{ scale: bgScale, y: bgY }} className="absolute inset-0">
           {video === 'found' ? (
-            <video
+            /* Salon footage, scrubbed by the scroll position. */
+            <ScrollScrubVideo
+              src={MEDIA.hero}
+              poster={scenery.interior.stock}
+              progress={p}
               className="h-full w-full object-cover"
-              src={asset(MEDIA.hero)}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={asset(scenery.interior.stock)}
             />
           ) : (
             <SmartImage
@@ -70,7 +74,10 @@ export default function Entrance() {
         </motion.div>
 
         {/* Ivory wash keeps the brand palette and the copy readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ivory-100/92 via-ivory-100/70 to-ivory-200/96" />
+        <motion.div
+          style={{ opacity: washOpacity }}
+          className="absolute inset-0 bg-gradient-to-b from-ivory-100/92 via-ivory-100/70 to-ivory-200/96"
+        />
         <div className="absolute inset-0 bg-[radial-gradient(70%_55%_at_50%_35%,rgba(255,253,249,0.55),transparent)]" />
 
         {/* ── Glass doors sliding aside ──────────────────────── */}

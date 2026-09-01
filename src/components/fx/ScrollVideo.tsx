@@ -19,7 +19,7 @@ export default function ScrollVideo({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const exists = useMediaExists(MEDIA.hero);
+  const exists = useMediaExists(MEDIA.tour);
 
   const { scrollYProgress } = useScroll({
     target: wrapRef,
@@ -57,7 +57,7 @@ export default function ScrollVideo({
           ref={videoRef}
           style={{ scale }}
           className="h-full w-full object-cover"
-          src={asset(MEDIA.hero)}
+          src={asset(MEDIA.tour)}
           muted
           playsInline
           preload="auto"
