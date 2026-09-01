@@ -101,33 +101,40 @@ export default function Entrance() {
         {/* ── Content ────────────────────────────────────────── */}
         <motion.div
           style={{ y: contentY, opacity: contentOpacity }}
-          className="relative z-10 flex h-full flex-col items-center justify-center px-4 pb-16 pt-28 sm:px-6 sm:pt-32"
+          className="relative z-10 flex h-full flex-col items-center justify-end px-4 pb-14 pt-28 sm:px-6 sm:pt-32"
         >
-          {/* Brand mark straight over the footage — no fake board panel */}
-          <Logo className="h-16 w-16 drop-shadow-[0_10px_24px_rgba(32,37,43,0.35)] sm:h-20 sm:w-20" />
-          <p className="sign-letters mt-3 text-center text-[1.75rem] leading-none sm:text-[3rem]">
-            Glow Station
-          </p>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
-            <span className="plate">Luxe Salon</span>
-            <span className="plate">{salon.audience}</span>
-            {salon.boardPlates.map((label) => (
-              <span key={label} className="plate hidden sm:inline-flex">
-                {label}
-              </span>
-            ))}
-          </div>
+          {/* The footage already carries the branding, so the overlay only
+              repeats it when there is no video to show. */}
+          {video !== 'found' && (
+            <>
+              <Logo className="h-16 w-16 drop-shadow-[0_10px_24px_rgba(32,37,43,0.35)] sm:h-20 sm:w-20" />
+              <p className="sign-letters mt-3 text-center text-[1.75rem] leading-none sm:text-[3rem]">
+                Glow Station
+              </p>
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+                <span className="plate">Luxe Salon</span>
+                <span className="plate">{salon.audience}</span>
+                {salon.boardPlates.map((label) => (
+                  <span key={label} className="plate hidden sm:inline-flex">
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
 
-          <span className="chip mt-6 bg-white shadow-card">
-            <Star size={12} className="fill-gold-400 text-gold-400" />
-            {salon.stats[0].value} on Google · {salon.address.line2}, {salon.address.city}
-          </span>
+          {/* Frosted panel keeps the copy readable over moving footage */}
+          <div className="mt-auto w-full max-w-xl rounded-2xl border border-white/60 bg-white/75 px-5 py-5 text-center shadow-card backdrop-blur-md">
+            <span className="chip bg-white">
+              <Star size={12} className="fill-gold-400 text-gold-400" />
+              {salon.stats[0].value} on Google · {salon.address.line2}, {salon.address.city}
+            </span>
 
-          <p className="mt-4 max-w-lg text-center text-sm leading-relaxed text-ink-soft sm:text-base">
-            {salon.intro}
-          </p>
+            <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
+              {salon.intro}
+            </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
             <Button size="md" onClick={() => openBooking({ from: 'entrance' })}>
               Book your slot
             </Button>
@@ -150,11 +157,13 @@ export default function Entrance() {
             </LinkButton>
           </div>
 
+          </div>
+
           <motion.p
             style={{ opacity: hintOpacity }}
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="mt-8 inline-flex items-center gap-1.5 text-[0.6rem] uppercase tracking-[0.3em] text-ink-muted"
+            className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.3em] text-ink-muted backdrop-blur"
           >
             Scroll to walk in <ChevronDown size={12} />
           </motion.p>
