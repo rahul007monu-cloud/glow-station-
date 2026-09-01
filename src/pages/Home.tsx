@@ -1,3 +1,4 @@
+import Walkthrough from '@/components/sections/Walkthrough';
 import Contact from '@/components/sections/Contact';
 import FAQ from '@/components/sections/FAQ';
 import Gallery from '@/components/sections/Gallery';
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Walkthrough />
       <Services />
       <Packages />
       <Offers />

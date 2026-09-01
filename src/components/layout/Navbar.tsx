@@ -11,6 +11,7 @@ import { telLink } from '@/lib/booking';
 import { useScrolled } from '@/lib/hooks';
 
 const links = [
+  { label: 'Experience', href: '#experience' },
   { label: 'Services', href: '#services' },
   { label: 'Packages', href: '#packages' },
   { label: 'Offers', href: '#offers' },

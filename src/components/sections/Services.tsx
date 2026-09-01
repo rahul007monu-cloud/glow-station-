@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Clock, Flame, Plus, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import Parallax from '@/components/fx/Parallax';
 import Reveal from '@/components/fx/Reveal';
 import TiltCard from '@/components/fx/TiltCard';
 import { Button } from '@/components/ui/Button';
@@ -90,8 +91,9 @@ export default function Services() {
           transition={{ duration: 0.35 }}
           className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {visible.map((s) => (
-            <TiltCard key={s.id} className="float-card group h-full p-5">
+          {visible.map((s, i) => (
+            <Parallax key={s.id} speed={i % 3 === 1 ? 46 : 22} tilt={i % 2 ? 0.5 : -0.5}>
+            <TiltCard className="vitrine group h-full p-5">
               <div className="relative z-20 flex h-full flex-col">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display text-xl leading-snug text-white">{s.name}</h3>
@@ -136,6 +138,7 @@ export default function Services() {
                 </div>
               </div>
             </TiltCard>
+            </Parallax>
           ))}
         </motion.div>
       </AnimatePresence>

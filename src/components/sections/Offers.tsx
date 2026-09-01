@@ -1,5 +1,6 @@
 import { Copy, Ticket } from 'lucide-react';
 import { useState } from 'react';
+import Parallax from '@/components/fx/Parallax';
 import Reveal from '@/components/fx/Reveal';
 import { Button } from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
@@ -28,7 +29,9 @@ export default function Offers() {
       <div className="grid gap-5 md:grid-cols-3">
         {live.map((o, i) => (
           <Reveal key={o.id} delay={i * 0.1}>
-            <OfferCard offer={o} />
+            <Parallax speed={i === 1 ? 44 : 18}>
+              <OfferCard offer={o} />
+            </Parallax>
           </Reveal>
         ))}
       </div>
@@ -54,7 +57,7 @@ function OfferCard({ offer }: { offer: (typeof offers)[number] }) {
 
   return (
     <div
-      className={`float-card relative h-full overflow-hidden border bg-gradient-to-br p-6 ${tones[offer.tone]}`}
+      className={`vitrine relative h-full overflow-hidden bg-gradient-to-br p-6 ${tones[offer.tone]}`}
     >
       {/* ticket notches */}
       <span className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-ink" />

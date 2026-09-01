@@ -87,7 +87,7 @@ export const salon = {
   legalName: 'Glow Station Luxe Salon',
   tagline: 'Look Luxe. Feel Luxe.',
   intro:
-    'Hair, skin, nails, makeup aur bridal — sab kuch ek premium studio me. Trained stylists, branded products aur hygiene-first setup.',
+    'Mansarovar, Jaipur ka premium unisex studio — hair, skin, nails, makeup aur bridal, sab ek jagah. Trained stylists, branded products aur hygiene-first setup.',
   establishedYear: 2021, // TODO: confirm
 
   // ── Contact ─────────────────────────────────────────────────────────────
@@ -99,18 +99,21 @@ export const salon = {
   instagram: 'https://www.instagram.com/glow_station_luxe_salon/',
   instagramHandle: '@glow_station_luxe_salon',
   facebook: '', // TODO: page URL (needed for Meta ads)
-  /** TODO: Google Maps "share" link + review link from your Business Profile. */
-  mapsLink: 'https://maps.google.com/?q=Glow+Station+Luxe+Salon',
+  /** TODO: replace with the exact "share" link from your Google Business Profile. */
+  mapsLink:
+    'https://www.google.com/maps/search/?api=1&query=Glow+Station+Luxe+Saloon+Baba+Paradise+Mansarovar+Jaipur',
   mapsEmbed:
-    'https://www.google.com/maps?q=Glow%20Station%20Luxe%20Salon&output=embed',
+    'https://www.google.com/maps?q=Glow+Station+Luxe+Saloon+Baba+Paradise+Mansarovar+Jaipur&output=embed',
   googleReviewLink: 'https://g.page/r/YOUR_PLACE_ID/review', // TODO
+  justdial:
+    'https://www.justdial.com/Jaipur/Glow-Station-Luxe-Saloon-Near-Baba-Paradise-Mansarovar/0141PX141-X141-250912200842-N8M8_BZDET',
 
   address: {
-    line1: 'Shop No. 00, Ground Floor', // TODO
-    line2: 'Main Market Road', // TODO
-    city: 'Your City', // TODO
-    state: 'Your State', // TODO
-    pincode: '000000', // TODO
+    line1: 'Near Baba Paradise', // TODO: add shop number / building name
+    line2: 'Mansarovar',
+    city: 'Jaipur',
+    state: 'Rajasthan',
+    pincode: '302020', // TODO: confirm exact pincode
   },
 
   hours: {
@@ -566,6 +569,7 @@ export const stylists: Stylist[] = [
     name: 'Aarti Sharma', // TODO
     role: 'Creative Director – Hair',
     experience: '11 yrs',
+    photo: 'images/team-1.jpg',
     specialities: ['Balayage', 'Keratin', 'Precision cuts'],
   },
   {
@@ -573,6 +577,7 @@ export const stylists: Stylist[] = [
     name: 'Rahul Verma', // TODO
     role: 'Senior Stylist',
     experience: '8 yrs',
+    photo: 'images/team-2.jpg',
     specialities: ['Men’s grooming', 'Beard design', 'Fades'],
   },
   {
@@ -580,6 +585,7 @@ export const stylists: Stylist[] = [
     name: 'Neha Kapoor', // TODO
     role: 'Bridal Makeup Artist',
     experience: '9 yrs',
+    photo: 'images/team-3.jpg',
     specialities: ['Airbrush', 'HD bridal', 'Draping'],
   },
   {
@@ -587,6 +593,7 @@ export const stylists: Stylist[] = [
     name: 'Simran Kaur', // TODO
     role: 'Skin & Nail Specialist',
     experience: '6 yrs',
+    photo: 'images/team-4.jpg',
     specialities: ['Hydra facial', 'Peels', 'Nail art'],
   },
 ];
@@ -677,10 +684,10 @@ export const gallery: {
   src?: string;
   tall?: boolean;
 }[] = [
-  { id: 'g1', label: 'Balayage transformation', tag: 'Hair colour', tall: true },
-  { id: 'g2', label: 'Bridal HD look', tag: 'Bridal' },
-  { id: 'g3', label: 'Keratin smooth finish', tag: 'Hair care' },
-  { id: 'g4', label: 'Glass-skin facial', tag: 'Skin', tall: true },
-  { id: 'g5', label: 'Almond nail extensions', tag: 'Nails' },
-  { id: 'g6', label: 'Men’s textured fade', tag: 'Grooming' },
+  { id: 'g1', label: 'Balayage transformation', tag: 'Hair colour', src: 'images/gallery-1.jpg', tall: true },
+  { id: 'g2', label: 'Bridal HD look', tag: 'Bridal', src: 'images/gallery-2.jpg' },
+  { id: 'g3', label: 'Keratin smooth finish', tag: 'Hair care', src: 'images/gallery-3.jpg' },
+  { id: 'g4', label: 'Glass-skin facial', tag: 'Skin', src: 'images/gallery-4.jpg', tall: true },
+  { id: 'g5', label: 'Almond nail extensions', tag: 'Nails', src: 'images/gallery-5.jpg' },
+  { id: 'g6', label: 'Men’s textured fade', tag: 'Grooming', src: 'images/gallery-6.jpg' },
 ];

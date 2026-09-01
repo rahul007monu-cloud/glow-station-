@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Camera, Instagram } from 'lucide-react';
 import Reveal from '@/components/fx/Reveal';
+import SmartImage from '@/components/ui/SmartImage';
 import { LinkButton } from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import { gallery, salon } from '@/data/salon';
@@ -32,26 +33,25 @@ export default function Gallery() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.6, delay: i * 0.07 }}
             whileHover={{ y: -8 }}
-            className={`group relative overflow-hidden rounded-3xl border border-white/10 ${
+            className={`group relative overflow-hidden rounded-3xl border border-gold-300/20 gold-frame ${
               item.tall ? 'row-span-2' : ''
             }`}
+            style={{ y: i % 2 ? -8 : 8 }}
           >
-            {item.src ? (
-              <img
-                src={item.src}
-                alt={item.label}
-                loading="lazy"
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <div
-                className={`flex h-full w-full items-center justify-center bg-gradient-to-br to-transparent ${
-                  tints[i % tints.length]
-                }`}
-              >
-                <Camera className="animate-floaty text-white/25" size={30} />
-              </div>
-            )}
+            <SmartImage
+              src={item.src}
+              alt={item.label}
+              className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+              fallback={
+                <div
+                  className={`flex h-full w-full items-center justify-center bg-gradient-to-br to-transparent ${
+                    tints[i % tints.length]
+                  }`}
+                >
+                  <Camera className="animate-floaty text-white/25" size={30} />
+                </div>
+              }
+            />
 
             <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink via-ink/70 to-transparent p-4">
               <span className="text-[0.6rem] uppercase tracking-[0.25em] text-gold-300/90">

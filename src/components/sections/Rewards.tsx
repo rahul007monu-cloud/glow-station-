@@ -55,7 +55,7 @@ export default function Rewards() {
       <div className="grid gap-5 lg:grid-cols-3">
         {/* ── Loyalty stamp card ─────────────────────────────── */}
         <Reveal>
-          <div className="float-card h-full p-6">
+          <div className="vitrine h-full p-6">
             <div className="flex items-center gap-2 text-gold-200">
               <Gift size={18} />
               <h3 className="font-display text-xl text-white">Loyalty card</h3>
@@ -103,7 +103,7 @@ export default function Rewards() {
 
         {/* ── Referral ───────────────────────────────────────── */}
         <Reveal delay={0.08}>
-          <div className="float-card h-full border-rose-400/25 p-6">
+          <div className="vitrine h-full border-rose-400/25 p-6">
             <div className="flex items-center gap-2 text-rose-300">
               <Share2 size={18} />
               <h3 className="font-display text-xl text-white">Refer & earn</h3>
@@ -138,7 +138,7 @@ export default function Rewards() {
 
         {/* ── Install the app ────────────────────────────────── */}
         <Reveal delay={0.16}>
-          <div className="float-card h-full border-lilac-400/25 p-6">
+          <div className="vitrine h-full border-lilac-400/25 p-6">
             <div className="flex items-center gap-2 text-lilac-300">
               <Sparkles size={18} />
               <h3 className="font-display text-xl text-white">Install the app</h3>

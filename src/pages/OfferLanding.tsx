@@ -208,7 +208,7 @@ export default function OfferLanding() {
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {packages.map((p, i) => (
               <Reveal key={p.id} delay={i * 0.08}>
-                <div className="float-card h-full p-6">
+                <div className="vitrine h-full p-6">
                   <h3 className="font-display text-xl text-white">{p.name}</h3>
                   <p className="mt-1 text-xs text-white/50">{p.bestFor}</p>
                   <p className="mt-4 font-display text-3xl text-gold-100">{formatINR(p.price)}</p>

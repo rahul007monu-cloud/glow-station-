@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import BookingModal from '@/components/booking/BookingModal';
+import CurtainIntro from '@/components/fx/CurtainIntro';
 import FloatingBackground from '@/components/fx/FloatingBackground';
+import RoomShell from '@/components/fx/RoomShell';
+import ScrollProgress from '@/components/fx/ScrollProgress';
+import Spotlight from '@/components/fx/Spotlight';
 import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import FloatingActions from '@/components/layout/FloatingActions';
 import Footer from '@/components/layout/Footer';
@@ -25,6 +29,10 @@ export default function App() {
   return (
     <BookingProvider>
       <FloatingBackground />
+      <RoomShell />
+      <Spotlight />
+      <ScrollProgress />
+      <CurtainIntro />
       <OfflineNotice />
       <RouteEffects />
       <Chrome />

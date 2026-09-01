@@ -125,6 +125,123 @@
   .dock-safe {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
   }
+
+  /* Polished white-marble surface used for counters and shelves. */
+  .marble {
+    background-color: #efeaf3;
+    background-image:
+      linear-gradient(115deg, rgba(255, 255, 255, 0.9) 0%, rgba(226, 218, 233, 0.9) 40%, rgba(246, 242, 250, 0.95) 100%),
+      linear-gradient(75deg, transparent 46%, rgba(150, 130, 170, 0.35) 47%, transparent 48.5%),
+      linear-gradient(100deg, transparent 60%, rgba(120, 100, 145, 0.28) 61%, transparent 62.5%),
+      linear-gradient(15deg, transparent 28%, rgba(170, 150, 190, 0.25) 29%, transparent 30.5%);
+  }
+
+  /* Deep velvet drape, used behind premium blocks. */
+  .velvet {
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.012) 16px, rgba(0, 0, 0, 0.28) 36px),
+      linear-gradient(180deg, rgba(43, 21, 51, 0.9), rgba(11, 7, 16, 0.95));
+  }
+
+  /* Thin gold frame like a salon mirror. */
+  .gold-frame {
+    box-shadow:
+      0 0 0 1px rgba(231, 195, 93, 0.45),
+      0 0 0 6px rgba(231, 195, 93, 0.08),
+      0 30px 60px -24px rgba(0, 0, 0, 0.8);
+  }
+
+  /*
+   * Showroom display case: gold-framed glass with a light sheen across the top
+   * edge and a soft reflection pooling underneath, like a lit vitrine.
+   */
+  .vitrine {
+    @apply relative rounded-3xl border border-gold-300/25 backdrop-blur-xl;
+    background-image:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(231, 195, 93, 0.06) 100%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 0 rgba(231, 195, 93, 0.14),
+      0 34px 70px -30px rgba(0, 0, 0, 0.9);
+    transition:
+      transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1),
+      box-shadow 0.55s ease,
+      border-color 0.55s ease;
+  }
+
+  .vitrine::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 45%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+  }
+
+  /* Reflection puddle under a floating card. */
+  .vitrine::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -14px;
+    height: 22px;
+    border-radius: 100%;
+    background: radial-gradient(closest-side, rgba(231, 195, 93, 0.28), transparent);
+    filter: blur(7px);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .vitrine:hover {
+    @apply -translate-y-2 border-gold-200/50;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
+      0 0 60px -12px rgba(231, 195, 93, 0.55),
+      0 40px 80px -30px rgba(0, 0, 0, 0.95);
+  }
+
+  /* Polished floor: mirrors whatever sits above it. */
+  .mirror-floor {
+    background-image:
+      linear-gradient(180deg, rgba(231, 195, 93, 0.14) 0%, transparent 55%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 70%);
+    mask-image: linear-gradient(180deg, #000, transparent 85%);
+  }
+
+  /* Two soft spotlight beams from the ceiling. */
+  .light-beams::before,
+  .light-beams::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    width: 34vw;
+    height: 90vh;
+    background: linear-gradient(180deg, rgba(231, 195, 93, 0.14), transparent 72%);
+    filter: blur(28px);
+    pointer-events: none;
+  }
+  .light-beams::before {
+    left: 4%;
+    transform: rotate(9deg);
+  }
+  .light-beams::after {
+    right: 4%;
+    transform: rotate(-9deg);
+  }
+
+  /* Ornamental section divider. */
+  .ornament {
+    @apply flex items-center justify-center gap-3 text-gold-300/70;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    height: 1px;
+    width: 3.5rem;
+    background: linear-gradient(90deg, transparent, rgba(231, 195, 93, 0.55), transparent);
+  }
 }
 
 @layer utilities {

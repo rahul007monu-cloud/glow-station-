@@ -13,7 +13,7 @@ export default function WhyUs() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {salon.usps.map((u, i) => (
           <Reveal key={u.title} delay={i * 0.09} from="scale">
-            <div className="float-card group relative h-full overflow-hidden p-6">
+            <div className="vitrine group relative h-full overflow-hidden p-6">
               <span
                 aria-hidden
                 className="absolute -right-6 -top-8 font-display text-[6rem] leading-none text-white/[0.04]"

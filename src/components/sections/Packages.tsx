@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { BadgeCheck, CalendarClock, Check, Crown, MessageCircle, Users } from 'lucide-react';
+import Parallax from '@/components/fx/Parallax';
 import Reveal from '@/components/fx/Reveal';
 import TiltCard from '@/components/fx/TiltCard';
 import { Button, LinkButton } from '@/components/ui/Button';
@@ -42,9 +43,10 @@ export default function Packages() {
 
           return (
             <Reveal key={p.id} delay={i * 0.1} from="up">
+              <Parallax speed={i === 1 ? 52 : 20} tilt={i === 1 ? 0 : 0.6}>
               <TiltCard
                 intensity={5}
-                className={`float-card h-full p-6 ${
+                className={`vitrine h-full p-6 ${
                   p.highlight
                     ? 'border-gold-300/40 bg-gradient-to-b from-gold-300/[0.12] to-transparent shadow-glow'
                     : ''
@@ -193,6 +195,7 @@ export default function Packages() {
                   </div>
                 </div>
               </TiltCard>
+              </Parallax>
             </Reveal>
           );
         })}

@@ -20,7 +20,7 @@ export default function Contact() {
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
         <Reveal>
-          <div className="float-card h-full p-6">
+          <div className="vitrine h-full p-6">
             <ul className="space-y-5">
               <li className="flex gap-3">
                 <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-200">

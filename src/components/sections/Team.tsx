@@ -1,5 +1,7 @@
 import { CalendarHeart } from 'lucide-react';
+import Parallax from '@/components/fx/Parallax';
 import Reveal from '@/components/fx/Reveal';
+import SmartImage from '@/components/ui/SmartImage';
 import { Button } from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import { useBooking } from '@/context/BookingProvider';
@@ -19,24 +21,23 @@ export default function Team() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stylists.map((s, i) => (
           <Reveal key={s.id} delay={i * 0.08}>
-            <article className="float-card group h-full p-6 text-center">
+            <Parallax speed={i % 2 ? 40 : 16} tilt={i % 2 ? -0.6 : 0.6}>
+            <article className="vitrine group h-full p-6 text-center">
               <div className="relative mx-auto h-24 w-24">
                 <span className="absolute inset-0 animate-pulse-ring rounded-full bg-gold-300/20" />
-                {s.photo ? (
-                  <img
-                    src={s.photo}
-                    alt={s.name}
-                    loading="lazy"
-                    className="relative h-24 w-24 rounded-full border border-gold-300/30 object-cover"
-                  />
-                ) : (
-                  <span className="relative flex h-24 w-24 items-center justify-center rounded-full border border-gold-300/30 bg-gradient-to-br from-gold-300/25 to-lilac-400/20 font-display text-3xl text-gold-100">
-                    {s.name
-                      .split(' ')
-                      .map((n) => n[0])
-                      .join('')}
-                  </span>
-                )}
+                <SmartImage
+                  src={s.photo}
+                  alt={s.name}
+                  className="relative h-24 w-24 rounded-full border border-gold-300/30 object-cover"
+                  fallback={
+                    <span className="relative flex h-24 w-24 items-center justify-center rounded-full border border-gold-300/30 bg-gradient-to-br from-gold-300/25 to-lilac-400/20 font-display text-3xl text-gold-100">
+                      {s.name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')}
+                    </span>
+                  }
+                />
               </div>
 
               <h3 className="mt-4 font-display text-xl text-white">{s.name}</h3>
@@ -61,6 +62,7 @@ export default function Team() {
                 Book with {s.name.split(' ')[0]}
               </Button>
             </article>
+            </Parallax>
           </Reveal>
         ))}
       </div>

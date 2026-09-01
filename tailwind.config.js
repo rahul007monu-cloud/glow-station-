@@ -46,7 +46,7 @@ export default {
         'gold-sheen':
           'linear-gradient(110deg, #815714 0%, #e7c35d 28%, #fdf8ec 45%, #e7c35d 62%, #a77616 100%)',
         'aurora':
-          'radial-gradient(60% 60% at 15% 10%, rgba(169,125,255,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 85% 15%, rgba(241,119,165,0.3) 0%, transparent 60%), radial-gradient(60% 60% at 50% 100%, rgba(223,177,52,0.25) 0%, transparent 65%)',
+          'radial-gradient(55% 55% at 12% 8%, rgba(231,195,93,0.22) 0%, transparent 62%), radial-gradient(50% 50% at 88% 14%, rgba(225,78,134,0.20) 0%, transparent 62%), radial-gradient(65% 55% at 50% 100%, rgba(169,118,22,0.28) 0%, transparent 68%)',
         'glass':
           'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.05) 100%)',
       },
