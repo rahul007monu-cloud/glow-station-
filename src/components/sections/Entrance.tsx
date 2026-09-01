@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ChevronDown, MessageCircle, Phone, Star } from 'lucide-react';
+import { ChevronDown, MessageCircle, Phone } from 'lucide-react';
 import { useRef } from 'react';
 import Logo from '@/components/layout/Logo';
 import { Button, LinkButton } from '@/components/ui/Button';
@@ -125,18 +125,12 @@ export default function Entrance() {
             </>
           )}
 
-          {/* Frosted panel keeps the copy readable over moving footage */}
-          <div className="mt-auto w-full max-w-xl rounded-2xl border border-white/60 bg-white/75 px-5 py-5 text-center shadow-card backdrop-blur-md">
-            <span className="chip bg-white">
-              <Star size={12} className="fill-gold-400 text-gold-400" />
-              {salon.stats[0].value} on Google · {salon.address.line2}, {salon.address.city}
-            </span>
-
-            <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
-              {salon.intro}
-            </p>
-
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+          {/*
+            No panel here on purpose — the footage carries the hero. Only the
+            three actions sit on top of it. The intro copy lives in the trust
+            strip right below, where it has a solid background to sit on.
+          */}
+          <div className="mt-auto flex flex-wrap items-center justify-center gap-2.5">
             <Button size="md" onClick={() => openBooking({ from: 'entrance' })}>
               Book your slot
             </Button>
@@ -157,8 +151,6 @@ export default function Entrance() {
             >
               {salon.phone.replace('+91', '')}
             </LinkButton>
-          </div>
-
           </div>
 
           <motion.p

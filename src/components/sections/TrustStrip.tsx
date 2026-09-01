@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import Marquee from '@/components/fx/Marquee';
 import Reveal from '@/components/fx/Reveal';
 import { salon } from '@/data/salon';
@@ -16,6 +17,18 @@ export default function TrustStrip() {
   return (
     <section className="relative px-5 py-14 sm:px-8">
       <div className="shell">
+        <Reveal>
+          <div className="mb-8 text-center">
+            <span className="chip bg-white shadow-card">
+              <Star size={12} className="fill-gold-400 text-gold-400" />
+              {salon.stats[0].value} on Google · {salon.address.line2}, {salon.address.city}
+            </span>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-ink-soft sm:text-base">
+              {salon.intro}
+            </p>
+          </div>
+        </Reveal>
+
         <Reveal>
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             {salon.stats.map((s) => (
