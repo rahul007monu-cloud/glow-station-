@@ -39,7 +39,7 @@ export default function Navbar() {
           }`}
         >
           <Link to="/" className="flex items-center gap-2.5" aria-label={salon.legalName}>
-            <Logo className="h-9 w-9" />
+            <Logo variant="mark" className="h-9 w-9" />
             <span className="leading-none">
               <span className="block font-display text-lg tracking-wide text-ink">
                 {salon.name}
@@ -102,7 +102,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[95] bg-ink/90 backdrop-blur-xl lg:hidden"
           >
             <div className="flex items-center justify-between px-5 pt-6">
-              <Logo className="h-10 w-10" />
+              <Logo variant="mark" className="h-10 w-10" />
               <button
                 onClick={() => setMenuOpen(false)}
                 aria-label="Close menu"

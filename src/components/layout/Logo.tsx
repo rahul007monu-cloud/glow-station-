@@ -3,7 +3,15 @@
  * the glam face with black cat-eye sunglasses, red lips and red nails, and
  * "GLOW STATION · LUXE SALON" in gold underneath.
  */
-export default function Logo({ className = 'h-10 w-10' }: { className?: string }) {
+export default function Logo({
+  className = 'h-10 w-10',
+  /** `mark` drops the in-badge wordmark — use it below ~64px, where the
+      lettering would turn into unreadable mush next to real text. */
+  variant = 'full',
+}: {
+  className?: string;
+  variant?: 'full' | 'mark';
+}) {
   return (
     <span className={`relative inline-block ${className}`}>
       <svg viewBox="0 0 120 120" className="h-full w-full" role="img" aria-label="Glow Station Luxe Salon logo">
@@ -61,6 +69,8 @@ export default function Logo({ className = 'h-10 w-10' }: { className?: string }
         </g>
 
         {/* brand text */}
+        {variant === 'full' && (
+          <>
         <text
           x="60"
           y="103"
@@ -84,6 +94,8 @@ export default function Logo({ className = 'h-10 w-10' }: { className?: string }
         >
           LUXE SALON
         </text>
+          </>
+        )}
       </svg>
     </span>
   );

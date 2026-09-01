@@ -44,7 +44,7 @@ export default function Entrance() {
   const contentOpacity = useTransform(p, [0, 0.45, 0.7], [1, 1, 0]);
   const hintOpacity = useTransform(p, [0, 0.12], [1, 0]);
   /* Footage gets brighter as the copy clears, so the salon is actually visible. */
-  const washOpacity = useTransform(p, [0, 0.5, 1], video === 'found' ? [1, 0.5, 0.35] : [1, 1, 1]);
+  const washOpacity = useTransform(p, [0, 0.5, 1], video === 'found' ? [0.72, 0.4, 0.28] : [1, 1, 1]);
 
   return (
     <section
@@ -80,7 +80,8 @@ export default function Entrance() {
         />
         <div className="absolute inset-0 bg-[radial-gradient(70%_55%_at_50%_35%,rgba(255,253,249,0.55),transparent)]" />
 
-        {/* ── Glass doors sliding aside ──────────────────────── */}
+        {/* ── Glass doors sliding aside (only without footage) ── */}
+        {video !== 'found' && (
         <motion.div style={{ opacity: doorFade }} className="pointer-events-none absolute inset-0">
           <motion.div
             style={{ x: leftDoor }}
@@ -95,6 +96,7 @@ export default function Entrance() {
             <span className="absolute left-4 top-1/2 h-20 w-1.5 -translate-y-1/2 rounded-full bg-gold-400/70" />
           </motion.div>
         </motion.div>
+        )}
 
         {/* ── Content ────────────────────────────────────────── */}
         <motion.div
