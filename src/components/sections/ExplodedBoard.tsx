@@ -20,7 +20,7 @@ type Part = {
   /** Matches a plate on the real signboard. */
   label: string;
   categoryId: string;
-  photo: { own: string; label: string };
+  photo: { own: string; stock: string };
   /** Final resting position, in percent of the stage. */
   to: { x: number; y: number; z: number; rx: number; ry: number };
 };
@@ -70,20 +70,23 @@ export default function ExplodedBoard() {
   const boardZ = useTransform(p, [0, 1], [0, -220]);
 
   /* Logo badge lifts out towards the viewer. */
-  const logoX = useTransform(p, [0, 1], ['0%', '-118%']);
-  const logoY = useTransform(p, [0, 1], ['0%', '-58%']);
-  const logoZ = useTransform(p, [0, 1], [0, 320]);
-  const logoRotate = useTransform(p, [0, 1], [0, -22]);
+  const logoX = useTransform(p, [0, 0.5], ['0%', '-60%']);
+  const logoY = useTransform(p, [0, 0.5], ['0%', '-40%']);
+  const logoZ = useTransform(p, [0, 0.5], [0, 220]);
+  const logoRotate = useTransform(p, [0, 0.5], [0, -14]);
 
-  /* Gold letters rise and grow. */
-  const wordY = useTransform(p, [0, 1], ['0%', '-128%']);
-  const wordZ = useTransform(p, [0, 1], [0, 170]);
-  const wordScale = useTransform(p, [0, 1], [1, 1.22]);
+  /* Gold letters lift off the board, then clear the stage for the cards. */
+  const wordY = useTransform(p, [0, 0.45], ['0%', '-80%']);
+  const wordZ = useTransform(p, [0, 0.45], [0, 90]);
+  const wordOpacity = useTransform(p, [0, 0.2, 0.4], [1, 1, 0]);
 
-  /* Sub-plates peel off sideways. */
-  const subX = useTransform(p, [0, 1], ['0%', '128%']);
-  const subY = useTransform(p, [0, 1], ['0%', '-96%']);
-  const subRotate = useTransform(p, [0, 1], [0, 14]);
+  /* Sub-plates peel off sideways and fade with it. */
+  const subX = useTransform(p, [0, 0.45], ['0%', '70%']);
+  const subY = useTransform(p, [0, 0.45], ['0%', '-70%']);
+  const subOpacity = useTransform(p, [0, 0.2, 0.4], [1, 1, 0]);
+
+  /* The badge leads the disassembly, then also steps aside. */
+  const logoOpacity = useTransform(p, [0, 0.3, 0.5], [1, 1, 0]);
 
   const captionOpacity = useTransform(p, [0, 0.12, 0.72, 0.9], [0, 1, 1, 0]);
   const outroOpacity = useTransform(p, [0.78, 0.95], [0, 1]);
@@ -103,7 +106,7 @@ export default function ExplodedBoard() {
 
           {/* ── Logo badge ──────────────────────────────────── */}
           <motion.div
-            style={{ x: logoX, y: logoY, z: logoZ, rotate: logoRotate }}
+            style={{ x: logoX, y: logoY, z: logoZ, rotate: logoRotate, opacity: logoOpacity }}
             className="preserve-3d absolute left-[8%] top-1/2 z-30 -translate-y-1/2"
           >
             <div className="rounded-full bg-ivory-50 p-1.5 shadow-lift">
@@ -113,17 +116,17 @@ export default function ExplodedBoard() {
 
           {/* ── Gold channel letters ────────────────────────── */}
           <motion.div
-            style={{ y: wordY, z: wordZ, scale: wordScale }}
-            className="absolute inset-x-0 top-1/2 z-30 -translate-y-1/2 text-center"
+            style={{ y: wordY, z: wordZ, opacity: wordOpacity }}
+            className="absolute inset-x-0 top-1/2 z-30 -translate-y-1/2 px-6 text-center"
           >
-            <p className="sign-letters text-[2rem] leading-none sm:text-[3.6rem] lg:text-[4.6rem]">
+            <p className="sign-letters text-[1.6rem] leading-none sm:text-[2.6rem] lg:text-[3.2rem]">
               Glow Station
             </p>
           </motion.div>
 
           {/* ── LUXE SALON / HIM-HER plates ─────────────────── */}
           <motion.div
-            style={{ x: subX, y: subY, rotate: subRotate }}
+            style={{ x: subX, y: subY, opacity: subOpacity }}
             className="absolute right-[8%] top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2"
           >
             <span className="plate">Luxe Salon</span>
@@ -202,9 +205,10 @@ function PartPanel({
         <span className="block aspect-[4/5] overflow-hidden">
           <SmartImage
             src={part.photo.own}
+            fallbackSrc={part.photo.stock}
             alt={`${part.label} at ${salon.legalName}`}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-            fallback={<PhotoPlaceholder label={part.label} hint={part.photo.label} />}
+            fallback={<PhotoPlaceholder label={part.label} />}
           />
         </span>
         {cheapest !== undefined && (

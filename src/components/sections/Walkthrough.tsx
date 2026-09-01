@@ -21,7 +21,7 @@ type Room = {
   detail: string;
   /** Which service category this room books. */
   categoryId?: string;
-  photo: { own: string; label: string };
+  photo: { own: string; stock: string };
 };
 
 const rooms: Room[] = [
@@ -210,9 +210,10 @@ function RoomScene({
         <figure className="gold-frame relative h-full w-full overflow-hidden rounded-2xl bg-ivory-100">
           <SmartImage
             src={room.photo.own}
+            fallbackSrc={room.photo.stock}
             alt={`${room.name} at ${salon.legalName}`}
             className="h-full w-full object-cover"
-            fallback={<PhotoPlaceholder label={room.name} hint={room.photo.label} />}
+            fallback={<PhotoPlaceholder label={room.name} />}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
           <VanityBulbs count={6} className="absolute inset-x-8 top-2 opacity-80" />

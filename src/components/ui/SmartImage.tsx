@@ -1,12 +1,14 @@
 import { useEffect, useState, type ReactNode } from 'react';
 
 type Props = {
-  /** The salon's own photo, e.g. `images/gallery-1.jpg`. */
+  /** The salon's own photo, e.g. `images/gallery-1.jpg`. Always wins. */
   src?: string;
+  /** Licensed placeholder used until the real photo is uploaded. */
+  fallbackSrc?: string;
   alt: string;
   className?: string;
-  /** Brand-styled block shown until the photo is uploaded. */
-  fallback: ReactNode;
+  /** Rendered only if both photos are missing. */
+  fallback?: ReactNode;
   /** `eager` for above-the-fold imagery. */
   priority?: boolean;
 };
@@ -15,33 +17,34 @@ const resolve = (src: string) =>
   /^(https?:)?\/\//.test(src) ? src : `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
 
 /**
- * Renders the salon's photo, or a designed placeholder while it is missing.
+ * Photo with a graceful chain: owner's upload → licensed stock → styled block.
  *
- * We deliberately never fall back to stock photography — a stranger's salon
- * photo undermines a premium brand. Upload `public/images/<name>.jpg` and it
- * takes over automatically, with no code change.
+ * The salon can drop `public/images/gallery-1.jpg` in at any time and it takes
+ * over automatically, with no code change and no broken-image state in between.
  */
 export default function SmartImage({
   src,
+  fallbackSrc,
   alt,
   className = '',
-  fallback,
+  fallback = null,
   priority = false,
 }: Props) {
-  const [failed, setFailed] = useState(false);
+  const chain = [src, fallbackSrc].filter(Boolean) as string[];
+  const [index, setIndex] = useState(0);
 
-  useEffect(() => setFailed(false), [src]);
+  useEffect(() => setIndex(0), [src, fallbackSrc]);
 
-  if (!src || failed) return <>{fallback}</>;
+  if (chain.length === 0 || index >= chain.length) return <>{fallback}</>;
 
   return (
     <img
-      src={resolve(src)}
+      src={resolve(chain[index])}
       alt={alt}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}
-      onError={() => setFailed(true)}
+      onError={() => setIndex((i) => i + 1)}
       className={className}
     />
   );

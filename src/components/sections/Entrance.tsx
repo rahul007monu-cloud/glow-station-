@@ -59,6 +59,7 @@ export default function Entrance() {
             /* Salon footage, scrubbed by the scroll position. */
             <ScrollScrubVideo
               src={MEDIA.hero}
+              poster={scenery.interior.stock}
               progress={p}
               className="h-full w-full object-cover"
             />
@@ -66,6 +67,7 @@ export default function Entrance() {
             <SmartImage
               priority
               src={scenery.interior.own}
+              fallbackSrc={scenery.interior.stock}
               alt={`Inside ${salon.legalName}`}
               className="h-full w-full object-cover"
               fallback={<PhotoPlaceholder showLogo={false} />}

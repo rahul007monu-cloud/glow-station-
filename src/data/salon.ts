@@ -757,8 +757,10 @@ export const gallery: {
   id: string;
   label: string;
   tag: string;
-  /** Salon's own photo — upload to public/images/ with this exact name. */
-  src: string;
+  /** Salon's own photo — upload to public/images/ with this name. */
+  src?: string;
+  /** Licensed placeholder shown until then. */
+  stock: string;
   tall?: boolean;
 }[] = [
   {
@@ -766,6 +768,7 @@ export const gallery: {
     label: 'Colour & balayage',
     tag: 'Hair colour',
     src: 'images/gallery-1.jpg',
+    stock: 'images/stock/hair-colour.jpg',
     tall: true,
   },
   {
@@ -773,18 +776,21 @@ export const gallery: {
     label: 'Bridal & HD makeup',
     tag: 'Bridal',
     src: 'images/gallery-2.jpg',
+    stock: 'images/stock/bridal.jpg',
   },
   {
     id: 'g3',
     label: 'Cut, blow dry & styling',
     tag: 'Hair studio',
     src: 'images/gallery-3.jpg',
+    stock: 'images/stock/hair-style.jpg',
   },
   {
     id: 'g4',
     label: 'Facials & glass-skin glow',
     tag: 'Skin bar',
     src: 'images/gallery-4.jpg',
+    stock: 'images/stock/facial.jpg',
     tall: true,
   },
   {
@@ -792,23 +798,29 @@ export const gallery: {
     label: 'Extensions & nail art',
     tag: 'Nail lounge',
     src: 'images/gallery-5.jpg',
+    stock: 'images/stock/nails.jpg',
   },
   {
     id: 'g6',
     label: 'Men’s cut & beard',
     tag: 'Him',
     src: 'images/gallery-6.jpg',
+    stock: 'images/stock/barber.jpg',
   },
 ];
 
 /** Photos used by the 3D scenes. Owner uploads override each `own` path. */
 export const scenery = {
-  interior: { own: 'images/interior.jpg', label: 'Our studio' },
-  reception: { own: 'images/reception.jpg', label: 'Reception' },
-  hair: { own: 'images/hair.jpg', label: 'Hair studio' },
-  skin: { own: 'images/skin.jpg', label: 'Skin bar' },
-  nails: { own: 'images/nails.jpg', label: 'Nail lounge' },
-  makeup: { own: 'images/makeup.jpg', label: 'Makeup' },
-  bridal: { own: 'images/bridal.jpg', label: 'Bridal suite' },
-  academy: { own: 'images/academy.jpg', label: 'Academy' },
+  interior: { own: 'images/interior.jpg', stock: 'images/stock/interior-wide.jpg' },
+  reception: { own: 'images/reception.jpg', stock: 'images/stock/interior-2.jpg' },
+  hair: { own: 'images/hair.jpg', stock: 'images/stock/hair-style.jpg' },
+  colour: { own: 'images/colour.jpg', stock: 'images/stock/hair-colour.jpg' },
+  skin: { own: 'images/skin.jpg', stock: 'images/stock/facial.jpg' },
+  nails: { own: 'images/nails.jpg', stock: 'images/stock/nails.jpg' },
+  makeup: { own: 'images/makeup.jpg', stock: 'images/stock/makeup.jpg' },
+  bridal: { own: 'images/bridal.jpg', stock: 'images/stock/bridal-2.jpg' },
+  academy: { own: 'images/academy.jpg', stock: 'images/stock/makeup-2.jpg' },
+  spa: { own: 'images/spa.jpg', stock: 'images/stock/spa.jpg' },
+  him: { own: 'images/him.jpg', stock: 'images/stock/barber.jpg' },
+  styling: { own: 'images/styling.jpg', stock: 'images/stock/hair-style.jpg' },
 };
