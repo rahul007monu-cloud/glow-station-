@@ -53,7 +53,7 @@ export default function OfferLanding() {
   };
 
   return (
-    <main className="px-5 pb-32 pt-14 sm:px-8 sm:pb-16">
+    <main className="px-5 pb-32 pt-28 sm:px-8 sm:pb-16">
       <div className="shell">
         {/* ── Offer hero ─────────────────────────────────────── */}
         <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">

@@ -520,13 +520,26 @@ export const packageUsps = [
   },
 ];
 
+/**
+ * Offers renew every month, so the countdown always shows a believable
+ * "ends in X days" instead of a fake year-long timer — and nothing ever
+ * silently expires on the site.
+ *
+ * @param monthsAhead 0 = end of this month, 1 = end of next month
+ */
+function endOfMonth(monthsAhead = 0) {
+  const now = new Date();
+  const d = new Date(now.getFullYear(), now.getMonth() + monthsAhead + 1, 0, 23, 59, 0);
+  return d.toISOString();
+}
+
 export const offers: Offer[] = [
   {
     id: 'first-visit',
     title: '25% OFF first visit',
     detail: 'Naye customers ke liye kisi bhi ek service par. App se book karo.',
     code: 'GLOW25',
-    expires: '2027-12-31',
+    expires: endOfMonth(0),
     tone: 'gold',
   },
   {
@@ -534,7 +547,7 @@ export const offers: Offer[] = [
     title: 'Weekday Happy Hours',
     detail: 'Mon–Thu, 11 AM–3 PM: hair spa + threading combo at ₹899.',
     code: 'HAPPY899',
-    expires: '2027-12-31',
+    expires: endOfMonth(0),
     tone: 'rose',
   },
   {
@@ -542,7 +555,7 @@ export const offers: Offer[] = [
     title: 'Bridal early-bird',
     detail: 'Shaadi 60+ din door hai? Bridal pack par ₹3,000 off.',
     code: 'DULHAN3000',
-    expires: '2027-12-31',
+    expires: endOfMonth(1),
     tone: 'lilac',
   },
 ];

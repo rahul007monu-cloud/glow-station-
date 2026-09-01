@@ -25,10 +25,9 @@ export default function App() {
   return (
     <BookingProvider>
       <FloatingBackground />
-      <AnnouncementBar />
-      <Navbar />
       <OfflineNotice />
       <RouteEffects />
+      <Chrome />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -38,11 +37,30 @@ export default function App() {
       </Routes>
 
       <Footer />
-      <MobileDock />
       <FloatingActions />
       <BookingModal />
-      <WelcomeOffer />
     </BookingProvider>
+  );
+}
+
+/**
+ * Navigation and popups are page-aware on purpose:
+ * the paid-ads landing page stays distraction-free so clicks don't leak away
+ * from its single call to action.
+ */
+function Chrome() {
+  const { pathname } = useLocation();
+  const route = pathname.replace(/\/+$/, '') || '/';
+  const isLanding = route === '/offer';
+  const isHome = route === '/';
+
+  return (
+    <>
+      {!isLanding && <AnnouncementBar />}
+      <Navbar />
+      {!isLanding && <MobileDock />}
+      {isHome && <WelcomeOffer />}
+    </>
   );
 }
 
