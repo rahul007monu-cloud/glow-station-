@@ -1,6 +1,6 @@
 import { motion, useScroll, useSpring, useTransform, type MotionValue } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Logo from '@/components/layout/Logo';
 import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
@@ -21,8 +21,8 @@ type Part = {
   label: string;
   categoryId: string;
   photo: { own: string; stock?: string };
-  /** Final resting position, in percent of the stage. */
-  to: { x: number; y: number; z: number; rx: number; ry: number };
+  /** Depth + tilt at rest; the x/y spread is computed per breakpoint below. */
+  to: { z: number; rx: number; ry: number };
 };
 
 const parts: Part[] = [
@@ -30,36 +30,68 @@ const parts: Part[] = [
     label: 'Hair',
     categoryId: 'hair',
     photo: scenery.hair,
-    to: { x: -34, y: -12, z: 130, rx: 4, ry: 16 },
+    to: { z: 130, rx: 3, ry: 12 },
   },
   {
     label: 'Skin',
     categoryId: 'skin',
     photo: scenery.skin,
-    to: { x: -12, y: 14, z: 30, rx: -3, ry: 7 },
+    to: { z: 40, rx: -2, ry: 6 },
   },
   {
     label: 'Makeup',
     categoryId: 'makeup',
     photo: scenery.makeup,
-    to: { x: 10, y: -16, z: 190, rx: 5, ry: -6 },
+    to: { z: 190, rx: 4, ry: 0 },
   },
   {
     label: 'Nails',
     categoryId: 'nails',
     photo: scenery.nails,
-    to: { x: 30, y: 12, z: 70, rx: -4, ry: -14 },
+    to: { z: 70, rx: -2, ry: -6 },
   },
   {
     label: 'Academy',
     categoryId: 'academy',
     photo: scenery.academy,
-    to: { x: 4, y: 30, z: -60, rx: 8, ry: 2 },
+    to: { z: -20, rx: 5, ry: -12 },
   },
 ];
 
+/** x/y offsets in multiples of the card's own size — no overlap by construction. */
+const SPREAD_DESKTOP = [
+  { x: -2.08, y: -0.22 },
+  { x: -1.04, y: 0.2 },
+  { x: 0, y: -0.3 },
+  { x: 1.04, y: 0.2 },
+  { x: 2.08, y: -0.22 },
+];
+
+const SPREAD_MOBILE = [
+  { x: -1.06, y: -0.62 },
+  { x: 0, y: -0.62 },
+  { x: 1.06, y: -0.62 },
+  { x: -0.53, y: 0.62 },
+  { x: 0.53, y: 0.62 },
+];
+
+function useIsNarrow() {
+  const [narrow, setNarrow] = useState(
+    typeof window === 'undefined' ? false : window.matchMedia('(max-width: 767px)').matches,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const onChange = () => setNarrow(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return narrow;
+}
+
 export default function ExplodedBoard() {
   const ref = useRef<HTMLDivElement>(null);
+  const narrow = useIsNarrow();
+  const spread = narrow ? SPREAD_MOBILE : SPREAD_DESKTOP;
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const p = useSpring(scrollYProgress, { stiffness: 95, damping: 28, restDelta: 0.001 });
 
@@ -97,7 +129,7 @@ export default function ExplodedBoard() {
         {/* soft studio floor */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ivory-300/80 to-transparent" />
 
-        <div className="preserve-3d relative h-[62vh] w-[min(94%,60rem)]">
+        <div className="preserve-3d relative mt-10 h-[58vh] w-[min(94%,62rem)] sm:mt-6">
           {/* ── The board panel ─────────────────────────────── */}
           <motion.div
             style={{ rotateY: boardRy, rotateX: boardRx, z: boardZ, opacity: boardOpacity }}
@@ -135,7 +167,13 @@ export default function ExplodedBoard() {
 
           {/* ── Service plates → photo panels ───────────────── */}
           {parts.map((part, i) => (
-            <PartPanel key={part.label} part={part} index={i} progress={p} />
+            <PartPanel
+              key={part.label}
+              part={part}
+              index={i}
+              progress={p}
+              offset={spread[i]}
+            />
           ))}
         </div>
 
@@ -152,7 +190,7 @@ export default function ExplodedBoard() {
 
         <motion.div
           style={{ opacity: outroOpacity }}
-          className="absolute inset-x-0 bottom-10 text-center"
+          className="absolute inset-x-0 bottom-4 z-40 text-center sm:bottom-6"
         >
           <a
             href="#services"
@@ -170,18 +208,21 @@ function PartPanel({
   part,
   index,
   progress,
+  offset,
 }: {
   part: Part;
   index: number;
   progress: MotionValue<number>;
+  offset: { x: number; y: number };
 }) {
   const { openBooking } = useBooking();
   const category = categories.find((c) => c.id === part.categoryId);
   const from = 0.12 + index * 0.045;
   const to = 0.62 + index * 0.05;
 
-  const x = useTransform(progress, [from, to], ['0%', `${part.to.x * 3}%`]);
-  const y = useTransform(progress, [from, to], ['0%', `${part.to.y * 3}%`]);
+  /* Percentages here are relative to the card itself, so the fan scales with it. */
+  const x = useTransform(progress, [from, to], ['0%', `${offset.x * 100}%`]);
+  const y = useTransform(progress, [from, to], ['0%', `${offset.y * 100}%`]);
   const z = useTransform(progress, [from, to], [0, part.to.z]);
   const rotateX = useTransform(progress, [from, to], [0, part.to.rx]);
   const rotateY = useTransform(progress, [from, to], [0, part.to.ry]);
@@ -193,8 +234,8 @@ function PartPanel({
 
   return (
     <motion.div
-      style={{ x, y, z, rotateX, rotateY }}
-      className="preserve-3d absolute left-1/2 top-1/2 z-20 -ml-[4.2rem] -mt-4 w-[8.4rem] sm:-ml-[5.4rem] sm:w-[10.8rem]"
+      style={{ x, y, z, rotateX, rotateY, zIndex: 20 + index }}
+      className="preserve-3d absolute left-1/2 top-1/2 -ml-[3.6rem] -mt-[4.6rem] w-[7.2rem] sm:-ml-[5rem] sm:w-[10rem]"
     >
       {/* photo panel */}
       <motion.button
