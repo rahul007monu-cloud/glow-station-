@@ -40,8 +40,8 @@ export default function CurtainIntro() {
               className={`absolute top-0 h-full w-1/2 ${side === 'left' ? 'left-0' : 'right-0'}`}
               style={{
                 backgroundImage:
-                  'repeating-linear-gradient(90deg, #1a0d1f 0px, #2b1533 14px, #150a1a 30px), radial-gradient(120% 80% at 50% 0%, rgba(231,195,93,0.18), transparent 60%)',
-                boxShadow: 'inset 0 0 120px rgba(0,0,0,0.9)',
+                  'repeating-linear-gradient(90deg, #fffdf9 0px, #f3ecdf 14px, #e6dcc8 30px), radial-gradient(120% 80% at 50% 0%, rgba(208,169,85,0.22), transparent 60%)',
+                boxShadow: 'inset 0 0 120px rgba(32,37,43,0.18)',
               }}
             />
           ))}

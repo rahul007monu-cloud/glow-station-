@@ -65,7 +65,7 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
                 alt={item.label}
                 className="h-full w-full object-cover"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 to-transparent px-3 pb-2.5 pt-8">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-3 pb-2.5 pt-8">
                 <span className="block text-[0.55rem] uppercase tracking-[0.25em] text-gold-200">
                   {item.tag}
                 </span>
