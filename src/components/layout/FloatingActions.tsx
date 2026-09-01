@@ -38,7 +38,7 @@ export default function FloatingActions() {
       href: salon.googleReviewLink,
       external: true,
       icon: <Star size={18} />,
-      className: 'bg-white/[0.12] text-white',
+      className: 'bg-white/75 text-ink',
       onClick: () => track('Contact', { method: 'google-review', placement: 'fab' }),
     },
   ];
@@ -53,7 +53,7 @@ export default function FloatingActions() {
             exit={{ opacity: 0, scale: 0.6 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Back to top"
-            className="glass rounded-full p-3 text-white/70 hover:text-white"
+            className="glass rounded-full p-3 text-ink-soft hover:text-ink"
           >
             <ArrowUp size={16} />
           </motion.button>
@@ -72,7 +72,7 @@ export default function FloatingActions() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.8 }}
               transition={{ delay: i * 0.05 }}
-              className={`flex items-center gap-2 rounded-full py-2.5 pl-4 pr-3 text-sm font-semibold shadow-float ${a.className}`}
+              className={`flex items-center gap-2 rounded-full py-2.5 pl-4 pr-3 text-sm font-semibold shadow-lift ${a.className}`}
             >
               {a.label}
               {a.icon}
@@ -89,7 +89,7 @@ export default function FloatingActions() {
         {expanded ? <X size={22} /> : <MessageCircle size={22} />}
         {!expanded && (
           <span className="absolute -right-0.5 -top-0.5 rounded-full bg-ink p-0.5">
-            <Plus size={10} className="text-gold-200" />
+            <Plus size={10} className="text-gold-500" />
           </span>
         )}
       </button>

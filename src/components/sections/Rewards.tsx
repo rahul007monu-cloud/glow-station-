@@ -56,12 +56,12 @@ export default function Rewards() {
         {/* ── Loyalty stamp card ─────────────────────────────── */}
         <Reveal>
           <div className="vitrine h-full p-6">
-            <div className="flex items-center gap-2 text-gold-200">
+            <div className="flex items-center gap-2 text-gold-500">
               <Gift size={18} />
-              <h3 className="font-display text-xl text-white">Loyalty card</h3>
+              <h3 className="font-display text-xl text-ink">Loyalty card</h3>
             </div>
-            <p className="mt-2 text-sm text-white/55">
-              {total} visits complete karo aur pao <strong className="text-gold-100">{salon.loyalty.reward}</strong> — bilkul free.
+            <p className="mt-2 text-sm text-ink-muted">
+              {total} visits complete karo aur pao <strong className="text-gold-600">{salon.loyalty.reward}</strong> — bilkul free.
             </p>
 
             <div className="mt-5 grid grid-cols-6 gap-2">
@@ -72,8 +72,8 @@ export default function Rewards() {
                     key={i}
                     className={`flex aspect-square items-center justify-center rounded-full border text-xs transition-all duration-500 ${
                       filled
-                        ? 'animate-floaty border-gold-300/60 bg-gold-300/20 text-gold-100 shadow-glow'
-                        : 'border-dashed border-white/15 text-white/25'
+                        ? 'animate-floaty border-gold-300/60 bg-gold-300/20 text-gold-600 shadow-glow'
+                        : 'border-dashed border-ivory-400/70 text-ink-muted'
                     }`}
                     style={filled ? { animationDelay: `${i * 0.2}s` } : undefined}
                   >
@@ -83,19 +83,19 @@ export default function Rewards() {
               })}
             </div>
 
-            <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-white/[0.08] pt-4 text-center">
+            <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-ivory-400/60 pt-4 text-center">
               <div>
-                <dt className="text-[0.65rem] uppercase tracking-wider text-white/40">Points</dt>
-                <dd className="font-display text-2xl text-gold-100">{loyalty.points}</dd>
+                <dt className="text-[0.65rem] uppercase tracking-wider text-ink-muted">Points</dt>
+                <dd className="font-display text-2xl text-gold-600">{loyalty.points}</dd>
               </div>
               <div>
-                <dt className="text-[0.65rem] uppercase tracking-wider text-white/40">
+                <dt className="text-[0.65rem] uppercase tracking-wider text-ink-muted">
                   Rewards earned
                 </dt>
-                <dd className="font-display text-2xl text-gold-100">{loyalty.rewardsClaimed}</dd>
+                <dd className="font-display text-2xl text-gold-600">{loyalty.rewardsClaimed}</dd>
               </div>
             </dl>
-            <p className="mt-3 text-[0.68rem] text-white/35">
+            <p className="mt-3 text-[0.68rem] text-ink-muted">
               Har ₹100 par {salon.loyalty.pointsPerHundred} points. Counter par ID batayein.
             </p>
           </div>
@@ -103,24 +103,24 @@ export default function Rewards() {
 
         {/* ── Referral ───────────────────────────────────────── */}
         <Reveal delay={0.08}>
-          <div className="vitrine h-full border-rose-400/25 p-6">
-            <div className="flex items-center gap-2 text-rose-300">
+          <div className="vitrine h-full border-clay-400/25 p-6">
+            <div className="flex items-center gap-2 text-clay-300">
               <Share2 size={18} />
-              <h3 className="font-display text-xl text-white">Refer & earn</h3>
+              <h3 className="font-display text-xl text-ink">Refer & earn</h3>
             </div>
-            <p className="mt-2 text-sm text-white/55">
+            <p className="mt-2 text-sm text-ink-muted">
               Friend ko {salon.referral.friendDiscount}% off milega, aapko bhi apni next service par{' '}
               {salon.referral.yourDiscount}% off.
             </p>
 
             <button
               onClick={copyCode}
-              className="mt-5 flex w-full items-center justify-between rounded-2xl border border-dashed border-rose-400/40 bg-black/25 px-4 py-3"
+              className="mt-5 flex w-full items-center justify-between rounded-2xl border border-dashed border-clay-400/40 bg-ivory-300/70 px-4 py-3"
             >
               <span className="font-mono text-lg tracking-[0.15em] text-rose-200">
                 {referral.code}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-white/60">
+              <span className="inline-flex items-center gap-1.5 text-xs text-ink-muted">
                 <Copy size={13} /> {copied ? 'Copied!' : 'Copy'}
               </span>
             </button>
@@ -128,7 +128,7 @@ export default function Rewards() {
             <Button full className="mt-4" icon={<Share2 size={15} />} onClick={share}>
               Share with friends
             </Button>
-            <p className="mt-3 text-center text-[0.68rem] text-white/35">
+            <p className="mt-3 text-center text-[0.68rem] text-ink-muted">
               {referral.shares > 0
                 ? `${referral.shares} time(s) shared — keep going!`
                 : 'Ek share = ek naya customer.'}
@@ -138,30 +138,30 @@ export default function Rewards() {
 
         {/* ── Install the app ────────────────────────────────── */}
         <Reveal delay={0.16}>
-          <div className="vitrine h-full border-lilac-400/25 p-6">
-            <div className="flex items-center gap-2 text-lilac-300">
+          <div className="vitrine h-full border-gold-300/25 p-6">
+            <div className="flex items-center gap-2 text-gold-500">
               <Sparkles size={18} />
-              <h3 className="font-display text-xl text-white">Install the app</h3>
+              <h3 className="font-display text-xl text-ink">Install the app</h3>
             </div>
-            <p className="mt-2 text-sm text-white/55">
+            <p className="mt-2 text-sm text-ink-muted">
               Phone me app install karo — offline chalta hai, 1-tap booking, aur exclusive app-only
               offers.
             </p>
 
-            <ul className="mt-4 space-y-2 text-sm text-white/65">
+            <ul className="mt-4 space-y-2 text-sm text-ink-muted">
               <li className="flex gap-2">
-                <Check size={14} className="mt-0.5 text-[#5be584]" /> Home screen icon, no Play Store
+                <Check size={14} className="mt-0.5 text-[#2f9e5f]" /> Home screen icon, no Play Store
               </li>
               <li className="flex gap-2">
-                <Check size={14} className="mt-0.5 text-[#5be584]" /> Sirf 1 MB, phone slow nahi hota
+                <Check size={14} className="mt-0.5 text-[#2f9e5f]" /> Sirf 1 MB, phone slow nahi hota
               </li>
               <li className="flex gap-2">
-                <Check size={14} className="mt-0.5 text-[#5be584]" /> Loyalty card always saved
+                <Check size={14} className="mt-0.5 text-[#2f9e5f]" /> Loyalty card always saved
               </li>
             </ul>
 
             {installed ? (
-              <p className="mt-5 rounded-2xl border border-[#5be584]/30 bg-[#5be584]/10 px-4 py-3 text-center text-sm text-[#5be584]">
+              <p className="mt-5 rounded-2xl border border-[#2f9e5f]/30 bg-[#2f9e5f]/10 px-4 py-3 text-center text-sm text-[#2f9e5f]">
                 App installed ✓ Enjoy!
               </p>
             ) : canInstall ? (
@@ -177,7 +177,7 @@ export default function Rewards() {
                 Install now
               </Button>
             ) : (
-              <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-xs leading-relaxed text-white/60">
+              <div className="mt-5 rounded-2xl border border-ivory-400/70 bg-white/75 p-4 text-xs leading-relaxed text-ink-muted">
                 {isIOS ? (
                   <>
                     iPhone par: Safari me <strong>Share</strong> button dabao →{' '}

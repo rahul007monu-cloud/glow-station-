@@ -28,27 +28,27 @@ export function ReceptionArt() {
 
       {/* signage */}
       <div className="absolute left-1/2 top-10 -translate-x-1/2 text-center">
-        <p className="font-display text-3xl text-gold-100 drop-shadow-[0_0_18px_rgba(231,195,93,0.5)]">
+        <p className="font-display text-3xl text-gold-600 drop-shadow-[0_0_18px_rgba(231,195,93,0.5)]">
           Glow Station
         </p>
-        <p className="mt-1 text-[0.55rem] uppercase tracking-[0.45em] text-white/60">Luxe Salon</p>
+        <p className="mt-1 text-[0.55rem] uppercase tracking-[0.45em] text-ink-muted">Luxe Salon</p>
       </div>
 
       {/* counter */}
-      <div className="absolute inset-x-8 bottom-10 h-28 rounded-2xl border border-white/15 bg-gradient-to-b from-white/25 to-white/[0.06] backdrop-blur-sm">
+      <div className="absolute inset-x-8 bottom-10 h-28 rounded-2xl border border-ivory-400/70 bg-gradient-to-b from-white/25 to-white/[0.06] backdrop-blur-sm">
         <div className="absolute inset-x-6 top-3 h-px bg-gradient-to-r from-transparent via-gold-200/60 to-transparent" />
         {/* orchid vase */}
         <div className="absolute -top-12 left-8 flex flex-col items-center">
-          <span className="h-8 w-1 rounded bg-lilac-400/70" />
-          <span className="h-3 w-3 -translate-y-1 rounded-full bg-rose-300 shadow-glow-rose" />
-          <span className="h-6 w-5 rounded-b-xl bg-white/25" />
+          <span className="h-8 w-1 rounded bg-gold-300/70" />
+          <span className="h-3 w-3 -translate-y-1 rounded-full bg-clay-300 shadow-glow" />
+          <span className="h-6 w-5 rounded-b-xl bg-white/75" />
         </div>
       </div>
 
       {/* pendant lights */}
       {[28, 50, 72].map((left, i) => (
         <div key={left} className="absolute top-0" style={{ left: `${left}%` }}>
-          <span className="block h-16 w-px bg-white/20" />
+          <span className="block h-16 w-px bg-white/75" />
           <span
             className="block h-7 w-7 animate-floaty rounded-b-full bg-gradient-to-b from-gold-200 to-gold-500/40 shadow-glow"
             style={{ animationDelay: `${i * 0.7}s` }}
@@ -101,7 +101,7 @@ export function SkinBarArt() {
       {[30, 45, 60, 72].map((left, i) => (
         <span
           key={left}
-          className="absolute bottom-28 h-24 w-10 rounded-full bg-white/12 blur-xl"
+          className="absolute bottom-28 h-24 w-10 rounded-full bg-white/75 blur-xl"
           style={{
             left: `${left}%`,
             animation: `floaty-slow ${7 + i}s ease-in-out ${i * 0.8}s infinite`,
@@ -110,10 +110,10 @@ export function SkinBarArt() {
       ))}
 
       {/* bed */}
-      <div className="absolute inset-x-10 bottom-12 h-24 rounded-[1.4rem] border border-white/12 bg-gradient-to-b from-white/20 to-white/[0.05]">
-        <span className="absolute left-6 top-4 h-8 w-14 rounded-full bg-white/25" />
+      <div className="absolute inset-x-10 bottom-12 h-24 rounded-[1.4rem] border border-ivory-400/70 bg-gradient-to-b from-white/20 to-white/[0.05]">
+        <span className="absolute left-6 top-4 h-8 w-14 rounded-full bg-white/75" />
       </div>
-      <div className="absolute inset-x-16 bottom-6 h-4 rounded-b-2xl bg-black/50" />
+      <div className="absolute inset-x-16 bottom-6 h-4 rounded-b-2xl bg-ivory-300/70" />
     </div>
   );
 }
@@ -121,10 +121,10 @@ export function SkinBarArt() {
 /** Nail lounge: polish bottles on a marble shelf. */
 export function NailLoungeArt() {
   const bottles = [
-    { c: 'bg-rose-500', h: 'h-14' },
+    { c: 'bg-clay-500', h: 'h-14' },
     { c: 'bg-gold-300', h: 'h-16' },
-    { c: 'bg-lilac-400', h: 'h-12' },
-    { c: 'bg-rose-300', h: 'h-16' },
+    { c: 'bg-gold-300', h: 'h-12' },
+    { c: 'bg-clay-300', h: 'h-16' },
     { c: 'bg-gold-500', h: 'h-14' },
   ];
   return (
@@ -134,16 +134,16 @@ export function NailLoungeArt() {
         {bottles.map((b, i) => (
           <span
             key={i}
-            className={`relative w-8 ${b.h} animate-floaty rounded-b-lg rounded-t-sm ${b.c} shadow-float`}
+            className={`relative w-8 ${b.h} animate-floaty rounded-b-lg rounded-t-sm ${b.c} shadow-lift`}
             style={{ animationDelay: `${i * 0.4}s` }}
           >
-            <span className="absolute -top-3 left-1/2 h-3 w-3 -translate-x-1/2 rounded-sm bg-white/30" />
-            <span className="absolute inset-x-1 top-1 h-2 rounded bg-white/25" />
+            <span className="absolute -top-3 left-1/2 h-3 w-3 -translate-x-1/2 rounded-sm bg-white/75" />
+            <span className="absolute inset-x-1 top-1 h-2 rounded bg-white/75" />
           </span>
         ))}
       </div>
       {/* hand rest */}
-      <div className="absolute inset-x-14 bottom-6 h-8 rounded-full border border-white/12 bg-white/10" />
+      <div className="absolute inset-x-14 bottom-6 h-8 rounded-full border border-ivory-400/70 bg-white/75" />
     </div>
   );
 }

@@ -1,37 +1,50 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 type Props = {
-  /** Path relative to `public/`, e.g. `images/gallery-1.jpg`. */
+  /** The salon's own photo, e.g. `images/gallery-1.jpg`. Always wins. */
   src?: string;
+  /** Licensed placeholder used until the real photo is uploaded. */
+  fallbackSrc?: string;
   alt: string;
   className?: string;
-  /** Shown while the photo is missing or fails to load. */
-  fallback: ReactNode;
+  /** Rendered only if both photos are missing. */
+  fallback?: ReactNode;
+  /** `eager` for above-the-fold imagery. */
+  priority?: boolean;
 };
 
+const resolve = (src: string) =>
+  /^(https?:)?\/\//.test(src) ? src : `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+
 /**
- * Renders a photo if it exists, otherwise the styled placeholder.
+ * Photo with a graceful chain: owner's upload → licensed stock → styled block.
  *
- * This lets us pre-wire the expected filenames (`images/gallery-1.jpg` …) so the
- * salon owner can simply upload photos with those names — no code change, and
- * the layout never shows a broken image icon in the meantime.
+ * The salon can drop `public/images/gallery-1.jpg` in at any time and it takes
+ * over automatically, with no code change and no broken-image state in between.
  */
-export default function SmartImage({ src, alt, className = '', fallback }: Props) {
-  const [failed, setFailed] = useState(false);
+export default function SmartImage({
+  src,
+  fallbackSrc,
+  alt,
+  className = '',
+  fallback = null,
+  priority = false,
+}: Props) {
+  const chain = [src, fallbackSrc].filter(Boolean) as string[];
+  const [index, setIndex] = useState(0);
 
-  if (!src || failed) return <>{fallback}</>;
+  useEffect(() => setIndex(0), [src, fallbackSrc]);
 
-  const resolved = /^(https?:)?\/\//.test(src)
-    ? src
-    : `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+  if (chain.length === 0 || index >= chain.length) return <>{fallback}</>;
 
   return (
     <img
-      src={resolved}
+      src={resolve(chain[index])}
       alt={alt}
-      loading="lazy"
+      loading={priority ? 'eager' : 'lazy'}
       decoding="async"
-      onError={() => setFailed(true)}
+      fetchPriority={priority ? 'high' : 'auto'}
+      onError={() => setIndex((i) => i + 1)}
       className={className}
     />
   );

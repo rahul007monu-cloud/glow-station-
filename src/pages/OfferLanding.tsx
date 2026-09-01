@@ -61,7 +61,7 @@ export default function OfferLanding() {
             <motion.span
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              className="chip border-rose-400/40 bg-rose-500/15 text-rose-200"
+              className="chip border-clay-400/40 bg-clay-500/15 text-rose-200"
             >
               Limited period offer
             </motion.span>
@@ -75,7 +75,7 @@ export default function OfferLanding() {
               {offer.title} <span className="gold-text">at {salon.name}</span>
             </motion.h1>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/65">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted">
               {offer.detail} Certified stylists, 100% original products aur ek fixed slot — waiting
               zero. Form bharo, hum WhatsApp par turant confirm karenge.
             </p>
@@ -89,10 +89,10 @@ export default function OfferLanding() {
                   { v: t.seconds, l: 'Sec' },
                 ].map((b) => (
                   <div key={b.l} className="glass w-[4.2rem] rounded-2xl py-2.5 text-center">
-                    <p className="font-display text-2xl text-gold-100">
+                    <p className="font-display text-2xl text-gold-600">
                       {String(b.v).padStart(2, '0')}
                     </p>
-                    <p className="text-[0.6rem] uppercase tracking-wider text-white/45">{b.l}</p>
+                    <p className="text-[0.6rem] uppercase tracking-wider text-ink-muted">{b.l}</p>
                   </div>
                 ))}
               </div>
@@ -105,8 +105,8 @@ export default function OfferLanding() {
                 'Sanitised tools, single-use disposables',
                 'Fixed appointment, no queue',
               ].map((point) => (
-                <li key={point} className="flex items-start gap-2 text-sm text-white/70">
-                  <BadgeCheck size={16} className="mt-0.5 shrink-0 text-gold-300" />
+                <li key={point} className="flex items-start gap-2 text-sm text-ink-soft">
+                  <BadgeCheck size={16} className="mt-0.5 shrink-0 text-gold-500" />
                   {point}
                 </li>
               ))}
@@ -114,17 +114,17 @@ export default function OfferLanding() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="chip">
-                <Star size={12} className="fill-gold-300 text-gold-300" /> {salon.stats[0].value}{' '}
+                <Star size={12} className="fill-gold-400 text-gold-500" /> {salon.stats[0].value}{' '}
                 Google rating
               </span>
               <span className="chip">
-                <ShieldCheck size={12} className="text-gold-300" /> Hygiene certified
+                <ShieldCheck size={12} className="text-gold-500" /> Hygiene certified
               </span>
               <span className="chip">
-                <MapPin size={12} className="text-gold-300" /> {salon.address.city}
+                <MapPin size={12} className="text-gold-500" /> {salon.address.city}
               </span>
               <span className="chip">
-                <Clock size={12} className="text-gold-300" /> {salon.hours.weekdays}
+                <Clock size={12} className="text-gold-500" /> {salon.hours.weekdays}
               </span>
             </div>
           </div>
@@ -132,10 +132,10 @@ export default function OfferLanding() {
           {/* ── Lead form ────────────────────────────────────── */}
           <Reveal from="scale">
             <div className="glass sticky top-24 rounded-3xl border-gold-300/25 p-6 shadow-glow">
-              <p className="text-[0.65rem] uppercase tracking-[0.25em] text-gold-300/85">
+              <p className="text-[0.65rem] uppercase tracking-[0.25em] text-gold-500/85">
                 Claim your discount
               </p>
-              <h2 className="mt-1.5 font-display text-2xl text-white">
+              <h2 className="mt-1.5 font-display text-2xl text-ink">
                 Slot book karo, {offer.code} apply hoga
               </h2>
 
@@ -157,13 +157,13 @@ export default function OfferLanding() {
                   onChange={(e) => setPhone(e.target.value)}
                 />
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-white/55">
+                  <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-ink-muted">
                     Service
                   </span>
                   <select
                     value={service}
                     onChange={(e) => setService(e.target.value)}
-                    className="w-full rounded-2xl border border-white/[0.12] bg-ink-card px-4 py-3 text-sm text-white outline-none focus:border-gold-300/60"
+                    className="w-full rounded-2xl border border-ivory-400/60 bg-white px-4 py-3 text-sm text-ink outline-none focus:border-gold-300/60"
                   >
                     {allServices.map((s) => (
                       <option key={s.id} value={s.id}>
@@ -173,7 +173,7 @@ export default function OfferLanding() {
                   </select>
                 </label>
 
-                {error && <p className="text-xs text-rose-400">{error}</p>}
+                {error && <p className="text-xs text-clay-400">{error}</p>}
 
                 <Button full size="lg" onClick={submit} icon={<MessageCircle size={17} />}>
                   Get my {offer.code} slot
@@ -187,7 +187,7 @@ export default function OfferLanding() {
                 >
                   Or call {salon.phone}
                 </LinkButton>
-                <p className="text-center text-[0.68rem] leading-relaxed text-white/40">
+                <p className="text-center text-[0.68rem] leading-relaxed text-ink-muted">
                   Aapka number sirf booking confirm karne ke liye use hoga. No spam.
                 </p>
               </div>
@@ -197,10 +197,10 @@ export default function OfferLanding() {
 
         {/* ── Package upsell ─────────────────────────────────── */}
         <section className="mt-20">
-          <h2 className="text-center font-display text-3xl text-white">
+          <h2 className="text-center font-display text-3xl text-ink">
             Ek baar aane wale nahi, <span className="gold-text">regular banne wale</span> deals
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-center text-sm text-white/55">
+          <p className="mx-auto mt-3 max-w-xl text-center text-sm text-ink-muted">
             Discount ek visit ka fayda deta hai — package saal bhar ka. Neeche dekhiye kitna bachta
             hai.
           </p>
@@ -209,15 +209,15 @@ export default function OfferLanding() {
             {packages.map((p, i) => (
               <Reveal key={p.id} delay={i * 0.08}>
                 <div className="vitrine h-full p-6">
-                  <h3 className="font-display text-xl text-white">{p.name}</h3>
-                  <p className="mt-1 text-xs text-white/50">{p.bestFor}</p>
-                  <p className="mt-4 font-display text-3xl text-gold-100">{formatINR(p.price)}</p>
+                  <h3 className="font-display text-xl text-ink">{p.name}</h3>
+                  <p className="mt-1 text-xs text-ink-muted">{p.bestFor}</p>
+                  <p className="mt-4 font-display text-3xl text-gold-600">{formatINR(p.price)}</p>
                   {p.mrp && (
-                    <p className="text-sm text-[#5be584]">
+                    <p className="text-sm text-[#2f9e5f]">
                       Save {formatINR(p.mrp - p.price)} · {p.validity}
                     </p>
                   )}
-                  <ul className="mt-4 space-y-1.5 text-sm text-white/65">
+                  <ul className="mt-4 space-y-1.5 text-sm text-ink-muted">
                     {p.usps.map((u) => (
                       <li key={u.title}>✓ {u.title}</li>
                     ))}

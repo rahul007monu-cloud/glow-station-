@@ -31,10 +31,10 @@ export default function FAQ() {
                   aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                 >
-                  <span className="text-sm font-medium text-white sm:text-base">{f.q}</span>
+                  <span className="text-sm font-medium text-ink sm:text-base">{f.q}</span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    className="shrink-0 rounded-full border border-white/15 bg-white/5 p-1.5 text-gold-200"
+                    className="shrink-0 rounded-full border border-ivory-400/70 bg-white/75 p-1.5 text-gold-500"
                   >
                     <Plus size={14} />
                   </motion.span>
@@ -47,7 +47,7 @@ export default function FAQ() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="px-5 pb-5 text-sm leading-relaxed text-white/60">{f.a}</p>
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-ink-muted">{f.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

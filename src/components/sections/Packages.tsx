@@ -29,8 +29,8 @@ export default function Packages() {
               <span aria-hidden className="text-2xl">
                 {u.glyph}
               </span>
-              <h3 className="mt-3 font-display text-lg text-gold-100">{u.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-white/55">{u.detail}</p>
+              <h3 className="mt-3 font-display text-lg text-gold-600">{u.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">{u.detail}</p>
             </div>
           </Reveal>
         ))}
@@ -57,16 +57,16 @@ export default function Packages() {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       {p.badge && (
-                        <span className="chip mb-2 border-gold-300/40 bg-gold-300/15 text-gold-100">
+                        <span className="chip mb-2 border-gold-300/40 bg-gold-300/15 text-gold-600">
                           <Crown size={11} /> {p.badge}
                         </span>
                       )}
-                      <h3 className="font-display text-2xl leading-tight text-white">{p.name}</h3>
-                      <p className="mt-1.5 text-xs text-white/50">{p.bestFor}</p>
+                      <h3 className="font-display text-2xl leading-tight text-ink">{p.name}</h3>
+                      <p className="mt-1.5 text-xs text-ink-muted">{p.bestFor}</p>
                     </div>
                     {savingPct > 0 && (
-                      <div className="shrink-0 rounded-2xl border border-rose-400/30 bg-rose-500/15 px-3 py-2 text-center">
-                        <p className="font-display text-xl leading-none text-rose-300">
+                      <div className="shrink-0 rounded-2xl border border-clay-400/30 bg-clay-500/15 px-3 py-2 text-center">
+                        <p className="font-display text-xl leading-none text-clay-300">
                           {savingPct}%
                         </p>
                         <p className="text-[0.6rem] uppercase tracking-wider text-rose-200/80">
@@ -77,21 +77,21 @@ export default function Packages() {
                   </div>
 
                   {/* price block with explicit saving maths */}
-                  <div className="mt-5 rounded-2xl border border-white/[0.08] bg-black/20 p-4">
+                  <div className="mt-5 rounded-2xl border border-ivory-400/60 bg-ivory-300/70 p-4">
                     <div className="flex items-end gap-2.5">
-                      <p className="font-display text-4xl text-gold-100">{formatINR(p.price)}</p>
+                      <p className="font-display text-4xl text-gold-600">{formatINR(p.price)}</p>
                       {p.mrp && (
-                        <p className="pb-1 text-sm text-white/35 line-through">
+                        <p className="pb-1 text-sm text-ink-muted line-through">
                           {formatINR(p.mrp)}
                         </p>
                       )}
                     </div>
                     {saving > 0 && (
-                      <p className="mt-1.5 text-sm font-semibold text-[#5be584]">
+                      <p className="mt-1.5 text-sm font-semibold text-[#2f9e5f]">
                         Aap bachate ho {formatINR(saving)}
                       </p>
                     )}
-                    <div className="mt-3 flex flex-wrap gap-2 text-[0.68rem] text-white/50">
+                    <div className="mt-3 flex flex-wrap gap-2 text-[0.68rem] text-ink-muted">
                       <span className="chip">
                         <CalendarClock size={11} /> {p.validity}
                       </span>
@@ -103,12 +103,12 @@ export default function Packages() {
                   <ul className="mt-5 space-y-3">
                     {p.usps.map((u) => (
                       <li key={u.title} className="flex gap-2.5">
-                        <BadgeCheck size={16} className="mt-0.5 shrink-0 text-gold-300" />
+                        <BadgeCheck size={16} className="mt-0.5 shrink-0 text-gold-500" />
                         <span>
-                          <span className="block text-sm font-semibold text-white/90">
+                          <span className="block text-sm font-semibold text-ink-soft">
                             {u.title}
                           </span>
-                          <span className="block text-xs leading-relaxed text-white/50">
+                          <span className="block text-xs leading-relaxed text-ink-muted">
                             {u.detail}
                           </span>
                         </span>
@@ -117,14 +117,14 @@ export default function Packages() {
                   </ul>
 
                   {/* what's inside */}
-                  <div className="mt-5 border-t border-white/[0.08] pt-4">
-                    <p className="mb-2.5 text-[0.65rem] uppercase tracking-[0.2em] text-white/40">
+                  <div className="mt-5 border-t border-ivory-400/60 pt-4">
+                    <p className="mb-2.5 text-[0.65rem] uppercase tracking-[0.2em] text-ink-muted">
                       Package me shaamil
                     </p>
                     <ul className="space-y-2">
                       {p.includes.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-sm text-white/70">
-                          <Check size={14} className="mt-0.5 shrink-0 text-[#5be584]" />
+                        <li key={item} className="flex items-start gap-2 text-sm text-ink-soft">
+                          <Check size={14} className="mt-0.5 shrink-0 text-[#2f9e5f]" />
                           {item}
                         </li>
                       ))}
@@ -135,15 +135,15 @@ export default function Packages() {
                   <div className="mt-6 space-y-2.5">
                     {typeof p.seatsLeft === 'number' && (
                       <div>
-                        <div className="flex items-center justify-between text-[0.68rem] text-white/50">
+                        <div className="flex items-center justify-between text-[0.68rem] text-ink-muted">
                           <span className="inline-flex items-center gap-1">
                             <Users size={11} /> Is mahine ke seats
                           </span>
-                          <span className="text-rose-300">only {p.seatsLeft} left</span>
+                          <span className="text-clay-300">only {p.seatsLeft} left</span>
                         </div>
-                        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+                        <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/75">
                           <motion.span
-                            className="block h-full rounded-full bg-gradient-to-r from-rose-500 to-gold-300"
+                            className="block h-full rounded-full bg-gradient-to-r from-clay-500 to-gold-300"
                             initial={{ width: 0 }}
                             whileInView={{
                               width: `${Math.min(100, 100 - p.seatsLeft * 6)}%`,
@@ -204,12 +204,12 @@ export default function Packages() {
       {/* Comparison: pay-per-visit vs member */}
       <Reveal delay={0.15}>
         <div className="glass mt-12 overflow-hidden rounded-3xl">
-          <div className="grid divide-y divide-white/[0.08] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+          <div className="grid divide-y divide-ivory-400/60 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
             <div className="p-6">
-              <p className="text-xs uppercase tracking-[0.25em] text-white/40">
+              <p className="text-xs uppercase tracking-[0.25em] text-ink-muted">
                 Without package
               </p>
-              <ul className="mt-4 space-y-2.5 text-sm text-white/55">
+              <ul className="mt-4 space-y-2.5 text-sm text-ink-muted">
                 <li>• Har visit par full price</li>
                 <li>• Peak hours par waiting</li>
                 <li>• Stylist available ho to ho</li>
@@ -217,10 +217,10 @@ export default function Packages() {
               </ul>
             </div>
             <div className="bg-gold-300/[0.06] p-6">
-              <p className="text-xs uppercase tracking-[0.25em] text-gold-300">
+              <p className="text-xs uppercase tracking-[0.25em] text-gold-500">
                 With Glow package
               </p>
-              <ul className="mt-4 space-y-2.5 text-sm text-white/80">
+              <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
                 <li>✓ Upto 38% kam kharcha</li>
                 <li>✓ Reserved priority slot</li>
                 <li>✓ Fixed senior stylist</li>

@@ -35,16 +35,16 @@ export default function Navbar() {
       >
         <nav
           className={`shell flex items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-6 ${
-            scrolled ? 'glass border-gold-300/20 shadow-float' : 'border border-transparent'
+            scrolled ? 'glass border-gold-300/20 shadow-lift' : 'border border-transparent'
           }`}
         >
           <Link to="/" className="flex items-center gap-2.5" aria-label={salon.legalName}>
             <Logo className="h-9 w-9" />
             <span className="leading-none">
-              <span className="block font-display text-lg tracking-wide text-white">
+              <span className="block font-display text-lg tracking-wide text-ink">
                 {salon.name}
               </span>
-              <span className="block text-[0.6rem] uppercase tracking-[0.3em] text-gold-300/80">
+              <span className="block text-[0.6rem] uppercase tracking-[0.3em] text-gold-500/80">
                 {salon.suffix}
               </span>
             </span>
@@ -55,7 +55,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="group relative rounded-full px-3.5 py-2 text-sm text-white/70 transition hover:text-white"
+                  className="group relative rounded-full px-3.5 py-2 text-sm text-ink-soft transition hover:text-ink"
                 >
                   {l.label}
                   <span className="absolute inset-x-3 -bottom-0.5 h-px scale-x-0 bg-gradient-to-r from-transparent via-gold-300 to-transparent transition-transform duration-300 group-hover:scale-x-100" />
@@ -85,7 +85,7 @@ export default function Navbar() {
             <button
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
-              className="rounded-full border border-white/[0.12] bg-white/5 p-2.5 text-white/80 lg:hidden"
+              className="rounded-full border border-ivory-400/60 bg-white/75 p-2.5 text-ink-soft lg:hidden"
             >
               <Menu size={18} />
             </button>
@@ -106,7 +106,7 @@ export default function Navbar() {
               <button
                 onClick={() => setMenuOpen(false)}
                 aria-label="Close menu"
-                className="rounded-full border border-white/[0.12] bg-white/5 p-2.5 text-white"
+                className="rounded-full border border-ivory-400/60 bg-white/75 p-2.5 text-ink"
               >
                 <X size={18} />
               </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
                   <a
                     href={l.href}
                     onClick={() => setMenuOpen(false)}
-                    className="block border-b border-white/[0.08] py-4 font-display text-3xl text-white/90"
+                    className="block border-b border-ivory-400/60 py-4 font-display text-3xl text-ink-soft"
                   >
                     {l.label}
                   </a>

@@ -6,17 +6,11 @@ import {
 } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
-import {
-  BridalSuiteArt,
-  HairStudioArt,
-  NailLoungeArt,
-  ReceptionArt,
-  SkinBarArt,
-  VanityBulbs,
-} from '@/components/fx/SalonArt';
+import { VanityBulbs } from '@/components/fx/SalonArt';
+import SmartImage from '@/components/ui/SmartImage';
 import { Button } from '@/components/ui/Button';
 import { useBooking } from '@/context/BookingProvider';
-import { formatINR, categories } from '@/data/salon';
+import { categories, formatINR, salon, scenery } from '@/data/salon';
 
 type Room = {
   id: string;
@@ -26,7 +20,7 @@ type Room = {
   detail: string;
   /** Which service category this room books. */
   categoryId?: string;
-  art: () => JSX.Element;
+  photo: { own: string; stock: string };
 };
 
 const rooms: Room[] = [
@@ -37,7 +31,7 @@ const rooms: Room[] = [
     line: 'Aap andar aate ho — naam counter par already ready hai.',
     detail:
       'Marble counter, fresh orchids aur ilaichi chai. Aapka slot pre-booked hai, isliye seedha chair tak.',
-    art: ReceptionArt,
+    photo: scenery.reception,
   },
   {
     id: 'hair',
@@ -47,7 +41,7 @@ const rooms: Room[] = [
     detail:
       'Consultation pehle, scissors baad me. Cut, global colour, balayage ya keratin — sab branded products se.',
     categoryId: 'hair',
-    art: HairStudioArt,
+    photo: scenery.hair,
   },
   {
     id: 'skin',
@@ -57,7 +51,7 @@ const rooms: Room[] = [
     detail:
       'Skin analysis ke baad hi facial choose hota hai. Hydra glow, dermat-grade peel ya express clean-up.',
     categoryId: 'skin',
-    art: SkinBarArt,
+    photo: scenery.skin,
   },
   {
     id: 'nails',
@@ -67,7 +61,7 @@ const rooms: Room[] = [
     detail:
       'Gel polish, acrylic extensions aur custom art. Tools UV-sterilised, files single-use.',
     categoryId: 'nails',
-    art: NailLoungeArt,
+    photo: scenery.nails,
   },
   {
     id: 'bridal',
@@ -77,7 +71,7 @@ const rooms: Room[] = [
     detail:
       'Private suite, dedicated bridal manager aur trial se pehle final look lock. Family ke liye alag seating.',
     categoryId: 'makeup',
-    art: BridalSuiteArt,
+    photo: scenery.bridal,
   },
 ];
 
@@ -100,10 +94,10 @@ export default function Walkthrough() {
       <div className="sticky top-0 flex h-[100dvh] items-center overflow-hidden px-5 sm:px-8">
         {/* ambience heading */}
         <div className="pointer-events-none absolute inset-x-0 top-24 z-30 text-center sm:top-28">
-          <p className="text-[0.6rem] uppercase tracking-[0.45em] text-gold-300/80">
+          <p className="text-[0.6rem] uppercase tracking-[0.45em] text-gold-500/80">
             Virtual walkthrough
           </p>
-          <p className="mt-1 font-display text-xl text-white/70 sm:text-2xl">
+          <p className="mt-1 font-display text-xl text-ink-soft sm:text-2xl">
             Scroll karo — poora salon ghoom lo
           </p>
         </div>
@@ -128,7 +122,7 @@ export default function Walkthrough() {
         </div>
 
         <motion.div
-          className="pointer-events-none absolute bottom-8 right-6 hidden items-center gap-2 text-[0.65rem] uppercase tracking-[0.3em] text-white/35 sm:flex"
+          className="pointer-events-none absolute bottom-8 right-6 hidden items-center gap-2 text-[0.65rem] uppercase tracking-[0.3em] text-ink-muted sm:flex"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2.2, repeat: Infinity }}
         >
@@ -176,7 +170,6 @@ function RoomScene({
   const cheapest = category
     ? Math.min(...category.items.map((item) => item.price))
     : undefined;
-  const Art = room.art;
 
   return (
     <>
@@ -185,13 +178,13 @@ function RoomScene({
         style={{ opacity, y: textY }}
         className="absolute inset-x-1 top-[17dvh] z-20 sm:inset-x-4 lg:inset-x-0 lg:top-1/2 lg:w-[46%] lg:-translate-y-1/2 lg:pl-[max(1.5rem,calc((100vw-72rem)/2))]"
       >
-        <p className="text-[0.65rem] uppercase tracking-[0.4em] text-gold-300/85">{room.step}</p>
-        <h3 className="mt-3 font-display text-4xl leading-tight text-white sm:text-5xl">
+        <p className="text-[0.65rem] uppercase tracking-[0.4em] text-gold-500/85">{room.step}</p>
+        <h3 className="mt-3 font-display text-4xl leading-tight text-ink sm:text-5xl">
           {room.name}
         </h3>
         <VanityBulbs count={5} className="mt-4 max-w-[9rem]" />
-        <p className="mt-5 max-w-md text-base text-white/75 sm:text-lg">{room.line}</p>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-white/50">{room.detail}</p>
+        <p className="mt-5 max-w-md text-base text-ink-soft sm:text-lg">{room.line}</p>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted">{room.detail}</p>
 
         {category && (
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -213,9 +206,16 @@ function RoomScene({
         style={{ opacity, scale, y: artY }}
         className="absolute inset-x-2 bottom-16 z-10 h-[32dvh] sm:inset-x-8 sm:h-[36dvh] lg:inset-x-auto lg:bottom-auto lg:right-0 lg:top-1/2 lg:h-[62vh] lg:w-[48%] lg:-translate-y-1/2 lg:pr-[max(1.5rem,calc((100vw-72rem)/2))]"
       >
-        <div className="h-full w-full opacity-90">
-          <Art />
-        </div>
+        <figure className="gold-frame relative h-full w-full overflow-hidden rounded-2xl bg-ivory-100">
+          <SmartImage
+            src={room.photo.own}
+            fallbackSrc={room.photo.stock}
+            alt={`${room.name} at ${salon.legalName}`}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-transparent" />
+          <VanityBulbs count={6} className="absolute inset-x-8 top-2 opacity-80" />
+        </figure>
       </motion.div>
     </>
   );

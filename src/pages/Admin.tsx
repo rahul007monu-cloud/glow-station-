@@ -49,11 +49,11 @@ export default function Admin() {
     return (
       <main className="flex min-h-[80vh] items-center justify-center px-5 pt-24">
         <div className="glass w-full max-w-sm rounded-3xl p-7">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-gold-300/30 bg-gold-300/10 text-gold-200">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-gold-300/30 bg-gold-300/10 text-gold-500">
             <Lock size={22} />
           </span>
-          <h1 className="mt-4 text-center font-display text-2xl text-white">Owner dashboard</h1>
-          <p className="mt-1.5 text-center text-sm text-white/50">
+          <h1 className="mt-4 text-center font-display text-2xl text-ink">Owner dashboard</h1>
+          <p className="mt-1.5 text-center text-sm text-ink-muted">
             {salon.legalName} staff only.
           </p>
           <form
@@ -76,7 +76,7 @@ export default function Admin() {
               Unlock
             </Button>
           </form>
-          <p className="mt-4 text-center text-[0.68rem] text-white/35">
+          <p className="mt-4 text-center text-[0.68rem] text-ink-muted">
             Default PIN 1234 — deploy karte waqt VITE_ADMIN_PIN set karke badal dena.
           </p>
         </div>
@@ -89,10 +89,10 @@ export default function Admin() {
       <div className="shell">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl text-white">Booking requests</h1>
-            <p className="mt-1 text-sm text-white/50">
+            <h1 className="font-display text-3xl text-ink">Booking requests</h1>
+            <p className="mt-1 text-sm text-ink-muted">
               {rows.length} request · estimated value{' '}
-              <strong className="text-gold-100">{formatINR(revenue)}</strong>
+              <strong className="text-gold-600">{formatINR(revenue)}</strong>
             </p>
           </div>
           <div className="flex gap-2">
@@ -110,7 +110,7 @@ export default function Admin() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`chip capitalize ${filter === f ? 'border-gold-300/60 text-gold-100' : ''}`}
+              className={`chip capitalize ${filter === f ? 'border-gold-300/60 text-gold-600' : ''}`}
             >
               {f}
             </button>
@@ -118,7 +118,7 @@ export default function Admin() {
         </div>
 
         {rows.length === 0 ? (
-          <p className="glass mt-8 rounded-3xl p-10 text-center text-sm text-white/50">
+          <p className="glass mt-8 rounded-3xl p-10 text-center text-sm text-ink-muted">
             Abhi koi booking request nahi hai. Jaise hi koi customer form bharega, wo yahan dikhega.
           </p>
         ) : (
@@ -127,24 +127,24 @@ export default function Admin() {
               <article key={b.id} className="glass rounded-2xl p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p className="font-display text-xl text-white">{b.name}</p>
-                    <a href={`tel:${b.phone}`} className="text-sm text-gold-200 hover:underline">
+                    <p className="font-display text-xl text-ink">{b.name}</p>
+                    <a href={`tel:${b.phone}`} className="text-sm text-gold-500 hover:underline">
                       {b.phone}
                     </a>
                   </div>
                   <div className="text-right">
-                    <p className="font-display text-xl text-gold-100">{formatINR(b.total)}</p>
-                    <p className="text-[0.68rem] uppercase tracking-wider text-white/40">{b.id}</p>
+                    <p className="font-display text-xl text-gold-600">{formatINR(b.total)}</p>
+                    <p className="text-[0.68rem] uppercase tracking-wider text-ink-muted">{b.id}</p>
                   </div>
                 </div>
 
-                <p className="mt-3 text-sm text-white/70">{b.serviceNames.join(' + ')}</p>
-                <p className="mt-1 text-xs text-white/45">
+                <p className="mt-3 text-sm text-ink-soft">{b.serviceNames.join(' + ')}</p>
+                <p className="mt-1 text-xs text-ink-muted">
                   {prettyDate(b.date)} · {b.time} · {b.estimatedMinutes} min ·{' '}
                   {b.stylistId ?? 'Any stylist'}
                   {b.couponCode ? ` · coupon ${b.couponCode}` : ''}
                 </p>
-                {b.notes && <p className="mt-2 text-xs italic text-white/50">“{b.notes}”</p>}
+                {b.notes && <p className="mt-2 text-xs italic text-ink-muted">“{b.notes}”</p>}
 
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <span className="chip text-[0.65rem]">lead: {b.source}</span>
@@ -153,7 +153,7 @@ export default function Admin() {
                       key={s}
                       onClick={() => updateBookingStatus(b.id, s)}
                       className={`chip text-[0.65rem] capitalize ${
-                        b.status === s ? 'border-gold-300/60 text-gold-100' : ''
+                        b.status === s ? 'border-gold-300/60 text-gold-600' : ''
                       }`}
                     >
                       {s}
@@ -165,8 +165,8 @@ export default function Admin() {
           </div>
         )}
 
-        <div className="mt-10 flex items-center justify-between rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] p-5">
-          <p className="text-xs text-white/55">
+        <div className="mt-10 flex items-center justify-between rounded-2xl border border-clay-400/20 bg-clay-500/[0.06] p-5">
+          <p className="text-xs text-ink-muted">
             Purana data clear karna hai? Ye sirf is browser se hatega.
           </p>
           <Button

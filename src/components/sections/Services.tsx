@@ -36,7 +36,7 @@ export default function Services() {
       {/* Search */}
       <Reveal className="mx-auto mb-8 max-w-md">
         <div className="glass flex items-center gap-2 rounded-full px-4 py-2.5">
-          <Search size={16} className="text-gold-300" />
+          <Search size={16} className="text-gold-500" />
           <input
             value={query}
             onChange={(e) => {
@@ -44,7 +44,7 @@ export default function Services() {
               if (e.target.value.length === 3) track('Search', { search_string: e.target.value });
             }}
             placeholder="Search e.g. keratin, facial, nails…"
-            className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/35"
+            className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
             aria-label="Search services"
           />
         </div>
@@ -68,8 +68,8 @@ export default function Services() {
               transition={{ delay: i * 0.05 }}
               className={`flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm transition-all duration-300 ${
                 isActive
-                  ? 'border-gold-300/60 bg-gold-300/15 text-gold-50 shadow-glow'
-                  : 'border-white/10 bg-white/[0.04] text-white/60 hover:border-white/25 hover:text-white'
+                  ? 'border-gold-300/60 bg-gold-300/15 text-gold-600 shadow-glow'
+                  : 'border-ivory-400/70 bg-white/75 text-ink-muted hover:border-ivory-400/70 hover:text-ink'
               }`}
             >
               <span aria-hidden className="text-base">
@@ -96,28 +96,28 @@ export default function Services() {
             <TiltCard className="vitrine group h-full p-5">
               <div className="relative z-20 flex h-full flex-col">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-xl leading-snug text-white">{s.name}</h3>
+                  <h3 className="font-display text-xl leading-snug text-ink">{s.name}</h3>
                   {s.popular && (
-                    <span className="chip shrink-0 border-rose-400/40 bg-rose-500/15 text-rose-300">
+                    <span className="chip shrink-0 border-clay-400/40 bg-clay-500/15 text-clay-300">
                       <Flame size={11} /> Hot
                     </span>
                   )}
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-white/55">{s.blurb}</p>
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{s.blurb}</p>
 
-                <div className="mt-4 flex items-center gap-3 text-xs text-white/45">
+                <div className="mt-4 flex items-center gap-3 text-xs text-ink-muted">
                   <span className="inline-flex items-center gap-1">
                     <Clock size={12} /> {s.minutes} min
                   </span>
-                  <span className="h-1 w-1 rounded-full bg-white/25" />
+                  <span className="h-1 w-1 rounded-full bg-white/75" />
                   <span>{s.categoryName}</span>
                 </div>
 
-                <div className="mt-5 flex items-end justify-between gap-3 border-t border-white/[0.08] pt-4">
+                <div className="mt-5 flex items-end justify-between gap-3 border-t border-ivory-400/60 pt-4">
                   <div>
-                    <p className="font-display text-2xl text-gold-100">{formatINR(s.price)}</p>
+                    <p className="font-display text-2xl text-gold-600">{formatINR(s.price)}</p>
                     {s.mrp && (
-                      <p className="text-xs text-white/35 line-through">{formatINR(s.mrp)}</p>
+                      <p className="text-xs text-ink-muted line-through">{formatINR(s.mrp)}</p>
                     )}
                   </div>
                   <Button
@@ -144,7 +144,7 @@ export default function Services() {
       </AnimatePresence>
 
       {visible.length === 0 && (
-        <p className="mt-10 text-center text-sm text-white/50">
+        <p className="mt-10 text-center text-sm text-ink-muted">
           Is service ka naam menu me nahi mila. WhatsApp par pooch lijiye — hum custom quote de denge.
         </p>
       )}

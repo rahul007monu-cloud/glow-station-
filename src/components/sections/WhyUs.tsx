@@ -23,8 +23,8 @@ export default function WhyUs() {
               <span aria-hidden className="inline-block animate-floaty text-3xl">
                 {u.glyph}
               </span>
-              <h3 className="mt-4 font-display text-xl text-white">{u.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/55">{u.detail}</p>
+              <h3 className="mt-4 font-display text-xl text-ink">{u.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{u.detail}</p>
             </div>
           </Reveal>
         ))}

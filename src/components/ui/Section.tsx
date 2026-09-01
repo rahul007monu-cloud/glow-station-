@@ -38,7 +38,7 @@ export default function Section({
               <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl">
                 {title} {highlight && <span className="gold-text">{highlight}</span>}
               </h2>
-              {subtitle && <p className="mt-4 text-sm text-white/60 sm:text-base">{subtitle}</p>}
+              {subtitle && <p className="mt-4 text-sm text-ink-muted sm:text-base">{subtitle}</p>}
               <div className="ornament mt-8">
                 <span className="text-xs">❖</span>
               </div>

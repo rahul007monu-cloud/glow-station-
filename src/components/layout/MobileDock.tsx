@@ -14,7 +14,7 @@ export default function MobileDock() {
 
   return (
     <nav className="dock-safe fixed inset-x-0 bottom-0 z-[65] px-3 pb-2 sm:hidden">
-      <div className="glass flex items-center justify-between rounded-3xl border-white/[0.12] px-2 py-2">
+      <div className="glass flex items-center justify-between rounded-3xl border-ivory-400/60 px-2 py-2">
         {items.slice(0, 2).map((item) => (
           <DockLink key={item.href} {...item} />
         ))}
@@ -48,7 +48,7 @@ function DockLink({
   return (
     <a
       href={href}
-      className="flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 text-white/60 transition active:scale-95 hover:text-gold-200"
+      className="flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 text-ink-muted transition active:scale-95 hover:text-gold-500"
     >
       <Icon size={18} />
       <span className="text-[0.6rem] font-medium tracking-wide">{label}</span>

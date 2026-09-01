@@ -4,8 +4,7 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
-    --dock-height: 4.5rem;
+    color-scheme: light;
   }
 
   * {
@@ -18,58 +17,34 @@
   }
 
   body {
-    @apply bg-ink font-sans text-white/85 antialiased;
+    @apply bg-ivory-200 font-sans text-ink-soft antialiased;
     overflow-x: hidden;
-  }
-
-  /* The page-wide aurora wash that everything floats on top of. */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: -20%;
-    z-index: -2;
-    background-image: theme('backgroundImage.aurora');
-    filter: blur(40px);
-    animation: drift 26s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  /* Fine grain so the gradients never look flat. */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.35;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display text-white;
+    @apply font-display text-ink;
     text-wrap: balance;
   }
 
   ::selection {
-    background: rgba(231, 195, 93, 0.35);
-    color: #fff;
+    background: rgba(208, 169, 85, 0.35);
+    color: #20252b;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #0b0710;
+    background: #f5f0e5;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(#a77616, #5c3d11);
+    background: linear-gradient(#d0a955, #9c722c);
     border-radius: 999px;
   }
 
-  /* Respect users who get motion sickness. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -83,34 +58,94 @@
 }
 
 @layer components {
+  /* ── Signboard language ─────────────────────────────────────────────── */
+
+  /**
+   * Gold channel letters, exactly like the shop sign: layered shadows fake the
+   * extrusion, the gradient gives the polished metal sheen.
+   */
+  .sign-letters {
+    @apply font-sign font-extrabold uppercase;
+    letter-spacing: 0.04em;
+    background-image: linear-gradient(
+      178deg,
+      #fdf6e3 0%,
+      #e2c37a 34%,
+      #b98c3a 58%,
+      #f7ebcb 78%,
+      #9c722c 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.85))
+      drop-shadow(0 3px 2px rgba(124, 90, 35, 0.45))
+      drop-shadow(0 10px 18px rgba(32, 37, 43, 0.28));
+  }
+
+  /** The charcoal service plates screwed onto the board (HAIR · SKIN · NAILS). */
+  .plate {
+    @apply inline-flex items-center justify-center rounded-[4px] bg-ink-plate px-3 py-1.5 font-sign text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ivory-50 shadow-plate;
+  }
+
+  /** The white ACP board itself. */
+  .board {
+    @apply relative rounded-lg border border-ivory-400/70 bg-ivory-50 shadow-board;
+  }
+
+  /* ── Surfaces ───────────────────────────────────────────────────────── */
+
   .glass {
-    @apply border border-white/10 bg-glass shadow-float backdrop-blur-xl;
+    @apply border border-ivory-400/60 bg-white/80 shadow-card backdrop-blur-xl;
   }
 
   .glass-soft {
-    @apply border border-white/[0.07] bg-white/[0.04] backdrop-blur-lg;
+    @apply border border-ivory-400/45 bg-white/60 backdrop-blur-md;
+  }
+
+  /** Lit display case used for every service / package / team card. */
+  .vitrine {
+    @apply relative rounded-2xl border border-ivory-400/60 bg-ivory-50;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 20px 42px -26px rgba(32, 37, 43, 0.4);
+    transition:
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1),
+      box-shadow 0.5s ease,
+      border-color 0.5s ease;
+    transform-style: preserve-3d;
+  }
+
+  .vitrine::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    border-radius: 999px;
+    margin: 0 14%;
+    background: linear-gradient(90deg, transparent, rgba(208, 169, 85, 0.75), transparent);
+  }
+
+  .vitrine:hover {
+    @apply -translate-y-2 border-gold-300;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 0 0 1px rgba(208, 169, 85, 0.35),
+      0 36px 60px -30px rgba(32, 37, 43, 0.5);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ivory-400/70 bg-white/80 px-3 py-1 text-xs font-medium text-ink-muted;
   }
 
   .gold-text {
     @apply bg-gold-sheen bg-clip-text text-transparent;
     background-size: 200% auto;
-    animation: sheen 7s linear infinite;
+    animation: sheen 8s linear infinite;
   }
 
   .hairline {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-gold-300/40 to-transparent;
-  }
-
-  /* Reusable floating card: hovers up and lifts its glow. */
-  .float-card {
-    @apply glass rounded-3xl transition-all duration-500 will-change-transform;
-  }
-  .float-card:hover {
-    @apply -translate-y-1.5 border-gold-300/30 shadow-glow;
-  }
-
-  .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1 text-xs font-medium text-white/75;
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold-400/50 to-transparent;
   }
 
   .section-pad {
@@ -121,132 +156,70 @@
     @apply mx-auto w-full max-w-6xl;
   }
 
-  /* Bottom dock safe area on iOS */
   .dock-safe {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
   }
 
-  /* Polished white-marble surface used for counters and shelves. */
+  /* ── Salon interior textures ────────────────────────────────────────── */
+
+  /** Polished white marble for counters and floors. */
   .marble {
-    background-color: #efeaf3;
+    background-color: #f7f4ee;
     background-image:
-      linear-gradient(115deg, rgba(255, 255, 255, 0.9) 0%, rgba(226, 218, 233, 0.9) 40%, rgba(246, 242, 250, 0.95) 100%),
-      linear-gradient(75deg, transparent 46%, rgba(150, 130, 170, 0.35) 47%, transparent 48.5%),
-      linear-gradient(100deg, transparent 60%, rgba(120, 100, 145, 0.28) 61%, transparent 62.5%),
-      linear-gradient(15deg, transparent 28%, rgba(170, 150, 190, 0.25) 29%, transparent 30.5%);
+      linear-gradient(115deg, #ffffff 0%, #f0ece3 45%, #fbf9f4 100%),
+      linear-gradient(75deg, transparent 46%, rgba(150, 140, 120, 0.28) 47%, transparent 48.5%),
+      linear-gradient(100deg, transparent 60%, rgba(120, 110, 95, 0.22) 61%, transparent 62.5%),
+      linear-gradient(15deg, transparent 28%, rgba(170, 160, 140, 0.2) 29%, transparent 30.5%);
   }
 
-  /* Deep velvet drape, used behind premium blocks. */
-  .velvet {
-    background-image:
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.012) 16px, rgba(0, 0, 0, 0.28) 36px),
-      linear-gradient(180deg, rgba(43, 21, 51, 0.9), rgba(11, 7, 16, 0.95));
+  /** Ivory fluted wall panelling. */
+  .fluted {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.95) 0px,
+      rgba(246, 241, 231, 0.9) 7px,
+      rgba(214, 204, 186, 0.55) 22px,
+      rgba(255, 255, 255, 0.9) 34px
+    );
   }
 
-  /* Thin gold frame like a salon mirror. */
   .gold-frame {
     box-shadow:
-      0 0 0 1px rgba(231, 195, 93, 0.45),
-      0 0 0 6px rgba(231, 195, 93, 0.08),
-      0 30px 60px -24px rgba(0, 0, 0, 0.8);
+      0 0 0 1px rgba(185, 140, 58, 0.55),
+      0 0 0 5px rgba(226, 195, 122, 0.18),
+      0 26px 50px -28px rgba(32, 37, 43, 0.55);
   }
 
-  /*
-   * Showroom display case: gold-framed glass with a light sheen across the top
-   * edge and a soft reflection pooling underneath, like a lit vitrine.
-   */
-  .vitrine {
-    @apply relative rounded-3xl border border-gold-300/25 backdrop-blur-xl;
-    background-image:
-      linear-gradient(165deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(231, 195, 93, 0.06) 100%);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
-      inset 0 -1px 0 0 rgba(231, 195, 93, 0.14),
-      0 34px 70px -30px rgba(0, 0, 0, 0.9);
-    transition:
-      transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1),
-      box-shadow 0.55s ease,
-      border-color 0.55s ease;
-  }
-
-  .vitrine::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 45%;
-    border-radius: inherit;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
-    pointer-events: none;
-  }
-
-  /* Reflection puddle under a floating card. */
-  .vitrine::after {
-    content: '';
-    position: absolute;
-    left: 12%;
-    right: 12%;
-    bottom: -14px;
-    height: 22px;
-    border-radius: 100%;
-    background: radial-gradient(closest-side, rgba(231, 195, 93, 0.28), transparent);
-    filter: blur(7px);
-    opacity: 0.65;
-    pointer-events: none;
-  }
-
-  .vitrine:hover {
-    @apply -translate-y-2 border-gold-200/50;
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
-      0 0 60px -12px rgba(231, 195, 93, 0.55),
-      0 40px 80px -30px rgba(0, 0, 0, 0.95);
-  }
-
-  /* Polished floor: mirrors whatever sits above it. */
-  .mirror-floor {
-    background-image:
-      linear-gradient(180deg, rgba(231, 195, 93, 0.14) 0%, transparent 55%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 70%);
-    mask-image: linear-gradient(180deg, #000, transparent 85%);
-  }
-
-  /* Two soft spotlight beams from the ceiling. */
-  .light-beams::before,
-  .light-beams::after {
-    content: '';
-    position: absolute;
-    top: -10%;
-    width: 34vw;
-    height: 90vh;
-    background: linear-gradient(180deg, rgba(231, 195, 93, 0.14), transparent 72%);
-    filter: blur(28px);
-    pointer-events: none;
-  }
-  .light-beams::before {
-    left: 4%;
-    transform: rotate(9deg);
-  }
-  .light-beams::after {
-    right: 4%;
-    transform: rotate(-9deg);
-  }
-
-  /* Ornamental section divider. */
   .ornament {
-    @apply flex items-center justify-center gap-3 text-gold-300/70;
+    @apply flex items-center justify-center gap-3 text-gold-500;
   }
   .ornament::before,
   .ornament::after {
     content: '';
     height: 1px;
     width: 3.5rem;
-    background: linear-gradient(90deg, transparent, rgba(231, 195, 93, 0.55), transparent);
+    background: linear-gradient(90deg, transparent, rgba(185, 140, 58, 0.6), transparent);
   }
 }
 
 @layer utilities {
-  .text-shadow-luxe {
-    text-shadow: 0 8px 40px rgba(0, 0, 0, 0.65);
+  /* 3D scene helpers — used by the entrance and the card tilts. */
+  .scene {
+    perspective: 1200px;
+    perspective-origin: 50% 45%;
+  }
+  .scene-tight {
+    perspective: 800px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .text-shadow-board {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
   .mask-fade-x {
@@ -259,9 +232,5 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  .perspective {
-    perspective: 1000px;
   }
 }

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import BookingModal from '@/components/booking/BookingModal';
 import CurtainIntro from '@/components/fx/CurtainIntro';
-import FloatingBackground from '@/components/fx/FloatingBackground';
 import RoomShell from '@/components/fx/RoomShell';
 import ScrollProgress from '@/components/fx/ScrollProgress';
 import Spotlight from '@/components/fx/Spotlight';
@@ -28,7 +27,6 @@ export default function App() {
 
   return (
     <BookingProvider>
-      <FloatingBackground />
       <RoomShell />
       <Spotlight />
       <ScrollProgress />
@@ -99,7 +97,7 @@ function OfflineNotice() {
   const online = useOnlineStatus();
   if (online) return null;
   return (
-    <div className="fixed inset-x-0 top-0 z-[100] bg-rose-500/90 py-2 text-center text-xs font-medium text-white">
+    <div className="fixed inset-x-0 top-0 z-[100] bg-clay-500/90 py-2 text-center text-xs font-medium text-ink">
       Aap offline ho — menu aur prices dikhte rahenge, booking online hone par bhej payenge.
     </div>
   );

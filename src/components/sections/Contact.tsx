@@ -23,14 +23,14 @@ export default function Contact() {
           <div className="vitrine h-full p-6">
             <ul className="space-y-5">
               <li className="flex gap-3">
-                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-200">
+                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-500">
                   <MapPin size={18} />
                 </span>
                 <span>
-                  <span className="block text-xs uppercase tracking-wider text-white/40">
+                  <span className="block text-xs uppercase tracking-wider text-ink-muted">
                     Address
                   </span>
-                  <span className="mt-1 block text-sm text-white/80">
+                  <span className="mt-1 block text-sm text-ink-soft">
                     {salon.address.line1}, {salon.address.line2}
                     <br />
                     {salon.address.city}, {salon.address.state} – {salon.address.pincode}
@@ -38,31 +38,31 @@ export default function Contact() {
                 </span>
               </li>
               <li className="flex gap-3">
-                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-200">
+                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-500">
                   <Clock size={18} />
                 </span>
                 <span>
-                  <span className="block text-xs uppercase tracking-wider text-white/40">
+                  <span className="block text-xs uppercase tracking-wider text-ink-muted">
                     Timings
                   </span>
-                  <span className="mt-1 block text-sm text-white/80">
+                  <span className="mt-1 block text-sm text-ink-soft">
                     Mon–Fri · {salon.hours.weekdays}
                     <br />
                     Sat–Sun · {salon.hours.weekends}
                     <br />
-                    <span className="text-white/45">{salon.hours.closedDay}</span>
+                    <span className="text-ink-muted">{salon.hours.closedDay}</span>
                   </span>
                 </span>
               </li>
               <li className="flex gap-3">
-                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-200">
+                <span className="rounded-2xl border border-gold-300/25 bg-gold-300/10 p-2.5 text-gold-500">
                   <Phone size={18} />
                 </span>
                 <span>
-                  <span className="block text-xs uppercase tracking-wider text-white/40">
+                  <span className="block text-xs uppercase tracking-wider text-ink-muted">
                     Call / WhatsApp
                   </span>
-                  <a href={telLink()} className="mt-1 block text-sm text-white/80 hover:text-white">
+                  <a href={telLink()} className="mt-1 block text-sm text-ink-soft hover:text-ink">
                     {salon.phone}
                   </a>
                 </span>

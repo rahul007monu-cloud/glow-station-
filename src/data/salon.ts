@@ -86,16 +86,20 @@ export const salon = {
   suffix: 'Luxe Salon',
   legalName: 'Glow Station Luxe Salon',
   tagline: 'Look Luxe. Feel Luxe.',
+  /** Straight off the signboard — the salon serves both men and women. */
+  audience: 'HIM / HER',
+  /** Service plates on the board, shown in the same order. */
+  boardPlates: ['Hair', 'Skin', 'Makeup', 'Nails', 'Academy'],
   intro:
-    'Mansarovar, Jaipur ka premium unisex studio — hair, skin, nails, makeup aur bridal, sab ek jagah. Trained stylists, branded products aur hygiene-first setup.',
+    'Mansarovar, Jaipur ka premium HIM/HER studio — hair, skin, makeup, nails aur apni academy, sab ek jagah. Trained stylists, branded products aur hygiene-first setup.',
   establishedYear: 2021, // TODO: confirm
 
   // ── Contact ─────────────────────────────────────────────────────────────
-  /** TODO: asli number daalo. Format: country code + number, no spaces. */
-  phone: '+910000000000',
+  /** Number from the shop signboard. */
+  phone: '+919929650211',
   /** WhatsApp number in wa.me format (digits only, with country code). */
-  whatsapp: '910000000000',
-  email: 'hello@glowstationluxesalon.com', // TODO
+  whatsapp: '919929650211',
+  email: 'hello@glowstationluxesalon.com', // TODO: confirm or remove
   instagram: 'https://www.instagram.com/glow_station_luxe_salon/',
   instagramHandle: '@glow_station_luxe_salon',
   facebook: '', // TODO: page URL (needed for Meta ads)
@@ -372,6 +376,45 @@ export const categories: ServiceCategory[] = [
     ],
   },
   {
+    id: 'academy',
+    name: 'Academy',
+    glyph: '🎓',
+    tagline: 'Professional courses & certification',
+    gradient: 'from-ink/10 via-gold-300/10 to-transparent',
+    items: [
+      {
+        id: 'course-beautician',
+        name: 'Basic to advanced beautician course',
+        blurb: '3 months, hands-on training + certificate + kit',
+        price: 24999,
+        mrp: 32000,
+        minutes: 60,
+        popular: true,
+      },
+      {
+        id: 'course-hair',
+        name: 'Professional hair course',
+        blurb: 'Cutting, colouring, keratin & styling on live models',
+        price: 19999,
+        minutes: 60,
+      },
+      {
+        id: 'course-makeup',
+        name: 'Makeup artistry (bridal + HD)',
+        blurb: '6 weeks, portfolio shoot included',
+        price: 17999,
+        minutes: 60,
+      },
+      {
+        id: 'course-nails',
+        name: 'Nail technician course',
+        blurb: 'Extensions, gel, art — starter kit included',
+        price: 12999,
+        minutes: 60,
+      },
+    ],
+  },
+  {
     id: 'spa',
     name: 'Spa & Body',
     glyph: '🌿',
@@ -463,6 +506,39 @@ export const packages: Package[] = [
       {
         title: 'Save ₹7,000 + free hairstyling',
         detail: 'Individual booking par yahi sab ₹32,000 padta hai.',
+      },
+    ],
+  },
+  {
+    id: 'academy-career',
+    name: 'Academy Career Pack',
+    price: 34999,
+    mrp: 48000,
+    badge: 'Career start',
+    bestFor: 'Jo salon industry me apna career ya apna parlour shuru karna chahte hain',
+    validity: '6 months course window',
+    seatsLeft: 6,
+    payment: '3 easy instalments',
+    includes: [
+      'Beautician + hair + makeup modules',
+      'Practice on live models in the salon',
+      'Professional starter kit',
+      'Certificate + portfolio shoot',
+      'Paid internship option at Glow Station',
+      'Business setup guidance (pricing, staff, marketing)',
+    ],
+    usps: [
+      {
+        title: 'Salon ke andar training',
+        detail: 'Classroom nahi — asli clients par supervised practice, isliye confidence jaldi aata hai.',
+      },
+      {
+        title: 'Kamai ka rasta ready',
+        detail: 'Course ke baad internship ya freelance dono option, kit already aapke paas.',
+      },
+      {
+        title: 'Save ₹13,000',
+        detail: 'Teen modules alag lene par ₹48,000 padta hai.',
       },
     ],
   },
@@ -681,13 +757,70 @@ export const gallery: {
   id: string;
   label: string;
   tag: string;
+  /** Salon's own photo — upload to public/images/ with this name. */
   src?: string;
+  /** Licensed placeholder shown until then. */
+  stock: string;
   tall?: boolean;
 }[] = [
-  { id: 'g1', label: 'Balayage transformation', tag: 'Hair colour', src: 'images/gallery-1.jpg', tall: true },
-  { id: 'g2', label: 'Bridal HD look', tag: 'Bridal', src: 'images/gallery-2.jpg' },
-  { id: 'g3', label: 'Keratin smooth finish', tag: 'Hair care', src: 'images/gallery-3.jpg' },
-  { id: 'g4', label: 'Glass-skin facial', tag: 'Skin', src: 'images/gallery-4.jpg', tall: true },
-  { id: 'g5', label: 'Almond nail extensions', tag: 'Nails', src: 'images/gallery-5.jpg' },
-  { id: 'g6', label: 'Men’s textured fade', tag: 'Grooming', src: 'images/gallery-6.jpg' },
+  {
+    id: 'g1',
+    label: 'Colour & balayage',
+    tag: 'Hair colour',
+    src: 'images/gallery-1.jpg',
+    stock: 'images/stock/hair-colour.jpg',
+    tall: true,
+  },
+  {
+    id: 'g2',
+    label: 'Bridal & HD makeup',
+    tag: 'Bridal',
+    src: 'images/gallery-2.jpg',
+    stock: 'images/stock/bridal.jpg',
+  },
+  {
+    id: 'g3',
+    label: 'Cut, blow dry & styling',
+    tag: 'Hair studio',
+    src: 'images/gallery-3.jpg',
+    stock: 'images/stock/hair-cut.jpg',
+  },
+  {
+    id: 'g4',
+    label: 'Facials & glass-skin glow',
+    tag: 'Skin bar',
+    src: 'images/gallery-4.jpg',
+    stock: 'images/stock/facial.jpg',
+    tall: true,
+  },
+  {
+    id: 'g5',
+    label: 'Extensions & nail art',
+    tag: 'Nail lounge',
+    src: 'images/gallery-5.jpg',
+    stock: 'images/stock/nails.jpg',
+  },
+  {
+    id: 'g6',
+    label: 'Men’s cut & beard',
+    tag: 'Him',
+    src: 'images/gallery-6.jpg',
+    stock: 'images/stock/barber.jpg',
+  },
 ];
+
+/** Photos used by the 3D scenes. Owner uploads override each `own` path. */
+export const scenery = {
+  interior: { own: 'images/interior.jpg', stock: 'images/stock/interior-wide.jpg' },
+  reception: { own: 'images/reception.jpg', stock: 'images/stock/interior-2.jpg' },
+  hair: { own: 'images/hair.jpg', stock: 'images/stock/hair-cut.jpg' },
+  colour: { own: 'images/colour.jpg', stock: 'images/stock/hair-colour.jpg' },
+  skin: { own: 'images/skin.jpg', stock: 'images/stock/facial.jpg' },
+  nails: { own: 'images/nails.jpg', stock: 'images/stock/nails.jpg' },
+  makeup: { own: 'images/makeup.jpg', stock: 'images/stock/makeup.jpg' },
+  bridal: { own: 'images/bridal.jpg', stock: 'images/stock/bridal-2.jpg' },
+  academy: { own: 'images/academy.jpg', stock: 'images/stock/makeup-2.jpg' },
+  spa: { own: 'images/spa.jpg', stock: 'images/stock/spa.jpg' },
+  him: { own: 'images/him.jpg', stock: 'images/stock/barber.jpg' },
+  styling: { own: 'images/styling.jpg', stock: 'images/stock/hair-style.jpg' },
+};

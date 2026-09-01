@@ -47,12 +47,12 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
           >
             <span
               aria-hidden
-              className="mx-auto mb-4 block h-1 w-12 rounded-full bg-white/20 sm:hidden"
+              className="mx-auto mb-4 block h-1 w-12 rounded-full bg-white/75 sm:hidden"
             />
             <button
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-4 top-4 rounded-full border border-white/10 bg-white/5 p-2 text-white/70 transition hover:bg-white/15 hover:text-white"
+              className="absolute right-4 top-4 rounded-full border border-ivory-400/70 bg-white/75 p-2 text-ink-soft transition hover:bg-white/75 hover:text-ink"
             >
               <X size={16} />
             </button>
@@ -60,7 +60,7 @@ export default function Modal({ open, onClose, title, subtitle, children, size =
             {title && (
               <header className="mb-5 pr-10">
                 <h3 className="text-2xl">{title}</h3>
-                {subtitle && <p className="mt-1 text-sm text-white/55">{subtitle}</p>}
+                {subtitle && <p className="mt-1 text-sm text-ink-muted">{subtitle}</p>}
               </header>
             )}
             {children}

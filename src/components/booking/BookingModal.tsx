@@ -133,7 +133,7 @@ export default function BookingModal() {
       {!confirmed && (
         <div className="mb-6 flex gap-1.5">
           {steps.slice(0, 3).map((s, i) => (
-            <div key={s} className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
+            <div key={s} className="h-1 flex-1 overflow-hidden rounded-full bg-white/75">
               <motion.span
                 className="block h-full rounded-full bg-gold-sheen"
                 initial={{ width: 0 }}
@@ -154,13 +154,13 @@ export default function BookingModal() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
           >
-            <p className="mb-3 text-sm text-white/55">
+            <p className="mb-3 text-sm text-ink-muted">
               Ek ya zyada service select karo — total apne aap calculate ho jayega.
             </p>
             <div className="max-h-[46vh] space-y-5 overflow-y-auto pr-1">
               {categories.map((c) => (
                 <div key={c.id}>
-                  <p className="mb-2 text-xs uppercase tracking-[0.2em] text-gold-300/80">
+                  <p className="mb-2 text-xs uppercase tracking-[0.2em] text-gold-500/80">
                     {c.glyph} {c.name}
                   </p>
                   <div className="space-y-2">
@@ -173,12 +173,12 @@ export default function BookingModal() {
                           className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left transition ${
                             selected
                               ? 'border-gold-300/60 bg-gold-300/[0.12] shadow-glow'
-                              : 'border-white/10 bg-white/[0.03] hover:border-white/25'
+                              : 'border-ivory-400/70 bg-white/75 hover:border-ivory-400/70'
                           }`}
                         >
                           <span>
-                            <span className="block text-sm font-medium text-white">{item.name}</span>
-                            <span className="block text-xs text-white/45">
+                            <span className="block text-sm font-medium text-ink">{item.name}</span>
+                            <span className="block text-xs text-ink-muted">
                               {item.minutes} min · {formatINR(item.price)}
                             </span>
                           </span>
@@ -186,7 +186,7 @@ export default function BookingModal() {
                             className={`shrink-0 rounded-full border p-1.5 ${
                               selected
                                 ? 'border-gold-300/60 bg-gold-300 text-ink'
-                                : 'border-white/20 text-white/40'
+                                : 'border-ivory-400/70 text-ink-muted'
                             }`}
                           >
                             {selected ? <Check size={13} /> : <Plus size={13} />}
@@ -209,7 +209,7 @@ export default function BookingModal() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
           >
-            <p className="mb-2 flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-gold-300/80">
+            <p className="mb-2 flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-gold-500/80">
               <CalendarDays size={13} /> Choose date
             </p>
             <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
@@ -221,19 +221,19 @@ export default function BookingModal() {
                     onClick={() => setDraft((x) => ({ ...x, date: d.iso, time: '' }))}
                     className={`flex w-16 shrink-0 flex-col items-center rounded-2xl border py-2.5 transition ${
                       active
-                        ? 'border-gold-300/60 bg-gold-300/15 text-white shadow-glow'
-                        : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25'
+                        ? 'border-gold-300/60 bg-gold-300/15 text-ink shadow-glow'
+                        : 'border-ivory-400/70 bg-white/75 text-ink-muted hover:border-ivory-400/70'
                     }`}
                   >
                     <span className="text-[0.65rem] uppercase tracking-wider">{d.day}</span>
                     <span className="font-display text-xl">{d.date}</span>
-                    <span className="text-[0.6rem] text-white/45">{d.month}</span>
+                    <span className="text-[0.6rem] text-ink-muted">{d.month}</span>
                   </button>
                 );
               })}
             </div>
 
-            <p className="mb-2 mt-6 text-xs uppercase tracking-[0.2em] text-gold-300/80">
+            <p className="mb-2 mt-6 text-xs uppercase tracking-[0.2em] text-gold-500/80">
               Available slots
             </p>
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -244,10 +244,10 @@ export default function BookingModal() {
                   onClick={() => setDraft((x) => ({ ...x, time: s.label }))}
                   className={`rounded-xl border py-2.5 text-xs transition ${
                     draft.time === s.label
-                      ? 'border-gold-300/60 bg-gold-300/20 text-white shadow-glow'
+                      ? 'border-gold-300/60 bg-gold-300/20 text-ink shadow-glow'
                       : s.disabled
-                        ? 'cursor-not-allowed border-white/5 bg-white/[0.02] text-white/20 line-through'
-                        : 'border-white/10 bg-white/[0.03] text-white/70 hover:border-white/25'
+                        ? 'cursor-not-allowed border-ivory-400/70 bg-white/75 text-ink-muted line-through'
+                        : 'border-ivory-400/70 bg-white/75 text-ink-soft hover:border-ivory-400/70'
                   }`}
                 >
                   {s.label}
@@ -255,13 +255,13 @@ export default function BookingModal() {
               ))}
             </div>
 
-            <p className="mb-2 mt-6 text-xs uppercase tracking-[0.2em] text-gold-300/80">
+            <p className="mb-2 mt-6 text-xs uppercase tracking-[0.2em] text-gold-500/80">
               Preferred stylist (optional)
             </p>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setDraft((x) => ({ ...x, stylistId: undefined }))}
-                className={`chip ${!draft.stylistId ? 'border-gold-300/60 text-gold-100' : ''}`}
+                className={`chip ${!draft.stylistId ? 'border-gold-300/60 text-gold-600' : ''}`}
               >
                 Any available
               </button>
@@ -270,7 +270,7 @@ export default function BookingModal() {
                   key={s.id}
                   onClick={() => setDraft((x) => ({ ...x, stylistId: s.name }))}
                   className={`chip ${
-                    draft.stylistId === s.name ? 'border-gold-300/60 text-gold-100' : ''
+                    draft.stylistId === s.name ? 'border-gold-300/60 text-gold-600' : ''
                   }`}
                 >
                   {s.name}
@@ -340,15 +340,15 @@ export default function BookingModal() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center"
           >
-            <span className="mx-auto flex h-16 w-16 animate-floaty items-center justify-center rounded-full border border-gold-300/40 bg-gold-300/15 text-gold-100">
+            <span className="mx-auto flex h-16 w-16 animate-floaty items-center justify-center rounded-full border border-gold-300/40 bg-gold-300/15 text-gold-600">
               <Sparkles size={26} />
             </span>
-            <p className="mt-4 text-sm text-white/70">
-              Ref <strong className="text-gold-100">{confirmed.id}</strong> · {confirmed.serviceNames.join(' + ')}
+            <p className="mt-4 text-sm text-ink-soft">
+              Ref <strong className="text-gold-600">{confirmed.id}</strong> · {confirmed.serviceNames.join(' + ')}
               <br />
               {prettyDate(confirmed.date)} at {confirmed.time}
             </p>
-            <p className="mt-3 text-xs leading-relaxed text-white/50">
+            <p className="mt-3 text-xs leading-relaxed text-ink-muted">
               Last step: neeche button dabao — aapki details WhatsApp par hamare paas chali jayengi
               aur hum 10 minute me slot confirm kar denge.
             </p>
@@ -366,8 +366,8 @@ export default function BookingModal() {
               Confirm on WhatsApp
             </LinkButton>
 
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-left text-xs text-white/60">
-              <p className="flex items-center gap-1.5 font-semibold text-gold-100">
+            <div className="mt-4 rounded-2xl border border-ivory-400/70 bg-white/75 p-4 text-left text-xs text-ink-muted">
+              <p className="flex items-center gap-1.5 font-semibold text-gold-600">
                 <BadgePercent size={13} /> Aapko ek loyalty stamp mil gaya!
               </p>
               <p className="mt-1">
@@ -378,7 +378,7 @@ export default function BookingModal() {
 
             <button
               onClick={closeBooking}
-              className="mt-4 inline-flex items-center gap-1.5 text-xs text-white/45 hover:text-white"
+              className="mt-4 inline-flex items-center gap-1.5 text-xs text-ink-muted hover:text-ink"
             >
               <X size={12} /> Close
             </button>
@@ -388,20 +388,20 @@ export default function BookingModal() {
 
       {/* ── Sticky summary + nav ──────────────────────────── */}
       {!confirmed && (
-        <div className="mt-6 border-t border-white/[0.08] pt-4">
+        <div className="mt-6 border-t border-ivory-400/60 pt-4">
           {draft.serviceIds.length > 0 && (
             <div className="mb-3 flex items-center justify-between text-sm">
-              <span className="text-white/55">
+              <span className="text-ink-muted">
                 {draft.serviceIds.length} service · ~{duration} min
                 {draft.time ? ` · ${prettyDate(draft.date)}, ${draft.time}` : ''}
               </span>
               <span className="text-right">
                 {discount.amount > 0 && (
-                  <span className="mr-2 text-xs text-white/35 line-through">
+                  <span className="mr-2 text-xs text-ink-muted line-through">
                     {formatINR(subtotal)}
                   </span>
                 )}
-                <strong className="font-display text-xl text-gold-100">{formatINR(total)}</strong>
+                <strong className="font-display text-xl text-gold-600">{formatINR(total)}</strong>
               </span>
             </div>
           )}
@@ -423,7 +423,7 @@ export default function BookingModal() {
           </div>
 
           {step === 0 && draft.serviceIds.length === 0 && (
-            <p className="mt-2 text-center text-xs text-white/40">
+            <p className="mt-2 text-center text-xs text-ink-muted">
               Kam se kam ek service select karein ({allServices.length} options)
             </p>
           )}

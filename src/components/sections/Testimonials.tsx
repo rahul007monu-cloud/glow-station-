@@ -27,18 +27,18 @@ export default function Testimonials() {
               key={`${t.id}-${i}`}
               className="glass w-[19rem] shrink-0 rounded-3xl p-6 sm:w-[22rem]"
             >
-              <Quote className="text-gold-300/60" size={22} />
-              <blockquote className="mt-3 text-sm leading-relaxed text-white/75">
+              <Quote className="text-gold-500/60" size={22} />
+              <blockquote className="mt-3 text-sm leading-relaxed text-ink-soft">
                 “{t.text}”
               </blockquote>
-              <figcaption className="mt-5 flex items-center justify-between border-t border-white/[0.08] pt-4">
+              <figcaption className="mt-5 flex items-center justify-between border-t border-ivory-400/60 pt-4">
                 <div>
-                  <p className="text-sm font-semibold text-white">{t.name}</p>
-                  <p className="text-xs text-white/45">{t.service}</p>
+                  <p className="text-sm font-semibold text-ink">{t.name}</p>
+                  <p className="text-xs text-ink-muted">{t.service}</p>
                 </div>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, k) => (
-                    <Star key={k} size={13} className="fill-gold-300 text-gold-300" />
+                    <Star key={k} size={13} className="fill-gold-400 text-gold-500" />
                   ))}
                 </div>
               </figcaption>
@@ -57,7 +57,7 @@ export default function Testimonials() {
         >
           Apna review likhiye
         </LinkButton>
-        <p className="mt-3 text-xs text-white/40">
+        <p className="mt-3 text-xs text-ink-muted">
           Review dikhane par next visit par 5% extra discount 🎁
         </p>
       </div>

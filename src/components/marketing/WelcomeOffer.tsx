@@ -33,15 +33,15 @@ export default function WelcomeOffer() {
   return (
     <Modal open={open} onClose={dismiss}>
       <div className="text-center">
-        <span className="mx-auto flex h-16 w-16 animate-floaty items-center justify-center rounded-full border border-gold-300/40 bg-gold-300/15 text-gold-100">
+        <span className="mx-auto flex h-16 w-16 animate-floaty items-center justify-center rounded-full border border-gold-300/40 bg-gold-300/15 text-gold-600">
           <Gift size={26} />
         </span>
-        <h3 className="mt-4 font-display text-3xl text-white">{offer.headline}</h3>
-        <p className="mt-2 text-sm text-white/60">{offer.sub}</p>
+        <h3 className="mt-4 font-display text-3xl text-ink">{offer.headline}</h3>
+        <p className="mt-2 text-sm text-ink-muted">{offer.sub}</p>
 
-        <div className="mt-5 rounded-2xl border border-dashed border-gold-300/40 bg-black/25 px-4 py-3">
-          <p className="text-[0.65rem] uppercase tracking-[0.25em] text-white/45">Coupon code</p>
-          <p className="mt-1 font-mono text-2xl tracking-[0.2em] text-gold-100">{offer.code}</p>
+        <div className="mt-5 rounded-2xl border border-dashed border-gold-300/40 bg-ivory-300/70 px-4 py-3">
+          <p className="text-[0.65rem] uppercase tracking-[0.25em] text-ink-muted">Coupon code</p>
+          <p className="mt-1 font-mono text-2xl tracking-[0.2em] text-gold-600">{offer.code}</p>
         </div>
 
         <Button
@@ -56,7 +56,7 @@ export default function WelcomeOffer() {
         >
           Claim & book now
         </Button>
-        <button onClick={dismiss} className="mt-3 text-xs text-white/40 hover:text-white/70">
+        <button onClick={dismiss} className="mt-3 text-xs text-ink-muted hover:text-ink-soft">
           Baad me dekhunga
         </button>
       </div>

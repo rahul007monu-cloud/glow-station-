@@ -52,8 +52,8 @@ export default function CurtainIntro() {
             transition={{ duration: 0.8 }}
           >
             <Logo className="h-16 w-16" />
-            <p className="font-display text-3xl text-white">{salon.name}</p>
-            <p className="text-[0.6rem] uppercase tracking-[0.4em] text-gold-300/90">
+            <p className="font-display text-3xl text-ink">{salon.name}</p>
+            <p className="text-[0.6rem] uppercase tracking-[0.4em] text-gold-500/90">
               {salon.suffix}
             </p>
           </motion.div>

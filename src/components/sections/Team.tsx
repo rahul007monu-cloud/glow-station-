@@ -30,7 +30,7 @@ export default function Team() {
                   alt={s.name}
                   className="relative h-24 w-24 rounded-full border border-gold-300/30 object-cover"
                   fallback={
-                    <span className="relative flex h-24 w-24 items-center justify-center rounded-full border border-gold-300/30 bg-gradient-to-br from-gold-300/25 to-lilac-400/20 font-display text-3xl text-gold-100">
+                    <span className="relative flex h-24 w-24 items-center justify-center rounded-full border border-gold-300/30 bg-gradient-to-br from-gold-300/25 to-gold-300/20 font-display text-3xl text-gold-600">
                       {s.name
                         .split(' ')
                         .map((n) => n[0])
@@ -40,9 +40,9 @@ export default function Team() {
                 />
               </div>
 
-              <h3 className="mt-4 font-display text-xl text-white">{s.name}</h3>
-              <p className="text-xs uppercase tracking-[0.18em] text-gold-300/85">{s.role}</p>
-              <p className="mt-1 text-xs text-white/45">{s.experience} experience</p>
+              <h3 className="mt-4 font-display text-xl text-ink">{s.name}</h3>
+              <p className="text-xs uppercase tracking-[0.18em] text-gold-500/85">{s.role}</p>
+              <p className="mt-1 text-xs text-ink-muted">{s.experience} experience</p>
 
               <div className="mt-4 flex flex-wrap justify-center gap-1.5">
                 {s.specialities.map((sp) => (

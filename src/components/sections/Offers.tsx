@@ -11,8 +11,8 @@ import { useCountdown } from '@/lib/hooks';
 
 const tones = {
   gold: 'from-gold-500/25 to-gold-300/5 border-gold-300/30',
-  rose: 'from-rose-500/25 to-rose-300/5 border-rose-400/30',
-  lilac: 'from-lilac-500/25 to-lilac-300/5 border-lilac-400/30',
+  rose: 'from-clay-500/25 to-clay-300/5 border-clay-400/30',
+  lilac: 'from-gold-400/25 to-gold-200/5 border-gold-300/30',
 };
 
 export default function Offers() {
@@ -63,22 +63,22 @@ function OfferCard({ offer }: { offer: (typeof offers)[number] }) {
       <span className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-ink" />
       <span className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-ink" />
 
-      <Ticket className="animate-floaty text-gold-200" size={26} />
-      <h3 className="mt-4 font-display text-2xl leading-snug text-white">{offer.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-white/60">{offer.detail}</p>
+      <Ticket className="animate-floaty text-gold-500" size={26} />
+      <h3 className="mt-4 font-display text-2xl leading-snug text-ink">{offer.title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{offer.detail}</p>
 
       <button
         onClick={copy}
-        className="mt-5 flex w-full items-center justify-between rounded-2xl border border-dashed border-white/25 bg-black/25 px-4 py-3 text-left transition hover:border-gold-300/60"
+        className="mt-5 flex w-full items-center justify-between rounded-2xl border border-dashed border-ivory-400/70 bg-ivory-300/70 px-4 py-3 text-left transition hover:border-gold-300/60"
       >
-        <span className="font-mono text-lg tracking-[0.2em] text-gold-100">{offer.code}</span>
-        <span className="inline-flex items-center gap-1.5 text-xs text-white/60">
+        <span className="font-mono text-lg tracking-[0.2em] text-gold-600">{offer.code}</span>
+        <span className="inline-flex items-center gap-1.5 text-xs text-ink-muted">
           <Copy size={13} /> {copied ? 'Copied!' : 'Copy'}
         </span>
       </button>
 
       {t.total > 0 && t.days < 45 && (
-        <p className="mt-3 text-center text-[0.7rem] uppercase tracking-wider text-rose-300">
+        <p className="mt-3 text-center text-[0.7rem] uppercase tracking-wider text-clay-300">
           Ends in {t.days}d {t.hours}h {t.minutes}m
         </p>
       )}

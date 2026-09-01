@@ -8,12 +8,12 @@ const base =
 
 const variants: Record<Variant, string> = {
   gold: 'bg-gold-sheen bg-[length:200%_auto] text-ink shadow-glow hover:bg-[position:100%_50%] hover:shadow-[0_0_60px_-10px_rgba(231,195,93,0.7)] active:scale-[0.98]',
-  ghost: 'text-white/80 hover:bg-white/10 hover:text-white',
+  ghost: 'text-ink-soft hover:bg-white/75 hover:text-ink',
   outline:
-    'border border-gold-300/40 text-gold-100 hover:border-gold-200 hover:bg-gold-300/10 hover:shadow-glow',
+    'border border-gold-300/40 text-gold-600 hover:border-gold-200 hover:bg-gold-300/10 hover:shadow-glow',
   whatsapp:
     'bg-[#25D366] text-[#04310f] shadow-[0_0_36px_-10px_rgba(37,211,102,0.8)] hover:brightness-110 active:scale-[0.98]',
-  dark: 'border border-white/[0.12] bg-white/[0.06] text-white backdrop-blur hover:border-white/25 hover:bg-white/[0.12]',
+  dark: 'border border-ivory-400/60 bg-white/75 text-ink backdrop-blur hover:border-ivory-400/70 hover:bg-white/75',
 };
 
 const sizes: Record<Size, string> = {
