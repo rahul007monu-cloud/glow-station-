@@ -172,17 +172,6 @@
       linear-gradient(15deg, transparent 28%, rgba(170, 160, 140, 0.2) 29%, transparent 30.5%);
   }
 
-  /** Ivory fluted wall panelling. */
-  .fluted {
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.95) 0px,
-      rgba(246, 241, 231, 0.9) 7px,
-      rgba(214, 204, 186, 0.55) 22px,
-      rgba(255, 255, 255, 0.9) 34px
-    );
-  }
-
   .gold-frame {
     box-shadow:
       0 0 0 1px rgba(185, 140, 58, 0.55),

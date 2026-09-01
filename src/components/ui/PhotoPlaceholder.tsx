@@ -26,12 +26,12 @@ export default function PhotoPlaceholder({
       {/* blush → wood wash */}
       <div className="absolute inset-0 bg-[linear-gradient(150deg,#fbe6f0_0%,#fdf6e3_45%,#f0dcbc_100%)]" />
 
-      {/* wooden slat texture, like the salon walls */}
+      {/* soft diagonal sheen instead of a stripe texture */}
       <div
-        className="absolute inset-0 opacity-[0.16]"
+        className="absolute inset-0"
         style={{
           backgroundImage:
-            'repeating-linear-gradient(90deg, #a9743f 0px, transparent 3px, transparent 14px)',
+            'linear-gradient(115deg, rgba(255,255,255,0.7) 0%, transparent 42%, rgba(208,169,85,0.10) 100%)',
         }}
       />
 
