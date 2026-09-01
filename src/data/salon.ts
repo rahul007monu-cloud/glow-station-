@@ -757,18 +757,18 @@ export const gallery: {
   id: string;
   label: string;
   tag: string;
-  /** Salon's own photo — upload to public/images/ with this name. */
+  /** Salon's own photo — upload to public/images/ with this exact name. */
   src?: string;
-  /** Licensed placeholder shown until then. */
+  /** Shown until then. */
   stock?: string;
   tall?: boolean;
 }[] = [
   {
     id: 'g1',
-    label: 'Colour & balayage',
-    tag: 'Hair colour',
+    label: 'Inside the studio',
+    tag: 'Our space',
     src: 'images/gallery-1.jpg',
-    stock: undefined /* needs the salon's own colour photo */,
+    stock: 'images/stock/interior-wide.jpg',
     tall: true,
   },
   {
@@ -783,7 +783,7 @@ export const gallery: {
     label: 'Cut, blow dry & styling',
     tag: 'Hair studio',
     src: 'images/gallery-3.jpg',
-    stock: undefined /* needs the salon's own styling photo */,
+    stock: 'images/stock/barber.jpg',
   },
   {
     id: 'g4',
@@ -802,25 +802,25 @@ export const gallery: {
   },
   {
     id: 'g6',
-    label: 'Men’s cut & beard',
-    tag: 'Him',
+    label: 'Glow & spa rituals',
+    tag: 'Skin & spa',
     src: 'images/gallery-6.jpg',
-    stock: 'images/stock/barber.jpg',
+    stock: 'images/stock/skin.jpg',
   },
 ];
 
 /** Photos used by the 3D scenes. Owner uploads override each `own` path. */
 export const scenery = {
   interior: { own: 'images/interior.jpg', stock: 'images/stock/interior-wide.jpg' },
-  reception: { own: 'images/reception.jpg' },
-  hair: { own: 'images/hair.jpg', stock: undefined /* needs the salon's own styling photo */ },
-  colour: { own: 'images/colour.jpg', stock: undefined /* needs the salon's own colour photo */ },
+  reception: { own: 'images/reception.jpg', stock: 'images/stock/interior-wide.jpg' },
+  hair: { own: 'images/hair.jpg', stock: 'images/stock/barber.jpg' },
+  colour: { own: 'images/colour.jpg', stock: 'images/stock/bridal-2.jpg' },
   skin: { own: 'images/skin.jpg', stock: 'images/stock/facial.jpg' },
   nails: { own: 'images/nails.jpg', stock: 'images/stock/nails-2.jpg' },
   makeup: { own: 'images/makeup.jpg', stock: 'images/stock/bridal-2.jpg' },
   bridal: { own: 'images/bridal.jpg', stock: 'images/stock/bridal.jpg' },
-  academy: { own: 'images/academy.jpg' },
+  academy: { own: 'images/academy.jpg', stock: 'images/stock/spa.jpg' },
   spa: { own: 'images/spa.jpg', stock: 'images/stock/spa.jpg' },
   him: { own: 'images/him.jpg', stock: 'images/stock/barber.jpg' },
-  styling: { own: 'images/styling.jpg', stock: undefined /* needs the salon's own styling photo */ },
+  styling: { own: 'images/styling.jpg', stock: 'images/stock/barber.jpg' },
 };
