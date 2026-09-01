@@ -39,6 +39,27 @@ export default {
           800: '#5c421b',
           900: '#3d2c12',
         },
+        /* the logo's blush pink */
+        blush: {
+          100: '#fdf1f7',
+          200: '#fbe6f0',
+          300: '#f2c9de',
+          400: '#e79ec0',
+          500: '#d97ba6',
+        },
+        /* the wooden slat walls and floor */
+        wood: {
+          200: '#f0dcbc',
+          300: '#dcb884',
+          400: '#c9945a',
+          500: '#a9743f',
+          600: '#835830',
+        },
+        /* cognac leather chairs */
+        leather: {
+          400: '#c0763f',
+          500: '#a25c2c',
+        },
         /* single warm accent for urgency chips */
         clay: {
           300: '#e8a887',
