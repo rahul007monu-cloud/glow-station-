@@ -20,7 +20,7 @@ type Part = {
   /** Matches a plate on the real signboard. */
   label: string;
   categoryId: string;
-  photo: { own: string; stock: string };
+  photo: { own: string; stock?: string };
   /** Final resting position, in percent of the stage. */
   to: { x: number; y: number; z: number; rx: number; ry: number };
 };

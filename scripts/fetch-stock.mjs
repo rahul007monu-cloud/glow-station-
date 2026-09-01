@@ -19,6 +19,11 @@ const OUT = path.resolve('public/images/stock');
 const wm = (file, hash, width = 1600) =>
   `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash}/${file}/${width}px-${file}`;
 
+/**
+ * Only clean, on-brand imagery lives here. Backstage/SFX and low-quality shots
+ * were removed on the owner's review — an off-brand photo is worse than the
+ * designed placeholder that shows in its place.
+ */
 /** Full-size Wikimedia original (we downscale locally with sharp). */
 const wmFull = (file, hash) => `https://upload.wikimedia.org/wikipedia/commons/${hash}/${file}`;
 const snap = (id) => `https://cdn.stocksnap.io/img-thumbs/960w/${id}.jpg`;
@@ -29,34 +34,8 @@ const shots = [
     url: wm('Interior_view_of_modern_beauty_salon.jpg', '4/4c', 1920),
     width: 1920,
   },
-  { name: 'interior-2.jpg', url: wmFull('Salon_interior.jpg', '3/34'), width: 1600 },
-  {
-    name: 'hair-colour.jpg',
-    url: wmFull(
-      'Make-up_artists_from_Iran_Jorj_Barber_Canon_Photography_Mostafa_Meraji_free_Pictures_01.jpg',
-      'b/b7',
-    ),
-    width: 1600,
-  },
-  {
-    name: 'makeup.jpg',
-    url: wmFull(
-      'Make-up_artists_from_Iran_Jorj_Barber_Canon_Photography_Mostafa_Meraji_free_Pictures_06.jpg',
-      'd/d0',
-    ),
-    width: 1200,
-  },
-  {
-    name: 'makeup-2.jpg',
-    url: wmFull(
-      'Make-up_artist_Iranian_Zeynab_Rashti_Canon_Real_Edit_Mostafa_Meraji_Persian_Women_10.jpg',
-      '7/77',
-    ),
-    width: 1200,
-  },
   { name: 'bridal.jpg', url: snap('Y72F5HF9PT'), width: 960 },
   { name: 'bridal-2.jpg', url: snap('V5JGV2EC4W'), width: 960 },
-  { name: 'hair-style.jpg', url: snap('ASMG0XOU6M'), width: 960 },
   { name: 'nails.jpg', url: snap('XX356Q6EI4'), width: 960 },
   { name: 'nails-2.jpg', url: snap('OCZSBORYR9'), width: 960 },
   { name: 'facial.jpg', url: snap('LRSAT4NCLS'), width: 960 },

@@ -21,7 +21,7 @@ type Room = {
   detail: string;
   /** Which service category this room books. */
   categoryId?: string;
-  photo: { own: string; stock: string };
+  photo: { own: string; stock?: string };
 };
 
 const rooms: Room[] = [

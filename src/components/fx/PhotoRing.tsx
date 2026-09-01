@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import PhotoPlaceholder from '@/components/ui/PhotoPlaceholder';
 import SmartImage from '@/components/ui/SmartImage';
 
-type Item = { id: string; label: string; tag: string; src?: string; stock: string };
+type Item = { id: string; label: string; tag: string; src?: string; stock?: string };
 
 /**
  * A true 3D carousel: the photos are arranged on the surface of a cylinder and
