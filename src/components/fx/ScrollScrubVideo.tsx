@@ -1,64 +1,92 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MotionValue } from 'framer-motion';
 import { asset } from '@/lib/media';
+import { useIsLowPower } from '@/lib/device';
 
 type Props = {
   src: string;
   poster?: string;
-  /** 0 → 1 progress that drives the playhead. */
+  /** 0 → 1 progress that drives the playhead in scrub mode. */
   progress: MotionValue<number>;
   className?: string;
 };
 
 /**
- * Scroll *is* the playhead.
+ * Salon footage that the scroll position scrubs — on hardware that can take it.
  *
- * The clip never plays on its own — every scroll tick seeks the video, so the
- * visitor walks through the salon at their own pace (the effect used in product
- * launch pages).
+ * Seeking an MP4 costs a decode, so doing it on every scroll tick pegs the main
+ * thread; on a phone that freezes touch scrolling outright. Guards:
  *
- * Two safety nets, because video seeking is the flakiest thing on mobile:
- *  1. iOS refuses to seek until the element has been played once, so we do a
- *     silent play/pause on load.
- *  2. If the browser cannot seek smoothly (or metadata never arrives) we fall
- *     back to a normal muted loop instead of showing a frozen frame.
+ *  1. Low-power / touch / reduced-motion devices never scrub. They get a plain
+ *     muted autoplay loop, which the browser decodes off the main thread.
+ *  2. In scrub mode we allow one seek at a time (waiting for `seeked`) and
+ *     ignore movements smaller than a frame, so seeks can never pile up.
+ *  3. If metadata never arrives or the file errors, it falls back to the loop.
  */
 export default function ScrollScrubVideo({ src, poster, progress, className = '' }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [mode, setMode] = useState<'scrub' | 'loop'>('scrub');
-  const frame = useRef(0);
+  const lowPower = useIsLowPower();
+  const [mode, setMode] = useState<'scrub' | 'loop'>(lowPower ? 'loop' : 'scrub');
+
+  const seeking = useRef(false);
+  const pending = useRef<number | null>(null);
 
   useEffect(() => {
+    if (lowPower) setMode('loop');
+  }, [lowPower]);
+
+  /* Loop mode: just play it. */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mode !== 'loop') return;
+    video.loop = true;
+    video.play().catch(() => {
+      /* autoplay blocked — the poster frame stays, which is fine */
+    });
+  }, [mode]);
+
+  /* Metadata guard: no duration means we cannot scrub. */
+  useEffect(() => {
+    if (mode !== 'scrub') return;
+    const video = videoRef.current;
+    if (!video) return;
+    const guard = setTimeout(() => {
+      if (!Number.isFinite(video.duration) || video.duration === 0) setMode('loop');
+    }, 3000);
+    return () => clearTimeout(guard);
+  }, [mode]);
+
+  /* Scrub mode: one in-flight seek at a time. */
+  useEffect(() => {
+    if (mode !== 'scrub') return;
     const video = videoRef.current;
     if (!video) return;
 
-    /* Give the browser a moment; if metadata never lands, just loop it. */
-    const guard = setTimeout(() => {
-      if (!Number.isFinite(video.duration) || video.duration === 0) {
-        setMode('loop');
-        video.loop = true;
-        video.play().catch(() => {});
-      }
-    }, 3500);
+    const step = () => {
+      if (pending.current === null || seeking.current) return;
+      const target = pending.current;
+      pending.current = null;
+      if (!Number.isFinite(video.duration) || video.duration === 0) return;
+      const time = Math.min(video.duration - 0.05, Math.max(0, video.duration * target));
+      // Ignore sub-frame moves; they cost a decode and change nothing visible.
+      if (Math.abs(time - video.currentTime) < 1 / 24) return;
+      seeking.current = true;
+      video.currentTime = time;
+    };
 
-    return () => clearTimeout(guard);
-  }, []);
+    const onSeeked = () => {
+      seeking.current = false;
+      step();
+    };
 
-  useEffect(() => {
-    if (mode !== 'scrub') return;
-
+    video.addEventListener('seeked', onSeeked);
     const unsubscribe = progress.on('change', (p) => {
-      const video = videoRef.current;
-      if (!video || !Number.isFinite(video.duration) || video.duration === 0) return;
-      cancelAnimationFrame(frame.current);
-      frame.current = requestAnimationFrame(() => {
-        const clamped = Math.min(Math.max(p, 0), 1);
-        video.currentTime = Math.min(video.duration - 0.04, video.duration * clamped);
-      });
+      pending.current = p;
+      step();
     });
 
     return () => {
-      cancelAnimationFrame(frame.current);
+      video.removeEventListener('seeked', onSeeked);
       unsubscribe();
     };
   }, [mode, progress]);
@@ -66,24 +94,23 @@ export default function ScrollScrubVideo({ src, poster, progress, className = ''
   return (
     <video
       ref={videoRef}
-      className={className}
+      className={`pointer-events-none ${className}`}
       src={asset(src)}
       poster={poster ? asset(poster) : undefined}
       muted
       playsInline
-      preload="auto"
+      loop={mode === 'loop'}
+      autoPlay={mode === 'loop'}
+      preload={mode === 'scrub' ? 'auto' : 'metadata'}
       disablePictureInPicture
       onLoadedMetadata={(e) => {
+        if (mode !== 'scrub') return;
         const video = e.currentTarget;
-        // iOS unlocks seeking only after a play() has happened.
+        // iOS only unlocks seeking after a play() has been attempted.
         video
           .play()
-          .then(() => {
-            if (mode === 'scrub') video.pause();
-          })
-          .catch(() => {
-            // Autoplay blocked — scrubbing still works from a user scroll.
-          });
+          .then(() => video.pause())
+          .catch(() => {});
       }}
       onError={() => setMode('loop')}
     />

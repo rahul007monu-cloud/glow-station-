@@ -91,7 +91,7 @@ export default function Walkthrough() {
   });
 
   return (
-    <section id="experience" ref={ref} className="relative" style={{ height: `${rooms.length * 100}vh` }}>
+    <section id="experience" ref={ref} className="relative" style={{ height: `${rooms.length * 78}vh` }}>
       <div className="sticky top-0 flex h-[100dvh] items-center overflow-hidden px-5 sm:px-8">
         {/* ambience heading */}
         <div className="pointer-events-none absolute inset-x-0 top-24 z-30 text-center sm:top-28">

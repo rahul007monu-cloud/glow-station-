@@ -11,6 +11,7 @@ export default function Spotlight() {
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const move = (e: PointerEvent) => {
       x.set(e.clientX / window.innerWidth);
       y.set(e.clientY / window.innerHeight);

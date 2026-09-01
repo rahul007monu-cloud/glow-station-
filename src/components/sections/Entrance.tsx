@@ -50,7 +50,7 @@ export default function Entrance() {
     <section
       id="top"
       ref={ref}
-      className={`relative ${video === 'found' ? 'h-[320vh]' : 'h-[200vh]'}`}
+      className={`relative ${video === 'found' ? 'h-[190vh] sm:h-[240vh]' : 'h-[180vh]'}`}
     >
       <div className="sticky top-0 h-[100dvh] overflow-hidden">
         {/* ── Background: salon footage or photo ─────────────── */}

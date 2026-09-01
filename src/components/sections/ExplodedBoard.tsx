@@ -124,7 +124,7 @@ export default function ExplodedBoard() {
   const outroOpacity = useTransform(p, [0.78, 0.95], [0, 1]);
 
   return (
-    <section id="exploded" ref={ref} className="relative h-[340vh]">
+    <section id="exploded" ref={ref} className="relative h-[230vh] sm:h-[300vh]">
       <div className="scene sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden">
         {/* soft studio floor */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ivory-300/80 to-transparent" />
