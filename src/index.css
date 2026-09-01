@@ -12,8 +12,16 @@
   }
 
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    /* iOS-friendly: never fight the finger, and no chained overscroll. */
+    overscroll-behavior-y: none;
+  }
+
+  /* Smooth anchor jumps only where the device can afford them. */
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

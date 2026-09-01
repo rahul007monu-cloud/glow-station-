@@ -38,6 +38,9 @@ export const usePrefersReducedMotion = () =>
 export function useIsLowPower() {
   const touch = useIsTouch();
   const reduced = usePrefersReducedMotion();
+  /* A phone-sized viewport is treated as low power even if the browser
+     reports a fine pointer, which some Android browsers do. */
+  const small = useMediaQuery('(max-width: 900px)');
   const [weak, setWeak] = useState(false);
 
   useEffect(() => {
@@ -50,5 +53,5 @@ export function useIsLowPower() {
     setWeak(cores <= 4 || memory <= 4 || nav.connection?.saveData === true);
   }, []);
 
-  return touch || reduced || weak;
+  return touch || reduced || weak || small;
 }
