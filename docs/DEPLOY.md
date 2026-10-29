@@ -3,7 +3,7 @@
 ## Current setup (already live)
 
 - GitHub Pages serves the **`gh-pages`** branch.
-- Live URL: https://rahul007monu-cloud.github.io/glow-station-/
+- Live URL: https://divinetouch-theta.vercel.app/
 - Every push to `main` triggers `.github/workflows/deploy.yml`, which builds and
   force-pushes `dist/` to `gh-pages`. Deploy takes ~1–2 minutes.
 
