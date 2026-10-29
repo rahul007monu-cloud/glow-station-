@@ -19,7 +19,7 @@ reaches Diksha's WhatsApp with every detail pre-filled.
 
 | Area | What it does for the business |
 | --- | --- |
-| Brand theme | Purple/magenta + gold from the Divine Touch flyer, script "Touch" wordmark, floating animated UI |
+| Brand theme | Espresso noir + champagne gold + dusty rose, script "Touch" wordmark, floating animated UI |
 | The Divine Experience | 9 service categories from the flyer, 32 services, search, starting prices |
 | Home or studio booking | 3 steps → choose services, date/time + **home visit or studio** (address for home), then WhatsApp |
 | How it works | 4-step explainer so first-time clients trust a solo, doorstep service |

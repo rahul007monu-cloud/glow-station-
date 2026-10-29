@@ -77,7 +77,7 @@ export default function HeroStage({ onOfferClick }: { onOfferClick: () => void }
       <motion.div style={{ rotateX: rx, rotateY: ry }} className="preserve-3d absolute inset-0">
         {/* glowing back plate */}
         <div
-          className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.45),rgba(143,62,240,0.25)_60%,transparent)] md:blur-2xl"
+          className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(185,103,122,0.45),rgba(166,101,86,0.25)_60%,transparent)] md:blur-2xl"
           style={{ transform: 'translateZ(-220px)' }}
         />
         {/* rotating gold ring */}
@@ -96,7 +96,7 @@ export default function HeroStage({ onOfferClick }: { onOfferClick: () => void }
         <motion.button
           onClick={onOfferClick}
           style={{ z: emblemZ }}
-          className="absolute left-1/2 top-1/2 -ml-[4.25rem] -mt-[4.25rem] flex h-[8.5rem] w-[8.5rem] sm:-ml-[5.5rem] sm:-mt-[5.5rem] sm:h-44 sm:w-44 flex-col items-center justify-center rounded-full border border-gold-300/60 bg-ink/80 text-center shadow-[0_30px_80px_-10px_rgba(214,51,159,0.8)] backdrop-blur-md transition hover:shadow-glow"
+          className="absolute left-1/2 top-1/2 -ml-[4.25rem] -mt-[4.25rem] flex h-[8.5rem] w-[8.5rem] sm:-ml-[5.5rem] sm:-mt-[5.5rem] sm:h-44 sm:w-44 flex-col items-center justify-center rounded-full border border-gold-300/60 bg-ink/80 text-center shadow-[0_30px_80px_-10px_rgba(185,103,122,0.8)] backdrop-blur-md transition hover:shadow-glow"
           aria-label={`Book with ${salon.welcomeOffer.code}`}
         >
           <Logo className="h-8 w-8 sm:h-11 sm:w-11" />

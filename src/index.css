@@ -62,7 +62,7 @@
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d0618;
+    background: #0b0908;
   }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(#a77616, #5c3d11);
@@ -96,7 +96,7 @@
       backdrop-filter: none !important;
     }
     .glass {
-      background-color: rgba(31, 15, 56, 0.94);
+      background-color: rgba(33, 26, 23, 0.94);
     }
     .glass-soft {
       background-color: rgba(255, 255, 255, 0.05);

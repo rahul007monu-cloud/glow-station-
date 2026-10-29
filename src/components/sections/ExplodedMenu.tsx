@@ -71,7 +71,7 @@ export default function ExplodedMenu() {
     <section id="menu-3d" ref={ref} className="relative h-[280vh] sm:h-[320vh]">
       <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden">
         {/* stage light */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.35),rgba(143,62,240,0.15)_55%,transparent)] md:blur-2xl" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(185,103,122,0.35),rgba(166,101,86,0.15)_55%,transparent)] md:blur-2xl" />
 
         <motion.div
           style={{ opacity: introOpacity }}
@@ -120,7 +120,7 @@ export default function ExplodedMenu() {
               style={{ z: logoZ, y: logoY, rotate: logoRotate, opacity: logoOpacity }}
               className="absolute left-1/2 top-1/2 z-50 -ml-16 -mt-16 sm:-ml-20 sm:-mt-20"
             >
-              <div className="rounded-full bg-ink p-2 shadow-[0_30px_80px_-10px_rgba(214,51,159,0.7)] ring-1 ring-gold-300/60">
+              <div className="rounded-full bg-ink p-2 shadow-[0_30px_80px_-10px_rgba(185,103,122,0.7)] ring-1 ring-gold-300/60">
                 <Logo className="h-28 w-28 sm:h-36 sm:w-36" />
               </div>
               <p className="mt-4 whitespace-nowrap rounded-full bg-ink/80 px-4 py-1 text-center backdrop-blur">
@@ -178,7 +178,7 @@ function Card({
     >
       <button
         onClick={() => openBooking({ from: `menu3d-${category.id}` })}
-        className="backface-hidden group relative block h-full w-full overflow-hidden rounded-2xl border border-gold-300/40 bg-ink-card text-left shadow-[0_25px_60px_-20px_rgba(0,0,0,0.9),0_0_30px_-10px_rgba(214,51,159,0.6)]"
+        className="backface-hidden group relative block h-full w-full overflow-hidden rounded-2xl border border-gold-300/40 bg-ink-card text-left shadow-[0_25px_60px_-20px_rgba(0,0,0,0.9),0_0_30px_-10px_rgba(185,103,122,0.6)]"
       >
         <img
           src={asset(category.photo)}

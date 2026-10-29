@@ -66,7 +66,7 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
               backfaceVisibility: 'hidden',
             }}
           >
-            <figure className="relative h-full w-full overflow-hidden rounded-2xl border border-gold-300/40 bg-ink-card shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9),0_0_30px_-12px_rgba(214,51,159,0.7)]">
+            <figure className="relative h-full w-full overflow-hidden rounded-2xl border border-gold-300/40 bg-ink-card shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9),0_0_30px_-12px_rgba(185,103,122,0.7)]">
               {item.src ? (
                 <img src={asset(item.src)} alt={item.label} loading="lazy" className="h-full w-full object-cover" />
               ) : (
@@ -82,7 +82,7 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
       </motion.div>
 
       {/* floor glow under the ring */}
-      <div className="pointer-events-none absolute inset-x-[15%] bottom-3 h-12 rounded-[100%] bg-[radial-gradient(closest-side,rgba(214,51,159,0.45),transparent)] blur-md" />
+      <div className="pointer-events-none absolute inset-x-[15%] bottom-3 h-12 rounded-[100%] bg-[radial-gradient(closest-side,rgba(185,103,122,0.45),transparent)] blur-md" />
       <p className="pointer-events-none absolute inset-x-0 bottom-0 text-center text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
         {touch ? 'Auto rotating' : 'Drag to rotate'}
       </p>

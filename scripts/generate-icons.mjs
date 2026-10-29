@@ -27,13 +27,13 @@ const monogram = (size, { padding = 0 } = {}) => {
       <stop offset="100%" stop-color="#a77616"/>
     </linearGradient>
     <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fbcfe8"/>
-      <stop offset="100%" stop-color="#f062b8"/>
+      <stop offset="0%" stop-color="#f3d7dc"/>
+      <stop offset="100%" stop-color="#d68fa0"/>
     </linearGradient>
     <radialGradient id="glow" cx="50%" cy="30%" r="75%">
-      <stop offset="0%" stop-color="#4a1a7a"/>
-      <stop offset="60%" stop-color="#1f0f38"/>
-      <stop offset="100%" stop-color="#0d0618"/>
+      <stop offset="0%" stop-color="#43201d"/>
+      <stop offset="60%" stop-color="#211a17"/>
+      <stop offset="100%" stop-color="#0b0908"/>
     </radialGradient>
   </defs>
   <rect width="${size}" height="${size}" fill="url(#glow)"/>
@@ -57,16 +57,16 @@ const cover = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
       <stop offset="100%" stop-color="#a77616"/>
     </linearGradient>
     <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#fbcfe8"/>
-      <stop offset="100%" stop-color="#f062b8"/>
+      <stop offset="0%" stop-color="#f3d7dc"/>
+      <stop offset="100%" stop-color="#d68fa0"/>
     </linearGradient>
     <radialGradient id="bg1" cx="20%" cy="15%" r="75%">
-      <stop offset="0%" stop-color="#4a1a7a"/>
-      <stop offset="100%" stop-color="#0d0618"/>
+      <stop offset="0%" stop-color="#43201d"/>
+      <stop offset="100%" stop-color="#0b0908"/>
     </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg1)"/>
-  <circle cx="1020" cy="110" r="230" fill="#d6339f" opacity="0.25"/>
+  <circle cx="1020" cy="110" r="230" fill="#b9677a" opacity="0.25"/>
   <circle cx="160" cy="560" r="220" fill="#dfb134" opacity="0.12"/>
   <circle cx="930" cy="330" r="190" fill="none" stroke="url(#gold)" stroke-width="4" opacity="0.8"/>
   <text x="930" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="64" fill="url(#gold)">10% OFF</text>
@@ -76,7 +76,7 @@ const cover = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <text x="90" y="360" font-family="Georgia, serif" font-style="italic" font-size="110" fill="url(#pink)">Touch</text>
   <text x="86" y="420" font-family="Helvetica, Arial, sans-serif" font-size="26" letter-spacing="8" fill="#e7c35d">BY DIKSHA GUPTA</text>
   <text x="86" y="480" font-family="Helvetica, Arial, sans-serif" font-size="24" letter-spacing="6" fill="#ffffff" opacity="0.65">WHERE BEAUTY MEETS PERFECTION</text>
-  <text x="86" y="545" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#f9a8d4">Makeup · Facials · Waxing · Hair · Massages — at your home</text>
+  <text x="86" y="545" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#e8b8c2">Makeup · Facials · Waxing · Hair · Massages — at your home</text>
 </svg>`;
 
 const targets = [

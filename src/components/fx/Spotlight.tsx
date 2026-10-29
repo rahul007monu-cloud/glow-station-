@@ -1,7 +1,7 @@
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring } from 'framer-motion';
 import { useEffect } from 'react';
 
-/** Magenta/gold light that follows the pointer (desktop only). */
+/** Dusty-rose/champagne light that follows the pointer (desktop only). */
 export function Spotlight() {
   const x = useSpring(useMotionValue(0.5), { stiffness: 60, damping: 20 });
   const y = useSpring(useMotionValue(0.2), { stiffness: 60, damping: 20 });
@@ -17,7 +17,7 @@ export function Spotlight() {
     return () => window.removeEventListener('pointermove', move);
   }, [x, y]);
 
-  const background = useMotionTemplate`radial-gradient(480px circle at calc(${x} * 100%) calc(${y} * 100%), rgba(240,98,184,0.12), rgba(231,195,93,0.05) 40%, transparent 70%)`;
+  const background = useMotionTemplate`radial-gradient(480px circle at calc(${x} * 100%) calc(${y} * 100%), rgba(214,143,160,0.12), rgba(231,195,93,0.05) 40%, transparent 70%)`;
 
   return (
     <motion.div
@@ -36,7 +36,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[80] h-[2px] origin-left bg-gradient-to-r from-gold-500 via-gold-200 to-rose-400 shadow-[0_0_14px_rgba(240,98,184,0.8)]"
+      className="fixed inset-x-0 top-0 z-[80] h-[2px] origin-left bg-gradient-to-r from-gold-500 via-gold-200 to-rose-400 shadow-[0_0_14px_rgba(214,143,160,0.8)]"
     />
   );
 }
