@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useBooking } from '@/context/BookingProvider';
 import { asset, categories, formatINR, story } from '@/data/salon';
-import { useIsNarrow } from '@/lib/device';
+import { useIsLowPower, useIsNarrow } from '@/lib/device';
 
 /**
  * Scroll-driven story: the section is pinned and each scene owns a slice of the
@@ -14,8 +14,11 @@ import { useIsNarrow } from '@/lib/device';
  */
 export default function ScrollStory() {
   const ref = useRef<HTMLElement>(null);
+  const lowPower = useIsLowPower();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const p = useSpring(scrollYProgress, { stiffness: 110, damping: 28, restDelta: 0.0005 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 110, damping: 28, restDelta: 0.0005 });
+  /* Phones follow the finger directly; a spring there feels like lag. */
+  const p = lowPower ? scrollYProgress : smooth;
 
   return (
     <section
@@ -71,13 +74,15 @@ function Scene({
   const imgScale = useTransform(progress, [start, end], [1.15, 1]);
   const titleY = useTransform(progress, [start, start + span * 0.3], [isFirst ? 0 : 60, 0]);
   const pointerEvents = useTransform(opacity, (o) => (o > 0.5 ? 'auto' : 'none'));
+  /* Hidden scenes are taken out of rendering entirely, not just made transparent. */
+  const visibility = useTransform(opacity, (o) => (o > 0.01 ? 'visible' : 'hidden'));
 
   const items = scene.categoryIds.flatMap((id) => categories.find((c) => c.id === id)?.items ?? []);
   const shown = items.slice(0, narrow ? 3 : 5);
 
   return (
     <motion.div
-      style={{ opacity, pointerEvents }}
+      style={{ opacity, pointerEvents, visibility }}
       className="absolute inset-0 grid grid-cols-1 grid-rows-[auto_1fr] items-center gap-4 px-5 pb-28 pt-24 sm:px-8 lg:grid-cols-2 lg:grid-rows-1 lg:gap-12 lg:pb-16 lg:pt-20"
     >
       {/* 3D photo */}
@@ -86,7 +91,7 @@ function Scene({
           style={{ rotateY, z }}
           className="preserve-3d relative aspect-[16/10] w-full sm:aspect-[4/3] lg:aspect-[4/5]"
         >
-          <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-gold-400/50 via-rose-500/40 to-lilac-500/50 blur-xl" />
+          <div className="absolute -inset-3 hidden rounded-[2rem] bg-gradient-to-tr from-gold-400/50 via-rose-500/40 to-lilac-500/50 blur-xl md:block" />
           <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-gold-300/40 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)]">
             <motion.img
               style={{ scale: imgScale }}

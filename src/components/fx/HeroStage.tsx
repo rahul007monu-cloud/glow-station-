@@ -11,6 +11,7 @@ import { Sparkles } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Logo from '@/components/layout/Logo';
 import { asset, salon } from '@/data/salon';
+import { useIsLowPower } from '@/lib/device';
 
 type Layer = {
   src: string;
@@ -33,36 +34,35 @@ const layers: Layer[] = [
 
 /**
  * The hero's 3D stage: photo cards hang at different depths inside one
- * perspective box. The whole box tilts towards the pointer (or sways gently on
- * phones), and on scroll the layers fly apart along Z — a parallax you can feel.
+ * perspective box. On desktop the whole box tilts towards the pointer and the
+ * layers fly apart along Z on scroll.
+ *
+ * On phones the stage holds a fixed, slightly turned 3D pose. A constant
+ * sway plus the scroll spread made the photos look like they were spinning
+ * past too fast to see, and kept the GPU busy during scroll.
  */
 export default function HeroStage({ onOfferClick }: { onOfferClick: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const lowPower = useIsLowPower();
+  const still = !!reduced || lowPower;
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rx = useSpring(useTransform(my, [-1, 1], [12, -12]), { stiffness: 80, damping: 18 });
   const ry = useSpring(useTransform(mx, [-1, 1], [-16, 16]), { stiffness: 80, damping: 18 });
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const spread = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), { stiffness: 90, damping: 24 });
+  const scrollSpread = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), { stiffness: 90, damping: 24 });
+  const noSpread = useMotionValue(0);
+  const spread = still ? noSpread : scrollSpread;
   const emblemZ = useTransform(spread, [0, 1], [220, 420]);
 
   useEffect(() => {
-    if (reduced) return;
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
-    if (coarse) {
-      /* Phones: slow automatic sway instead of pointer tracking. */
-      let t = 0;
-      let raf = 0;
-      const tick = () => {
-        t += 0.012;
-        mx.set(Math.sin(t) * 0.6);
-        my.set(Math.cos(t * 0.8) * 0.4);
-        raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(raf);
+    if (still) {
+      /* A fixed three-quarter pose keeps the depth visible without motion. */
+      mx.set(0.35);
+      my.set(-0.25);
+      return;
     }
     const move = (e: PointerEvent) => {
       mx.set((e.clientX / window.innerWidth) * 2 - 1);
@@ -70,14 +70,14 @@ export default function HeroStage({ onOfferClick }: { onOfferClick: () => void }
     };
     window.addEventListener('pointermove', move, { passive: true });
     return () => window.removeEventListener('pointermove', move);
-  }, [mx, my, reduced]);
+  }, [mx, my, still]);
 
   return (
     <div ref={ref} className="scene relative mx-auto aspect-square w-full max-w-[30rem]">
       <motion.div style={{ rotateX: rx, rotateY: ry }} className="preserve-3d absolute inset-0">
         {/* glowing back plate */}
         <div
-          className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.45),rgba(143,62,240,0.25)_60%,transparent)] blur-2xl"
+          className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.45),rgba(143,62,240,0.25)_60%,transparent)] md:blur-2xl"
           style={{ transform: 'translateZ(-220px)' }}
         />
         {/* rotating gold ring */}
@@ -96,12 +96,12 @@ export default function HeroStage({ onOfferClick }: { onOfferClick: () => void }
         <motion.button
           onClick={onOfferClick}
           style={{ z: emblemZ }}
-          className="absolute left-1/2 top-1/2 -ml-[5.5rem] -mt-[5.5rem] flex h-44 w-44 flex-col items-center justify-center rounded-full border border-gold-300/60 bg-ink/80 text-center shadow-[0_30px_80px_-10px_rgba(214,51,159,0.8)] backdrop-blur-md transition hover:shadow-glow"
+          className="absolute left-1/2 top-1/2 -ml-[4.25rem] -mt-[4.25rem] flex h-[8.5rem] w-[8.5rem] sm:-ml-[5.5rem] sm:-mt-[5.5rem] sm:h-44 sm:w-44 flex-col items-center justify-center rounded-full border border-gold-300/60 bg-ink/80 text-center shadow-[0_30px_80px_-10px_rgba(214,51,159,0.8)] backdrop-blur-md transition hover:shadow-glow"
           aria-label={`Book with ${salon.welcomeOffer.code}`}
         >
-          <Logo className="h-11 w-11" />
-          <span className="mt-1 font-display text-4xl leading-none text-gold-100">10% OFF</span>
-          <span className="mt-1 text-[0.55rem] uppercase tracking-[0.25em] text-white/65">for discovering us</span>
+          <Logo className="h-8 w-8 sm:h-11 sm:w-11" />
+          <span className="mt-1 font-display text-3xl sm:text-4xl leading-none text-gold-100">10% OFF</span>
+          <span className="mt-1 text-[0.5rem] uppercase tracking-[0.18em] text-white/65 sm:text-[0.55rem] sm:tracking-[0.25em]">for discovering us</span>
           <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-0.5 font-mono text-[0.6rem] tracking-[0.2em] text-gold-200">
             <Sparkles size={9} /> {salon.welcomeOffer.code}
           </span>

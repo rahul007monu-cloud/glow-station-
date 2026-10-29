@@ -69,6 +69,40 @@
     border-radius: 999px;
   }
 
+  /*
+   * Phones and tablets: keep the look, drop the work that janks scrolling.
+   * - The aurora is already a soft radial gradient, so its blur and drift are
+   *   pure GPU cost on a full-screen fixed layer.
+   * - Frosted glass (backdrop-filter) re-blurs whatever scrolls underneath it
+   *   on every frame; a solid tint looks nearly the same on a dark page.
+   * - The gold text sheen repaints text continuously.
+   */
+  @media (hover: none), (max-width: 900px) {
+    body::before {
+      inset: 0;
+      filter: none;
+      animation: none;
+    }
+    body::after {
+      display: none;
+    }
+    .gold-text {
+      animation: none;
+    }
+    .glass,
+    .glass-soft,
+    [class*='backdrop-blur'] {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+    .glass {
+      background-color: rgba(31, 15, 56, 0.94);
+    }
+    .glass-soft {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
   /* Respect users who get motion sickness. */
   @media (prefers-reduced-motion: reduce) {
     *,
