@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Logo from '@/components/layout/Logo';
 import { useBooking } from '@/context/BookingProvider';
 import { asset, categories, formatINR, salon, type ServiceCategory } from '@/data/salon';
-import { useIsNarrow } from '@/lib/device';
+import { useIsLowPower, useIsNarrow } from '@/lib/device';
 
 /**
  * Exploded-view scroll sequence.
@@ -44,8 +44,11 @@ const DEPTH = [
 export default function ExplodedMenu() {
   const ref = useRef<HTMLElement>(null);
   const narrow = useIsNarrow();
+  const lowPower = useIsLowPower();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const p = useSpring(scrollYProgress, { stiffness: 90, damping: 26, restDelta: 0.001 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 26, restDelta: 0.001 });
+  /* Phones follow the finger directly; a spring there feels like lag. */
+  const p = lowPower ? scrollYProgress : smooth;
 
   /* Whole stage slowly rotates, like turning a product in your hand. */
   const stageRx = useTransform(p, [0, 0.5, 1], [18, 6, 0]);
@@ -68,7 +71,7 @@ export default function ExplodedMenu() {
     <section id="menu-3d" ref={ref} className="relative h-[280vh] sm:h-[320vh]">
       <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden">
         {/* stage light */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.35),rgba(143,62,240,0.15)_55%,transparent)] blur-2xl" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(214,51,159,0.35),rgba(143,62,240,0.15)_55%,transparent)] md:blur-2xl" />
 
         <motion.div
           style={{ opacity: introOpacity }}

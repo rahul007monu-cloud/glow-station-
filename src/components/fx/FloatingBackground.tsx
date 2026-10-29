@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
+import { useIsLowPower } from '@/lib/device';
 
 type Blob = {
   size: number;
@@ -19,53 +20,65 @@ const BLOBS: Blob[] = [
 
 /**
  * The signature "floating" layer: soft drifting orbs, twinkling dust and a
- * slow-rotating gold ring. Purely decorative, so it is hidden from a11y tools
- * and it stops animating when the user prefers reduced motion (CSS handles it).
+ * slow-rotating gold ring. Purely decorative, so it is hidden from a11y tools.
+ *
+ * On phones the orbs stay still and unblurred (their radial gradient is
+ * already soft), the big spinning ring is skipped and there is less dust:
+ * this layer is fixed behind everything, so any motion here is recomposited
+ * on every scroll frame.
  */
 export default function FloatingBackground() {
+  const lowPower = useIsLowPower();
   const dust = useMemo(
     () =>
-      Array.from({ length: 26 }, (_, i) => ({
+      Array.from({ length: lowPower ? 10 : 26 }, (_, i) => ({
         id: i,
         left: `${(i * 37) % 100}%`,
         top: `${(i * 53) % 100}%`,
         size: 1 + ((i * 7) % 3),
         delay: (i % 9) * 0.4,
       })),
-    [],
+    [lowPower],
   );
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {BLOBS.map((blob, i) => (
-        <motion.span
-          key={i}
-          className="absolute rounded-full blur-3xl"
-          style={{
-            width: blob.size,
-            height: blob.size,
-            top: blob.top,
-            left: blob.left,
-            background: `radial-gradient(circle at 30% 30%, ${blob.hue}, transparent 70%)`,
-          }}
-          animate={{
-            y: [0, -38, 12, 0],
-            x: [0, 22, -18, 0],
-            scale: [1, 1.08, 0.96, 1],
-          }}
-          transition={{
-            duration: blob.duration,
-            delay: blob.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
+      {BLOBS.map((blob, i) => {
+        const style = {
+          width: blob.size,
+          height: blob.size,
+          top: blob.top,
+          left: blob.left,
+          background: `radial-gradient(circle at 30% 30%, ${blob.hue}, transparent 70%)`,
+        };
+        return lowPower ? (
+          <span key={i} className="absolute rounded-full" style={style} />
+        ) : (
+          <motion.span
+            key={i}
+            className="absolute rounded-full blur-3xl"
+            style={style}
+            animate={{
+              y: [0, -38, 12, 0],
+              x: [0, 22, -18, 0],
+              scale: [1, 1.08, 0.96, 1],
+            }}
+            transition={{
+              duration: blob.duration,
+              delay: blob.delay,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        );
+      })}
 
       {/* Slow gold ring behind the hero */}
-      <div className="absolute left-1/2 top-[8%] h-[46rem] w-[46rem] -translate-x-1/2 animate-spin-slow rounded-full border border-gold-300/10">
-        <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-gold-200/70 blur-[1px]" />
-      </div>
+      {!lowPower && (
+        <div className="absolute left-1/2 top-[8%] h-[46rem] w-[46rem] -translate-x-1/2 animate-spin-slow rounded-full border border-gold-300/10">
+          <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-gold-200/70 blur-[1px]" />
+        </div>
+      )}
 
       {/* Floating dust */}
       {dust.map((d) => (

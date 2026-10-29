@@ -1,4 +1,4 @@
-import { animate, motion, useMotionValue, useReducedMotion } from 'framer-motion';
+import { animate, motion, useInView, useMotionValue, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { asset } from '@/data/salon';
 import { useIsNarrow, useIsTouch } from '@/lib/device';
@@ -15,12 +15,15 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
   const touch = useIsTouch();
   const narrow = useIsNarrow();
   const spin = useRef<ReturnType<typeof animate> | null>(null);
+  const box = useRef<HTMLDivElement>(null);
+  /* Only spin while the ring is on screen. */
+  const inView = useInView(box, { margin: '100px' });
   const step = 360 / items.length;
   /* Smaller cylinder on phones so the front card never fills the screen. */
   const r = narrow ? Math.round(radius * 0.5) : radius;
 
   const startSpin = () => {
-    if (reduced) return;
+    if (reduced || !inView) return;
     spin.current?.stop();
     spin.current = animate(rotate, rotate.get() - 360, {
       duration: 40,
@@ -34,10 +37,11 @@ export default function PhotoRing({ items, radius = 420 }: { items: Item[]; radi
     startSpin();
     return () => spin.current?.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduced]);
+  }, [reduced, inView]);
 
   return (
     <div
+      ref={box}
       className={`relative h-[22rem] w-full select-none overflow-hidden sm:h-[28rem] ${touch ? '' : 'cursor-grab active:cursor-grabbing'}`}
       style={{ perspective: '1100px', touchAction: 'pan-y' }}
     >
