@@ -7,8 +7,10 @@ import FloatingActions from '@/components/layout/FloatingActions';
 import Footer from '@/components/layout/Footer';
 import MobileDock from '@/components/layout/MobileDock';
 import Navbar from '@/components/layout/Navbar';
+import InstallAppBanner from '@/components/marketing/InstallAppBanner';
 import WelcomeOffer from '@/components/marketing/WelcomeOffer';
 import { BookingProvider, useBooking } from '@/context/BookingProvider';
+import { salon } from '@/data/salon';
 import Admin from '@/pages/Admin';
 import Home from '@/pages/Home';
 import OfferLanding from '@/pages/OfferLanding';
@@ -60,6 +62,7 @@ function Chrome() {
       <Navbar />
       {!isLanding && <MobileDock />}
       {isHome && <WelcomeOffer />}
+      {!isLanding && route !== '/admin' && <InstallAppBanner />}
     </>
   );
 }
@@ -80,7 +83,7 @@ function RouteEffects() {
       document.getElementById('rewards')?.scrollIntoView({ behavior: 'smooth' });
     }
     const ref = params.get('ref');
-    if (ref) openBooking({ coupon: 'FRIEND20', from: `referral-${ref}` });
+    if (ref) openBooking({ coupon: salon.referral.code, from: `referral-${ref}` });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 

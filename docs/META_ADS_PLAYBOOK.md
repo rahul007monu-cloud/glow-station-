@@ -9,7 +9,7 @@ ek dedicated landing page (`/offer`). Neeche step-by-step plan hai.
 ## 1. Setup (one time, ~30 minutes)
 
 1. **Meta Business Suite** account banao → business.facebook.com
-2. Instagram (`@glow_station_luxe_salon`) ko Business/Creator account banao aur
+2. Instagram (`@divine_touch_`) ko Business/Creator account banao aur
    Facebook Page se connect karo. **Ads ke liye Facebook Page zaroori hai.**
 3. Events Manager → Data Sources → **Create Pixel** → Pixel ID copy karo.
 4. Us ID ko GitHub → Settings → Secrets → `VITE_META_PIXEL_ID` me daalo aur
@@ -36,7 +36,7 @@ ek dedicated landing page (`/offer`). Neeche step-by-step plan hai.
 Har event ke saath `utm_*` aur `fbclid` bhi jaate hain, aur WhatsApp message me
 lead source likha hota hai — isse pata chalta hai kaunsa ad paisa kama raha hai.
 
-## 3. Campaign structure (chhote salon ke liye best)
+## 3. Campaign structure (solo beauty business ke liye best)
 
 Do campaign kaafi hain:
 
@@ -44,23 +44,23 @@ Do campaign kaafi hain:
 - **Objective:** Leads (ya Sales if you set up Conversions API later)
 - **Conversion location:** Website · **Event:** `Lead`
 - **Ad sets (ek-ek se shuru karo):**
-  1. **Local cold** — 3–5 km radius around the salon, age 18–45, all genders
+  1. **Local cold** — jitne area me home service dete ho (5–8 km radius), women 20–45
      (women-only ad set alag banao agar bridal push karna hai)
-  2. **Interest layer** — beauty salon, haircut, bridal makeup, skincare
+  2. **Interest layer** — beauty salon, bridal makeup, skincare, waxing, facial
 - **Destination:** `/offer?utm_source=meta&utm_medium=paid&utm_campaign=first-visit-25`
 - **Placements:** Advantage+ (Meta ko choose karne do)
 
 ### B. "Retargeting" campaign — jo aaye lekin book nahi kiya
 - **Audience:** Website visitors 30 days (Pixel), minus `Schedule` karne wale
 - **Plus:** Instagram engagers 365 days
-- **Message:** package/membership push, ya "aapka GLOW25 code abhi valid hai"
+- **Message:** package/membership push, ya "aapka DIVINE10 code abhi valid hai"
 - **Budget:** total ka ~25%
 
 ### C. WhatsApp click-to-message ads (optional, bahut effective)
 - Objective: Engagement → Messaging apps → WhatsApp
 - Sasta lead source, lekin lead Pixel me nahi aayega — inhe alag track karo.
 
-## 4. Budget plan (India, local salon)
+## 4. Budget plan (India, local beauty service)
 
 | Phase | Daily budget | Kya karna hai |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ Do campaign kaafi hain:
 | Week 3–4 (scale) | ₹600–1,000/day | jo ad set kaam kar raha hai usi ka budget 20% badhao, baaki band |
 | Ongoing | 15–20% of monthly revenue target | 70% leads / 25% retargeting / 5% new creative testing |
 
-Target benchmarks (Tier-2/3 India, salon): cost per lead ₹40–₹120, lead→visit
+Target benchmarks (Tier-2/3 India, home beauty services): cost per lead ₹40–₹120, lead→visit
 conversion 25–40%. Har lead ka ₹ value nikaalne ke liye average bill × repeat
 rate use karo — package bikta hai to CPL ₹200 bhi profitable hai.
 
@@ -80,7 +80,7 @@ rate use karo — package bikta hai to CPL ₹200 bhi profitable hai.
 3. **Static offer post** — bada discount number, price, address, "Book on WhatsApp"
 
 **Rules:**
-- Har creative me salon ka naam aur area likho (local relevance)
+- Har creative me Divine Touch ka naam aur service area likho (local relevance)
 - Text image ke 20% se kam rakho
 - Face + emotion dikhao, sirf product nahi
 - 3 creative har 2 hafte me refresh karo (ad fatigue)
@@ -88,23 +88,23 @@ rate use karo — package bikta hai to CPL ₹200 bhi profitable hai.
 **Ad copy templates (Hinglish — jaisa local audience padhta hai):**
 
 > **Primary text A (offer)**
-> Pehli visit par **25% OFF** ✨
-> Haircut, facial, nails ya bridal — sab ek premium studio me.
-> ✔️ Certified stylists ✔️ 100% original products ✔️ Fixed slot, no waiting
-> 📍 {Area}, {City} · Book on WhatsApp 👇
-> *Headline:* 25% OFF first visit · *CTA:* Book Now
+> Pehli service par **10% OFF** ✨ — for discovering us!
+> Facial, waxing, mani-pedi ya party makeup — ghar baithe, Diksha Gupta ke haathon.
+> ✔ Certified professional ✔ Premium products ✔ Hygienic & safe
+> 📍 Home service in {City} · Book on WhatsApp 👇
+> *Headline:* 10% OFF first service · *CTA:* Book Now
 
 > **Primary text B (package / USP push)**
-> Har mahine salon jaate ho? Phir full price kyun? 💸
-> Glow Member: haircut + clean-up + threading sirf ₹1,499 (₹2,400 value).
-> Priority slot + same senior stylist + free consultation.
-> Sirf 8 seats is mahine.
-> *Headline:* Save ₹900 every month · *CTA:* Learn More
+> Har mahine parlour jaane ka time nahi? 💸
+> Monthly Divine Care: threading + Rica arms & legs + fruit facial + head massage
+> sirf ₹1,599 (₹2,177 value) — sab ek visit me, aapke ghar par.
+> *Headline:* Save ₹578 every month · *CTA:* Learn More
 
 > **Primary text C (bridal)**
 > Shaadi 60 din door hai? 👰
-> Bridal pre-wedding pack: 4 facials, body polishing, hair spa, HD makeup with
-> trial — ₹24,999 (₹32,000 value). Early-bird par ₹3,000 extra off.
+> Bridal Divine Pack: bridal makeup with trial, 3 glow facials, body polishing,
+> Rica wax, spa mani-pedi — ₹18,999 (₹22,991 value). Early-bird par 10% extra off.
+> Ek artist, limited brides per month.
 > *Headline:* Bridal glow, perfectly planned · *CTA:* Send Message
 
 ## 6. Retargeting audiences banane ka tareeka
@@ -140,4 +140,4 @@ offer clarity theek karo — ad theek hai.
 - **Conversions API** — iOS tracking loss recover karne ke liye (server needed)
 - **WhatsApp Business API** — automatic confirmation + reminder messages
 - **Online payment** (Razorpay) — advance booking se no-show 60% tak kam hota hai
-- **Google Ads Search** — "salon near me" jaise high-intent keywords
+- **Google Ads Search** — "makeup artist near me", "home beauty services" jaise high-intent keywords

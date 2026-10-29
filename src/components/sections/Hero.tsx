@@ -1,23 +1,19 @@
 import { motion } from 'framer-motion';
-import { CalendarHeart, Instagram, MapPin, MessageCircle, Star } from 'lucide-react';
+import { CalendarHeart, Home as HomeIcon, Instagram, MessageCircle, Sparkles } from 'lucide-react';
 import Marquee from '@/components/fx/Marquee';
+import Logo from '@/components/layout/Logo';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { useBooking } from '@/context/BookingProvider';
 import { categories, salon } from '@/data/salon';
 import { track } from '@/lib/analytics';
 import { waLink } from '@/lib/booking';
 
-const brands = [
-  "L'Oréal Professionnel",
-  'Schwarzkopf',
-  'Kérastase',
-  'O3+',
-  'Rica Wax',
-  'Olaplex',
-];
+/** Short label for the orbiting chips ("Waxing & Hair Removal" -> "Waxing"). */
+const short = (name: string) => name.split(/[\s/&]+/)[0];
 
 export default function Hero() {
   const { openBooking } = useBooking();
+  const welcome = salon.welcomeOffer;
 
   return (
     <section id="top" className="relative px-5 pb-16 pt-32 sm:px-8 md:pt-44">
@@ -28,29 +24,39 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 rounded-full border border-gold-300/25 bg-gold-300/[0.08] px-4 py-1.5 text-xs text-gold-100 backdrop-blur"
+            className="inline-flex items-center gap-2 rounded-full border border-rose-400/30 bg-rose-500/10 px-4 py-1.5 text-xs text-rose-200 backdrop-blur"
           >
-            <Star size={13} className="fill-gold-300 text-gold-300" />
-            {salon.stats[0].value} on Google · {salon.stats[1].value} happy clients
+            <HomeIcon size={13} className="text-gold-300" />
+            Doorstep beauty services · by {salon.owner}
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-shadow-luxe mt-6 text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.2rem]"
+            className="text-shadow-luxe mt-6 text-[3rem] leading-[1] sm:text-7xl lg:text-[5rem]"
           >
-            {salon.name} <span className="gold-text">{salon.suffix}</span>
-            <span className="mt-3 block font-sans text-base font-light tracking-[0.2em] text-white/50 sm:text-lg">
+            <span className="gold-text">{salon.name}</span>{' '}
+            <span className="script text-[1.15em] text-rose-300">{salon.suffix}</span>
+            <span className="mt-4 block font-sans text-sm font-light tracking-[0.3em] text-white/55 sm:text-base">
               {salon.tagline.toUpperCase()}
             </span>
           </motion.h1>
 
           <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="script mt-4 text-3xl text-gold-200 sm:text-4xl"
+          >
+            {salon.motto}
+          </motion.p>
+
+          <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-6 max-w-xl text-[0.95rem] leading-relaxed text-white/65 sm:text-lg"
+            className="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-white/65 sm:text-lg"
           >
             {salon.intro}
           </motion.p>
@@ -66,17 +72,17 @@ export default function Hero() {
               icon={<CalendarHeart size={18} />}
               onClick={() => openBooking({ from: 'hero' })}
             >
-              Book your slot
+              Book your appointment
             </Button>
             <LinkButton
               size="lg"
               variant="whatsapp"
               external
-              href={waLink(`Hi ${salon.legalName}! Aaj ka slot available hai?`)}
+              href={waLink(`Hi ${salon.owner}! ${salon.legalName} ki service book karni hai. Slot available hai?`)}
               icon={<MessageCircle size={18} />}
               onClick={() => track('Contact', { method: 'whatsapp', placement: 'hero' })}
             >
-              WhatsApp us
+              WhatsApp
             </LinkButton>
             <LinkButton
               size="lg"
@@ -85,7 +91,7 @@ export default function Hero() {
               href={salon.instagram}
               icon={<Instagram size={18} />}
             >
-              See our work
+              {salon.instagramHandle}
             </LinkButton>
           </motion.div>
 
@@ -115,16 +121,24 @@ export default function Hero() {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="absolute inset-0"
           >
-            {/* central glowing plate */}
-            <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 animate-floaty-slow rounded-full border border-gold-300/25 bg-gradient-to-br from-gold-300/20 via-rose-400/10 to-lilac-400/20 backdrop-blur-xl">
-              <div className="flex h-full flex-col items-center justify-center text-center">
-                <p className="font-display text-5xl text-gold-100">
-                  {salon.stats[2].value}
-                </p>
-                <p className="mt-1 px-6 text-[0.68rem] uppercase tracking-[0.25em] text-white/60">
-                  expert artists ready for you
-                </p>
-              </div>
+            {/* central glowing plate with the flyer offer */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <button
+              onClick={() => openBooking({ from: 'hero-orb', coupon: welcome.code })}
+              className="block h-56 w-56 animate-floaty-slow rounded-full border border-gold-300/30 bg-gradient-to-br from-lilac-500/30 via-rose-500/20 to-gold-300/20 backdrop-blur-xl transition hover:shadow-glow-rose"
+              aria-label={`Book with ${welcome.code}`}
+            >
+              <span className="flex h-full flex-col items-center justify-center text-center">
+                <Logo className="h-12 w-12" />
+                <span className="mt-2 font-display text-5xl text-gold-100">10% OFF</span>
+                <span className="mt-1 px-6 text-[0.65rem] uppercase tracking-[0.22em] text-white/65">
+                  for discovering us
+                </span>
+                <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-black/30 px-3 py-1 font-mono text-[0.65rem] tracking-[0.2em] text-gold-200">
+                  <Sparkles size={10} /> {welcome.code}
+                </span>
+              </span>
+            </button>
             </div>
 
             {/* orbiting category chips */}
@@ -137,37 +151,27 @@ export default function Hero() {
                 <motion.a
                   key={c.id}
                   href="#services"
-                  className="glass absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full px-3 py-2 text-xs text-white/80 hover:border-gold-300/40 hover:text-white"
+                  className="glass absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs text-white/80 hover:border-rose-300/40 hover:text-white"
                   style={{ left: `${left}%`, top: `${top}%` }}
                   animate={{ y: [0, -10, 0] }}
                   transition={{
-                    duration: 4 + i * 0.6,
+                    duration: 4 + i * 0.5,
                     repeat: Infinity,
                     ease: 'easeInOut',
-                    delay: i * 0.3,
+                    delay: i * 0.25,
                   }}
                 >
                   <span aria-hidden>{c.glyph}</span>
-                  <span className="whitespace-nowrap">{c.name}</span>
+                  <span className="whitespace-nowrap">{short(c.name)}</span>
                 </motion.a>
               );
             })}
           </motion.div>
-
-          <a
-            href={salon.mapsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glass absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full px-4 py-2 text-xs text-white/70 hover:text-white"
-          >
-            <MapPin size={13} className="text-gold-300" />
-            {salon.address.city} · Get directions
-          </a>
         </div>
       </div>
 
       <div className="shell mt-14">
-        <Marquee items={brands} />
+        <Marquee items={categories.map((c) => c.name)} />
       </div>
     </section>
   );

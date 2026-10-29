@@ -5,6 +5,7 @@ import {
   BadgePercent,
   CalendarDays,
   Check,
+  MapPin,
   MessageCircle,
   Plus,
   Sparkles,
@@ -15,7 +16,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { TextArea, TextField } from '@/components/ui/Field';
 import Modal from '@/components/ui/Modal';
 import { useBooking } from '@/context/BookingProvider';
-import { allServices, categories, formatINR, salon, stylists } from '@/data/salon';
+import { allServices, categories, enabledModes, formatINR, salon } from '@/data/salon';
 import { track, trackCustom } from '@/lib/analytics';
 import {
   bookingMessage,
@@ -33,14 +34,14 @@ import {
 } from '@/lib/booking';
 import { addVisit } from '@/lib/loyalty';
 
-const steps = ['Service', 'Date & time', 'Your details', 'Done'] as const;
+const steps = ['Service', 'Date, time & place', 'Your details', 'Done'] as const;
 
 export default function BookingModal() {
   const { open, closeBooking, initialServiceIds, initialCoupon } = useBooking();
   const [step, setStep] = useState(0);
   const [draft, setDraft] = useState<BookingDraft>(emptyDraft);
   const [confirmed, setConfirmed] = useState<BookingRecord | null>(null);
-  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; address?: string }>({});
 
   /* Reset the flow every time the sheet is opened. */
   useEffect(() => {
@@ -103,6 +104,8 @@ export default function BookingModal() {
     if (draft.name.trim().length < 2) nextErrors.name = 'Naam likhiye';
     if (!/^[+]?[0-9\s-]{10,15}$/.test(draft.phone.trim()))
       nextErrors.phone = '10-digit mobile number daaliye';
+    if (draft.mode === 'home' && draft.address.trim().length < 8)
+      nextErrors.address = 'Home visit ke liye address / area + landmark likhiye';
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
@@ -201,7 +204,7 @@ export default function BookingModal() {
           </motion.div>
         )}
 
-        {/* ── Step 2: date, time, stylist ───────────────────── */}
+        {/* ── Step 2: date, time, location ──────────────────── */}
         {step === 1 && (
           <motion.div
             key="s1"
@@ -255,28 +258,38 @@ export default function BookingModal() {
               ))}
             </div>
 
-            <p className="mb-2 mt-6 text-xs uppercase tracking-[0.2em] text-gold-300/80">
-              Preferred stylist (optional)
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setDraft((x) => ({ ...x, stylistId: undefined }))}
-                className={`chip ${!draft.stylistId ? 'border-gold-300/60 text-gold-100' : ''}`}
-              >
-                Any available
-              </button>
-              {stylists.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setDraft((x) => ({ ...x, stylistId: s.name }))}
-                  className={`chip ${
-                    draft.stylistId === s.name ? 'border-gold-300/60 text-gold-100' : ''
-                  }`}
-                >
-                  {s.name}
-                </button>
-              ))}
-            </div>
+            {enabledModes.length > 1 && (
+              <>
+                <p className="mb-2 mt-6 flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-gold-300/80">
+                  <MapPin size={13} /> Service kahan chahiye?
+                </p>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {enabledModes.map((m) => {
+                    const mode = salon.serviceModes[m];
+                    const active = draft.mode === m;
+                    return (
+                      <button
+                        key={m}
+                        onClick={() => setDraft((x) => ({ ...x, mode: m }))}
+                        className={`rounded-2xl border px-4 py-3 text-left transition ${
+                          active
+                            ? 'border-gold-300/60 bg-gold-300/[0.12] shadow-glow'
+                            : 'border-white/10 bg-white/[0.03] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="block text-sm font-medium text-white">
+                          {m === 'home' ? '🏡' : '🌸'} {mode.label}
+                        </span>
+                        <span className="mt-0.5 block text-xs text-white/45">{mode.detail}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+            {draft.mode === 'home' && salon.serviceModes.home.travelNote && (
+              <p className="mt-2 text-xs text-white/40">{salon.serviceModes.home.travelNote}</p>
+            )}
           </motion.div>
         )}
 
@@ -308,9 +321,20 @@ export default function BookingModal() {
               hint="Isi number par confirmation aayega."
               onChange={(e) => setDraft((x) => ({ ...x, phone: e.target.value }))}
             />
+            {draft.mode === 'home' && (
+              <TextArea
+                label="Home address"
+                required
+                placeholder="House no., society / colony, area, landmark"
+                value={draft.address}
+                error={errors.address}
+                hint="Sirf aapke ghar pahunchne ke liye use hoga."
+                onChange={(e) => setDraft((x) => ({ ...x, address: e.target.value }))}
+              />
+            )}
             <TextField
               label="Coupon code"
-              placeholder="GLOW25"
+              placeholder={salon.welcomeOffer.code}
               value={draft.couponCode}
               onChange={(e) =>
                 setDraft((x) => ({ ...x, couponCode: e.target.value.toUpperCase() }))
@@ -325,7 +349,7 @@ export default function BookingModal() {
             />
             <TextArea
               label="Anything we should know?"
-              placeholder="Allergy, hair length, preferred look, reference photo…"
+              placeholder="Skin type, allergy, outfit / event, preferred look…"
               value={draft.notes}
               onChange={(e) => setDraft((x) => ({ ...x, notes: e.target.value }))}
             />
@@ -346,11 +370,12 @@ export default function BookingModal() {
             <p className="mt-4 text-sm text-white/70">
               Ref <strong className="text-gold-100">{confirmed.id}</strong> · {confirmed.serviceNames.join(' + ')}
               <br />
-              {prettyDate(confirmed.date)} at {confirmed.time}
+              {prettyDate(confirmed.date)} at {confirmed.time} ·{' '}
+              {confirmed.mode === 'home' ? 'Home visit' : 'At studio'}
             </p>
             <p className="mt-3 text-xs leading-relaxed text-white/50">
-              Last step: neeche button dabao — aapki details WhatsApp par hamare paas chali jayengi
-              aur hum 10 minute me slot confirm kar denge.
+              Last step: neeche button dabao — aapki details {salon.owner} ke WhatsApp par chali
+              jayengi aur woh jaldi slot confirm kar dengi.
             </p>
 
             <LinkButton
@@ -394,6 +419,7 @@ export default function BookingModal() {
               <span className="text-white/55">
                 {draft.serviceIds.length} service · ~{duration} min
                 {draft.time ? ` · ${prettyDate(draft.date)}, ${draft.time}` : ''}
+                {step > 0 && enabledModes.length > 1 ? (draft.mode === 'home' ? ' · 🏡' : ' · 🌸') : ''}
               </span>
               <span className="text-right">
                 {discount.amount > 0 && (

@@ -5,12 +5,12 @@ import { salon } from '@/data/salon';
 export default function WhyUs() {
   return (
     <Section
-      eyebrow="Why Glow Station"
-      title="Sirf service nahi,"
-      highlight="ek experience"
-      subtitle="Hamare 4 promises jo har visit par constant rehte hain."
+      eyebrow="Why choose us"
+      title="The Divine"
+      highlight="promise"
+      subtitle="Har appointment par yahi promises — chahe service ghar par ho ya studio par."
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {salon.usps.map((u, i) => (
           <Reveal key={u.title} delay={i * 0.09} from="scale">
             <div className="float-card group relative h-full overflow-hidden p-6">

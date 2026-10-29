@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { TextField } from '@/components/ui/Field';
 import { formatINR, salon } from '@/data/salon';
 import {
+  modeLabel,
   bookingsToCSV,
   getBookings,
   prettyDate,
@@ -54,7 +55,7 @@ export default function Admin() {
           </span>
           <h1 className="mt-4 text-center font-display text-2xl text-white">Owner dashboard</h1>
           <p className="mt-1.5 text-center text-sm text-white/50">
-            {salon.legalName} staff only.
+            {salon.legalName} owner only.
           </p>
           <form
             className="mt-6 space-y-3"
@@ -141,9 +142,12 @@ export default function Admin() {
                 <p className="mt-3 text-sm text-white/70">{b.serviceNames.join(' + ')}</p>
                 <p className="mt-1 text-xs text-white/45">
                   {prettyDate(b.date)} · {b.time} · {b.estimatedMinutes} min ·{' '}
-                  {b.stylistId ?? 'Any stylist'}
+                  {modeLabel(b)}
                   {b.couponCode ? ` · coupon ${b.couponCode}` : ''}
                 </p>
+                {b.mode === 'home' && b.address && (
+                  <p className="mt-1 text-xs text-white/60">🏠 {b.address}</p>
+                )}
                 {b.notes && <p className="mt-2 text-xs italic text-white/50">“{b.notes}”</p>}
 
                 <div className="mt-4 flex flex-wrap items-center gap-2">

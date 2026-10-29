@@ -26,7 +26,7 @@ Secrets are baked in at build time, so re-run the workflow after adding them.
 
 ## Custom domain (recommended before advertising)
 
-A real domain (`glowstationluxesalon.com`) looks more trustworthy in ads and
+A real domain (e.g. `divinetouchbydiksha.in`) looks more trustworthy in ads and
 ranks better locally.
 
 1. Buy the domain (GoDaddy / Namecheap / Hostinger).
@@ -55,7 +55,7 @@ Both are free for this size and give instant rollbacks + preview URLs.
 
 - [ ] Real WhatsApp number in `salon.whatsapp` (test a booking end-to-end)
 - [ ] Real address + Google Maps embed
-- [ ] Real prices verified with the salon owner
+- [ ] Real prices verified with Diksha
 - [ ] `VITE_ADMIN_PIN` changed
 - [ ] At least 6 real photos in the gallery
 - [ ] Meta Pixel id added and "Test events" showing green in Events Manager

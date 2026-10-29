@@ -44,7 +44,7 @@ export type ReferralState = { code: string; shares: number };
 export function getReferral(): ReferralState {
   const existing = read<ReferralState | null>(KEYS.referral, null);
   if (existing?.code) return existing;
-  const code = `GLOW-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+  const code = `DIVINE-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
   const fresh = { code, shares: 0 };
   write(KEYS.referral, fresh);
   return fresh;

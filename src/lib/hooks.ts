@@ -23,31 +23,51 @@ type BeforeInstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 };
 
+/*
+ * The browser fires `beforeinstallprompt` once, often before React mounts.
+ * Capture it at module load and share it with every component that wants an
+ * "Install app" button (banner, menu, rewards card).
+ */
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
+let appInstalled = false;
+const installListeners = new Set<() => void>();
+const notifyInstall = () => installListeners.forEach((fn) => fn());
+
+if (typeof window !== 'undefined') {
+  appInstalled =
+    window.matchMedia?.('(display-mode: standalone)').matches ||
+    // iOS Safari home-screen apps
+    (navigator as Navigator & { standalone?: boolean }).standalone === true;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    notifyInstall();
+  });
+  window.addEventListener('appinstalled', () => {
+    appInstalled = true;
+    deferredPrompt = null;
+    notifyInstall();
+  });
+}
+
 /**
  * Native "Add to Home Screen" support. On iOS Safari there is no event, so we
  * fall back to showing manual instructions.
  */
 export function useInstallPrompt() {
-  const [event, setEvent] = useState<BeforeInstallPromptEvent | null>(null);
-  const [installed, setInstalled] = useState(false);
+  const [event, setEvent] = useState<BeforeInstallPromptEvent | null>(deferredPrompt);
+  const [installed, setInstalled] = useState(appInstalled);
 
   useEffect(() => {
-    const onPrompt = (e: Event) => {
-      e.preventDefault();
-      setEvent(e as BeforeInstallPromptEvent);
+    const sync = () => {
+      setEvent(deferredPrompt);
+      setInstalled(appInstalled);
     };
-    const onInstalled = () => {
-      setInstalled(true);
-      setEvent(null);
-    };
-    window.addEventListener('beforeinstallprompt', onPrompt);
-    window.addEventListener('appinstalled', onInstalled);
-
-    if (window.matchMedia('(display-mode: standalone)').matches) setInstalled(true);
-
+    sync();
+    installListeners.add(sync);
     return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt);
-      window.removeEventListener('appinstalled', onInstalled);
+      installListeners.delete(sync);
     };
   }, []);
 
@@ -55,8 +75,9 @@ export function useInstallPrompt() {
     if (!event) return 'unavailable' as const;
     await event.prompt();
     const { outcome } = await event.userChoice;
-    if (outcome === 'accepted') setInstalled(true);
-    setEvent(null);
+    if (outcome === 'accepted') appInstalled = true;
+    deferredPrompt = null;
+    notifyInstall();
     return outcome;
   }, [event]);
 

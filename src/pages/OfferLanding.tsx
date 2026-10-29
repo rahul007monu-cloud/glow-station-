@@ -72,12 +72,16 @@ export default function OfferLanding() {
               transition={{ delay: 0.08 }}
               className="text-shadow-luxe mt-4 text-4xl leading-[1.08] sm:text-6xl"
             >
-              {offer.title} <span className="gold-text">at {salon.name}</span>
+              {offer.title}{' '}
+              <span className="whitespace-nowrap">
+                <span className="gold-text">at {salon.name}</span>{' '}
+                <span className="script text-rose-300">{salon.suffix}</span>
+              </span>
             </motion.h1>
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/65">
-              {offer.detail} Certified stylists, 100% original products aur ek fixed slot — waiting
-              zero. Form bharo, hum WhatsApp par turant confirm karenge.
+              {offer.detail} {salon.owner} khud aapke ghar aakar service karti hain — premium
+              products, sanitised kit, aur aapke time par. Form bharo, WhatsApp par turant confirm.
             </p>
 
             {t.total > 0 && (
@@ -100,10 +104,10 @@ export default function OfferLanding() {
 
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {[
-                'Certified & trained stylists',
-                'Only branded, original products',
-                'Sanitised tools, single-use disposables',
-                'Fixed appointment, no queue',
+                'Experienced & certified professional',
+                'Premium quality products',
+                'Hygienic & safe — single-use disposables',
+                'Ghar par service, no waiting',
               ].map((point) => (
                 <li key={point} className="flex items-start gap-2 text-sm text-white/70">
                   <BadgeCheck size={16} className="mt-0.5 shrink-0 text-gold-300" />
@@ -114,14 +118,13 @@ export default function OfferLanding() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="chip">
-                <Star size={12} className="fill-gold-300 text-gold-300" /> {salon.stats[0].value}{' '}
-                Google rating
+                <Star size={12} className="fill-gold-300 text-gold-300" /> Satisfaction guaranteed
               </span>
               <span className="chip">
-                <ShieldCheck size={12} className="text-gold-300" /> Hygiene certified
+                <ShieldCheck size={12} className="text-gold-300" /> Hygienic & safe
               </span>
               <span className="chip">
-                <MapPin size={12} className="text-gold-300" /> {salon.address.city}
+                <MapPin size={12} className="text-gold-300" /> Home service · {salon.address.city}
               </span>
               <span className="chip">
                 <Clock size={12} className="text-gold-300" /> {salon.hours.weekdays}
@@ -198,11 +201,11 @@ export default function OfferLanding() {
         {/* ── Package upsell ─────────────────────────────────── */}
         <section className="mt-20">
           <h2 className="text-center font-display text-3xl text-white">
-            Ek baar aane wale nahi, <span className="gold-text">regular banne wale</span> deals
+            Combine karo, <span className="gold-text">aur bachao</span>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-center text-sm text-white/55">
-            Discount ek visit ka fayda deta hai — package saal bhar ka. Neeche dekhiye kitna bachta
-            hai.
+            Ek visit me multiple services — package lene par seedha saving. Neeche dekhiye kitna
+            bachta hai.
           </p>
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
@@ -229,7 +232,7 @@ export default function OfferLanding() {
                     className="mt-5"
                     external
                     href={waLink(
-                      `Hi ${salon.legalName}! Mujhe *${p.name}* chahiye. Details bhejiye.`,
+                      `Hi ${salon.owner}! Mujhe *${p.name}* chahiye. Details bhejiye.`,
                     )}
                     onClick={() =>
                       track('Lead', {
@@ -256,7 +259,7 @@ export default function OfferLanding() {
           size="lg"
           variant="whatsapp"
           external
-          href={waLink(`Hi ${salon.legalName}! ${offer.title} chahiye. Code: ${offer.code}`)}
+          href={waLink(`Hi ${salon.owner}! ${offer.title} chahiye. Code: ${offer.code}`)}
           icon={<MessageCircle size={18} />}
           onClick={() => track('Contact', { method: 'whatsapp', placement: 'offer-sticky' })}
         >

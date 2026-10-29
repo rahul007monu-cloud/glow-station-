@@ -5,9 +5,9 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: '#0b0710',
-          soft: '#130c1c',
-          card: '#1a1026',
+          DEFAULT: '#0d0618',
+          soft: '#160a28',
+          card: '#1f0f38',
         },
         gold: {
           50: '#fdf8ec',
@@ -21,24 +21,27 @@ export default {
           800: '#5c3d11',
           900: '#3b280c',
         },
+        // Divine Touch flyer: hot magenta + royal purple on deep plum.
         rose: {
-          300: '#f7a8c4',
-          400: '#f177a5',
-          500: '#e14e86',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f062b8',
+          500: '#d6339f',
         },
         lilac: {
-          300: '#c7aaff',
-          400: '#a97dff',
-          500: '#8b5cf6',
+          300: '#d0a8ff',
+          400: '#b06cff',
+          500: '#8f3ef0',
         },
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        script: ['"Great Vibes"', '"Brush Script MT"', 'cursive'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
         glow: '0 0 40px -8px rgba(223, 177, 52, 0.45)',
-        'glow-rose': '0 0 44px -10px rgba(241, 119, 165, 0.5)',
+        'glow-rose': '0 0 44px -10px rgba(240, 98, 184, 0.55)',
         float: '0 30px 60px -24px rgba(0, 0, 0, 0.75)',
         inset: 'inset 0 1px 0 0 rgba(255,255,255,0.08)',
       },
@@ -46,7 +49,7 @@ export default {
         'gold-sheen':
           'linear-gradient(110deg, #815714 0%, #e7c35d 28%, #fdf8ec 45%, #e7c35d 62%, #a77616 100%)',
         'aurora':
-          'radial-gradient(60% 60% at 15% 10%, rgba(169,125,255,0.35) 0%, transparent 60%), radial-gradient(50% 50% at 85% 15%, rgba(241,119,165,0.3) 0%, transparent 60%), radial-gradient(60% 60% at 50% 100%, rgba(223,177,52,0.25) 0%, transparent 65%)',
+          'radial-gradient(60% 60% at 15% 10%, rgba(143,62,240,0.42) 0%, transparent 60%), radial-gradient(50% 50% at 85% 15%, rgba(214,51,159,0.38) 0%, transparent 60%), radial-gradient(60% 60% at 50% 100%, rgba(223,177,52,0.22) 0%, transparent 65%)',
         'glass':
           'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.05) 100%)',
       },

@@ -9,9 +9,11 @@ wahan asli information daalni hai.
 | --- | --- | --- |
 | `phone` | `salon.phone` | Call button kaam karega |
 | `whatsapp` | `salon.whatsapp` | **Booking isi number par aayegi.** Format: `91XXXXXXXXXX` (country code + number, no `+`, no space) |
-| `address` | `salon.address` | Footer, contact section aur Google me dikhega |
-| `mapsLink` / `mapsEmbed` | `salon` | Directions button + map |
-| `googleReviewLink` | `salon` | Review CTA (Google Business Profile → "Ask for reviews" link) |
+| `address.city` / `serviceAreas` | `salon` | Kin areas me home service milti hai — contact, footer, offer page |
+| `serviceModes` | `salon.serviceModes` | Home visit / studio on-off. Studio nahi hai to `studio.enabled: false` |
+| `mapsLink` / `mapsEmbed` | `salon` | Sirf studio ho to — khaali rahe to map ki jagah "home service" card dikhta hai |
+| `googleReviewLink` | `salon` | Review CTA. Khaali rahe to WhatsApp feedback button dikhta hai |
+| `artist` | `artist` (same file) | Diksha ka bio, experience, certificates, photo |
 | `hours` | `salon.hours` | Booking slots inhi timings se banti hain |
 
 > `hours.openHour` aur `hours.closeHour` 24-hour format me hain (10 = 10 AM,
@@ -54,7 +56,7 @@ karke value badal do.
 1. `offers` array me offer add karo (`code`, `expires`, `tone`).
 2. Us code ka discount % **`src/lib/booking.ts`** ke `COUPONS` object me daalo:
    ```ts
-   const COUPONS = { GLOW25: 25, HAPPY899: 15, DULHAN3000: 10, FRIEND20: 20 };
+   const COUPONS = { DIVINE10: 10, WEEKDAY15: 15, BRIDE10: 10, FRIEND10: 10 };
    ```
    Warna booking form "Ye code valid nahi hai" dikhayega.
 
@@ -68,20 +70,22 @@ Asli photos se conversion 2–3x hota hai. Steps:
    150 KB se kam rakho — site fast rahegi).
 2. `gallery` array me `src` set karo:
    ```ts
-   { id: 'g1', label: 'Balayage transformation', tag: 'Hair colour', src: 'images/balayage.jpg', tall: true },
+   { id: 'g1', label: 'Bridal glam look', tag: 'Makeup', src: 'images/bridal-1.jpg', tall: true },
    ```
-3. Staff photos ke liye `stylists` me `photo: 'images/aarti.jpg'`.
+3. Diksha ki photo ke liye `artist.photo = 'images/diksha.jpg'`.
+4. Asli reviews `testimonials` array me daalo (fake reviews kabhi nahi).
 
 Jab tak photo nahi hai, styled gradient tile dikhta hai — layout kabhi toota
 hua nahi lagta.
 
 ## 6. Logo
 
-`src/components/layout/Logo.tsx` me abhi "GS" monogram hai. Asli logo aane par:
+Abhi built-in "DT" vector monogram dikhta hai. Asli Divine Touch logo lagane ke liye:
 
-- SVG ho to us file ka content Logo component me paste kar do
-- PNG ho to `public/images/logo.png` rakho aur component me `<img>` use karo
-- Uske baad `npm run icons` chalao taaki app icon bhi match kare
+- Logo file (square PNG, transparent ya dark background, ~512px) `public/images/logo.png` me rakho
+- `salon.ts` me `logoSrc: 'images/logo.png'` likho — navbar, footer, menu sab jagah logo aa jayega
+- App icon bhi same chahiye to logo ko `public/icons/icon-192.png`, `icon-512.png`,
+  `apple-touch-icon.png` (180px) aur `maskable-512.png` (logo beech me, 20% padding) se replace karo
 
 ## 7. Text ki language
 

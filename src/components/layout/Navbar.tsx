@@ -1,21 +1,21 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { CalendarHeart, Menu, Phone, X } from 'lucide-react';
+import { CalendarHeart, Download, Menu, Phone, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '@/components/layout/Logo';
+import Logo, { Wordmark } from '@/components/layout/Logo';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { useBooking } from '@/context/BookingProvider';
 import { salon } from '@/data/salon';
-import { track } from '@/lib/analytics';
+import { track, trackCustom } from '@/lib/analytics';
 import { telLink } from '@/lib/booking';
-import { useScrolled } from '@/lib/hooks';
+import { useInstallPrompt, useScrolled } from '@/lib/hooks';
 
 const links = [
   { label: 'Services', href: '#services' },
+  { label: 'How it works', href: '#how-it-works' },
   { label: 'Packages', href: '#packages' },
   { label: 'Offers', href: '#offers' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Team', href: '#team' },
+  { label: 'About Diksha', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -23,6 +23,7 @@ export default function Navbar() {
   const scrolled = useScrolled(30);
   const [menuOpen, setMenuOpen] = useState(false);
   const { openBooking } = useBooking();
+  const { canInstall, installed, promptInstall } = useInstallPrompt();
 
   return (
     <>
@@ -39,14 +40,7 @@ export default function Navbar() {
         >
           <Link to="/" className="flex items-center gap-2.5" aria-label={salon.legalName}>
             <Logo className="h-9 w-9" />
-            <span className="leading-none">
-              <span className="block font-display text-lg tracking-wide text-white">
-                {salon.name}
-              </span>
-              <span className="block text-[0.6rem] uppercase tracking-[0.3em] text-gold-300/80">
-                {salon.suffix}
-              </span>
-            </span>
+            <Wordmark />
           </Link>
 
           <ul className="hidden items-center gap-1 lg:flex">
@@ -142,6 +136,19 @@ export default function Navbar() {
               <LinkButton full variant="dark" href={telLink()} icon={<Phone size={16} />}>
                 {salon.phone}
               </LinkButton>
+              {canInstall && !installed && (
+                <Button
+                  full
+                  variant="outline"
+                  icon={<Download size={16} />}
+                  onClick={async () => {
+                    const outcome = await promptInstall();
+                    trackCustom('AppInstallPrompt', { outcome, placement: 'mobile-menu' });
+                  }}
+                >
+                  Install the app
+                </Button>
+              )}
             </div>
           </motion.div>
         )}

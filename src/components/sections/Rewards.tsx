@@ -96,7 +96,7 @@ export default function Rewards() {
               </div>
             </dl>
             <p className="mt-3 text-[0.68rem] text-white/35">
-              Har ₹100 par {salon.loyalty.pointsPerHundred} points. Counter par ID batayein.
+              Har ₹100 par {salon.loyalty.pointsPerHundred} points. Booking ke time apni ID batayein.
             </p>
           </div>
         </Reveal>

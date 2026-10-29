@@ -15,10 +15,10 @@ export default function Packages() {
   return (
     <Section
       id="packages"
-      eyebrow="Memberships"
+      eyebrow="Packages"
       title="Packages jo"
       highlight="paisa bachate hain"
-      subtitle="Ek-ek service alag lene se 25–38% zyada kharcha hota hai. Package lo, saving likhit me pao — aur priority slot bhi."
+      subtitle="Services ko combine karo aur upto 27% bachao — sab ek hi visit me, aapke ghar par."
     >
       {/* Why a package at all — the USP strip */}
       <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -135,7 +135,7 @@ export default function Packages() {
                       <div>
                         <div className="flex items-center justify-between text-[0.68rem] text-white/50">
                           <span className="inline-flex items-center gap-1">
-                            <Users size={11} /> Is mahine ke seats
+                            <Users size={11} /> Is mahine ke slots
                           </span>
                           <span className="text-rose-300">only {p.seatsLeft} left</span>
                         </div>
@@ -208,20 +208,20 @@ export default function Packages() {
               </p>
               <ul className="mt-4 space-y-2.5 text-sm text-white/55">
                 <li>• Har visit par full price</li>
-                <li>• Peak hours par waiting</li>
-                <li>• Stylist available ho to ho</li>
+                <li>• Har service ke liye alag appointment</li>
+                <li>• Parlour jaane aur wait karne ka time</li>
                 <li>• Koi free add-on nahi</li>
               </ul>
             </div>
             <div className="bg-gold-300/[0.06] p-6">
               <p className="text-xs uppercase tracking-[0.25em] text-gold-300">
-                With Glow package
+                With a Divine package
               </p>
               <ul className="mt-4 space-y-2.5 text-sm text-white/80">
-                <li>✓ Upto 38% kam kharcha</li>
-                <li>✓ Reserved priority slot</li>
-                <li>✓ Fixed senior stylist</li>
-                <li>✓ Free massage + consultation</li>
+                <li>✓ Upto 27% kam kharcha</li>
+                <li>✓ Sab services ek visit me</li>
+                <li>✓ Same artist — Diksha — har baar</li>
+                <li>✓ Free skin consultation</li>
               </ul>
             </div>
           </div>

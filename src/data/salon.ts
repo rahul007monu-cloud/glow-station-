@@ -1,9 +1,14 @@
 /**
  * ┌──────────────────────────────────────────────────────────────────────┐
- * │  SINGLE SOURCE OF TRUTH FOR ALL SALON CONTENT                        │
+ * │  SINGLE SOURCE OF TRUTH FOR ALL "DIVINE TOUCH" CONTENT               │
  * │  Ye ek file edit karo -> poori website + app update ho jayegi.        │
- * │  Jahan "TODO" likha hai, wahan asli salon ki detail daalni hai.       │
+ * │  Jahan "TODO" likha hai, wahan asli detail / price daalni hai.        │
  * └──────────────────────────────────────────────────────────────────────┘
+ *
+ * Divine Touch ek individual beauty startup hai (salon / parlour nahi):
+ * Diksha Gupta khud har client ki service karti hain — client ke ghar par
+ * (home visit) ya apne studio par. Isliye "team / stylist" ki jagah ek
+ * artist profile hai, aur booking me "service kahan chahiye" poocha jata hai.
  */
 
 export type ServiceItem = {
@@ -32,16 +37,6 @@ export type ServiceCategory = {
   items: ServiceItem[];
 };
 
-export type Stylist = {
-  id: string;
-  name: string;
-  role: string;
-  experience: string;
-  specialities: string[];
-  /** Optional photo in /public/images. Falls back to initials avatar. */
-  photo?: string;
-};
-
 export type Package = {
   id: string;
   name: string;
@@ -56,7 +51,7 @@ export type Package = {
   validity: string;
   /** The 3 differentiators that close the sale. */
   usps: { title: string; detail: string }[];
-  /** Scarcity counter shown on the card. Update weekly. */
+  /** Real capacity limit (one artist = limited slots). Update weekly. */
   seatsLeft?: number;
   /** Optional instalment line, e.g. '2 easy payments'. */
   payment?: string;
@@ -80,314 +75,477 @@ export type Testimonial = {
   text: string;
 };
 
+export type ServiceMode = 'home' | 'studio';
+
 export const salon = {
   // ── Identity ────────────────────────────────────────────────────────────
-  name: 'Glow Station',
-  suffix: 'Luxe Salon',
-  legalName: 'Glow Station Luxe Salon',
-  tagline: 'Look Luxe. Feel Luxe.',
+  name: 'Divine',
+  suffix: 'Touch',
+  legalName: 'Divine Touch',
+  owner: 'Diksha Gupta',
+  tagline: 'Where Beauty Meets Perfection',
+  motto: 'Enhance. Elegance. Empower.',
   intro:
-    'Hair, skin, nails, makeup aur bridal — sab kuch ek premium studio me. Trained stylists, branded products aur hygiene-first setup.',
-  establishedYear: 2021, // TODO: confirm
+    'Eyebrows se lekar bridal makeup tak — Diksha Gupta khud aapki har service karti hain. Aapke ghar par ya studio par, premium products aur personalised care ke saath.',
+  /**
+   * Official logo. Logo ki PNG/SVG file `public/images/logo.png` me daalo aur
+   * yahan 'images/logo.png' likho. Khaali rahe to built-in vector logo dikhega.
+   */
+  logoSrc: '',
 
   // ── Contact ─────────────────────────────────────────────────────────────
-  /** TODO: asli number daalo. Format: country code + number, no spaces. */
-  phone: '+910000000000',
+  phone: '+919057003469',
   /** WhatsApp number in wa.me format (digits only, with country code). */
-  whatsapp: '910000000000',
-  email: 'hello@glowstationluxesalon.com', // TODO
-  instagram: 'https://www.instagram.com/glow_station_luxe_salon/',
-  instagramHandle: '@glow_station_luxe_salon',
+  whatsapp: '919057003469',
+  email: '', // TODO: optional — khaali rahe to website par nahi dikhega
+  instagram: 'https://www.instagram.com/divine_touch_/',
+  instagramHandle: '@divine_touch_',
   facebook: '', // TODO: page URL (needed for Meta ads)
-  /** TODO: Google Maps "share" link + review link from your Business Profile. */
-  mapsLink: 'https://maps.google.com/?q=Glow+Station+Luxe+Salon',
-  mapsEmbed:
-    'https://www.google.com/maps?q=Glow%20Station%20Luxe%20Salon&output=embed',
-  googleReviewLink: 'https://g.page/r/YOUR_PLACE_ID/review', // TODO
+  /** TODO: Google Business Profile banne ke baad review link daalo. */
+  googleReviewLink: '',
+  /** TODO: studio ka Google Maps link (sirf agar studio hai). */
+  mapsLink: '',
+  /** TODO: studio map embed URL. Khaali rahe to map section nahi dikhega. */
+  mapsEmbed: '',
 
+  /** Studio address (agar studio nahi hai to sirf city/state bharo). */
   address: {
-    line1: 'Shop No. 00, Ground Floor', // TODO
-    line2: 'Main Market Road', // TODO
-    city: 'Your City', // TODO
+    line1: '', // TODO
+    line2: '', // TODO
+    city: 'Your City', // TODO: apna shehar
     state: 'Your State', // TODO
-    pincode: '000000', // TODO
+    pincode: '', // TODO
   },
 
+  /**
+   * Service kahan milegi. Jo mode available nahi hai use `enabled: false` karo —
+   * booking form apne aap adjust ho jayega.
+   */
+  serviceModes: {
+    home: {
+      enabled: true,
+      label: 'At my home',
+      detail: 'Diksha sanitised kit ke saath aapke ghar aayengi',
+      /** Shown to the customer; 0 = free. */
+      travelNote: 'Travel charge area ke hisaab se, booking confirm karte waqt bataya jayega', // TODO
+    },
+    studio: {
+      enabled: true, // TODO: studio nahi hai to false
+      label: 'At the studio',
+      detail: 'Private, hygienic studio setup — sirf appointment par',
+      travelNote: '',
+    },
+  } satisfies Record<ServiceMode, { enabled: boolean; label: string; detail: string; travelNote: string }>,
+
+  /** Areas jahan home service milti hai. TODO: apne areas likho. */
+  serviceAreas: ['Your City — all major areas'],
+
   hours: {
-    weekdays: '10:00 AM – 9:00 PM',
-    weekends: '9:30 AM – 9:30 PM',
-    closedDay: 'Open all days', // e.g. 'Closed on Tuesday'
+    weekdays: '9:00 AM – 8:00 PM',
+    weekends: '9:00 AM – 8:00 PM',
+    closedDay: 'Bridal bookings ke liye early-morning slots bhi', // e.g. 'Closed on Tuesday'
     /** Booking engine uses these 24h values. */
-    openHour: 10,
-    closeHour: 21,
+    openHour: 9,
+    closeHour: 20,
     slotMinutes: 30,
   },
 
-  /** Shown on the trust strip. */
+  /** Shown on the trust strip. Sirf sach likho — naya brand hai, fake numbers mat daalo. */
   stats: [
-    { value: '4.9★', label: 'Google rating' },
-    { value: '12k+', label: 'Happy clients' },
-    { value: '15+', label: 'Expert stylists' },
-    { value: '100%', label: 'Sanitised tools' },
+    { value: '9', label: 'Service types' },
+    { value: 'Doorstep', label: 'Home service' },
+    { value: '100%', label: 'Sanitised kit' },
+    { value: '10%', label: 'Off first service' },
   ],
 
+  /** "Why choose us" — flyer wale points. */
   usps: [
     {
-      title: 'Certified stylists',
-      detail: 'Loreal & Schwarzkopf trained team, regular in-house academy sessions.',
-      glyph: '✂️',
+      title: 'Experienced & certified',
+      detail: 'Trained beauty professional — har service khud Diksha karti hain, koi junior nahi.',
+      glyph: '🎓',
     },
     {
-      title: 'Only branded products',
-      detail: 'Original L\u2019Oreal, Schwarzkopf, O3+ & Kerastase — no local mixing.',
+      title: 'Premium quality products',
+      detail: 'Sirf branded, skin-safe products. Aap chahein to product pehle dekh sakte hain.',
       glyph: '🧴',
     },
     {
-      title: 'Hygiene first',
-      detail: 'Single-use disposables, UV-sterilised tools, sanitised stations.',
+      title: 'Hygienic & safe',
+      detail: 'Har client ke liye fresh disposables, sanitised tools aur clean setup.',
       glyph: '🧼',
     },
     {
-      title: 'On-time slots',
-      detail: 'Pre-booked appointments so you never wait in queue.',
-      glyph: '⏱️',
+      title: 'Personalised care',
+      detail: 'Service se pehle skin / hair consultation — aapke type ke hisaab se treatment.',
+      glyph: '💗',
+    },
+    {
+      title: 'Ghar baithe service',
+      detail: 'Traffic aur waiting nahi. Aapke time par, aapke ghar par.',
+      glyph: '🏡',
+    },
+    {
+      title: 'Satisfaction guaranteed',
+      detail: 'Result pasand nahi aaya? 48 ghante me batao, free touch-up karenge.', // TODO: confirm policy
+      glyph: '✨',
     },
   ],
 
   /** Loyalty programme rules (fully client-side, no backend needed). */
   loyalty: {
     stampsForReward: 6,
-    reward: 'Free hair spa + head massage',
+    reward: 'Free fruit facial',
     pointsPerHundred: 5,
   },
 
   referral: {
-    friendDiscount: 20,
-    yourDiscount: 20,
+    /** Coupon jo referred friend ko milta hai. */
+    code: 'FRIEND10',
+    friendDiscount: 10,
+    yourDiscount: 10,
   },
 
-  /** First-visit popup shown once per device. */
+  /** First-visit popup shown once per device. Flyer wala "10% OFF for discovering us". */
   welcomeOffer: {
     enabled: true,
-    headline: 'Pehli visit par 25% OFF',
-    sub: 'Naye customers ke liye — koi bhi ek service par.',
-    code: 'GLOW25',
+    headline: '10% OFF — for discovering us!',
+    sub: 'Pehli service par flat 10% off. Aaj hi appointment book karo.',
+    code: 'DIVINE10',
   },
+};
+
+/** The artist behind the brand — replaces the old "team" section. */
+export const artist = {
+  name: salon.owner,
+  title: 'Founder & Beauty Professional',
+  /** TODO: Diksha ki photo `public/images/diksha.jpg` me daal kar 'images/diksha.jpg' likho. */
+  photo: '',
+  experience: '5+ years', // TODO: confirm
+  bio: 'Divine Touch ki shuruaat ek simple soch se hui — har ladki ko premium beauty care mile, bina parlour ki bheed aur waiting ke. Main har client ki service khud karti hoon, consultation se lekar final look tak, taaki result hamesha consistent aur personal rahe.', // TODO: apne shabdon me
+  specialities: ['Bridal & party makeup', 'Facials & skin care', 'Waxing & threading', 'Hair styling'],
+  /** TODO: asli certificates / courses ke naam. */
+  certifications: ['Certified Beauty Professional', 'Advanced Makeup Course'],
 };
 
 export const categories: ServiceCategory[] = [
   {
-    id: 'hair',
-    name: 'Hair Studio',
-    glyph: '💇‍♀️',
-    tagline: 'Cut, colour, keratin & repair',
+    id: 'eyebrows',
+    name: 'Eyebrows',
+    glyph: '👁️',
+    tagline: 'Shape and define your brows',
     gradient: 'from-lilac-500/30 via-lilac-400/10 to-transparent',
     items: [
       {
-        id: 'hair-cut-women',
-        name: 'Haircut & blow dry (Women)',
-        blurb: 'Consultation + wash + finish styling',
-        price: 599,
-        mrp: 799,
-        minutes: 45,
+        id: 'eyebrow-threading',
+        name: 'Eyebrow threading',
+        blurb: 'Face shape ke hisaab se precise shaping',
+        price: 50,
+        minutes: 15,
         popular: true,
       },
       {
-        id: 'hair-cut-men',
-        name: 'Haircut & beard styling (Men)',
-        blurb: 'Machine + scissor cut with hot towel finish',
+        id: 'upper-lip',
+        name: 'Upper lip / forehead threading',
+        blurb: 'Quick, clean finish',
+        price: 30,
+        minutes: 10,
+      },
+      {
+        id: 'full-face-threading',
+        name: 'Full face threading',
+        blurb: 'Eyebrows, upper lip, chin, forehead & sides',
+        price: 150,
+        minutes: 30,
+      },
+      {
+        id: 'brow-tint',
+        name: 'Brow tint & shaping',
+        blurb: 'Fuller, defined brows for 3–4 weeks',
+        price: 399,
+        minutes: 30,
+      },
+    ],
+  },
+  {
+    id: 'waxing',
+    name: 'Waxing & Hair Removal',
+    glyph: '🍯',
+    tagline: 'Smooth, flawless skin',
+    gradient: 'from-gold-400/25 via-rose-300/10 to-transparent',
+    items: [
+      {
+        id: 'arms-legs-rica',
+        name: 'Rica full arms + full legs',
+        blurb: 'Low-temperature wax, kam dard, sensitive skin friendly',
+        price: 899,
+        mrp: 1099,
+        minutes: 60,
+        popular: true,
+      },
+      {
+        id: 'full-arms',
+        name: 'Full arms (normal wax)',
+        blurb: 'Includes underarms',
+        price: 299,
+        minutes: 25,
+      },
+      {
+        id: 'full-legs',
+        name: 'Full legs (normal wax)',
+        blurb: 'Smooth finish with soothing gel',
+        price: 399,
+        minutes: 30,
+      },
+      {
+        id: 'face-wax',
+        name: 'Face waxing (peel-off)',
+        blurb: 'Upper lip, chin & sides — gentle peel-off wax',
+        price: 249,
+        minutes: 20,
+      },
+      {
+        id: 'full-body-rica',
+        name: 'Full body Rica wax',
+        blurb: 'Arms, legs, underarms, back & stomach',
+        price: 1999,
+        mrp: 2499,
+        minutes: 110,
+      },
+    ],
+  },
+  {
+    id: 'mani-pedi',
+    name: 'Manicure & Pedicure',
+    glyph: '💅',
+    tagline: 'Expert hand and foot care',
+    gradient: 'from-rose-400/30 via-lilac-400/10 to-transparent',
+    items: [
+      {
+        id: 'classic-manicure',
+        name: 'Classic manicure',
+        blurb: 'Soak, cuticle care, shaping & polish',
+        price: 399,
+        minutes: 35,
+      },
+      {
+        id: 'classic-pedicure',
+        name: 'Classic pedicure',
+        blurb: 'Soak, scrub, callus care & polish',
+        price: 499,
+        minutes: 45,
+      },
+      {
+        id: 'spa-mani-pedi',
+        name: 'Spa manicure + pedicure',
+        blurb: 'Scrub, mask, massage — full relaxing ritual',
+        price: 1199,
+        mrp: 1499,
+        minutes: 80,
+        popular: true,
+      },
+      {
+        id: 'gel-polish',
+        name: 'Gel polish (hands)',
+        blurb: 'Chip-free shine for 2–3 weeks',
+        price: 699,
+        minutes: 40,
+      },
+    ],
+  },
+  {
+    id: 'massage',
+    name: 'Massages',
+    glyph: '💆‍♀️',
+    tagline: 'Relax and rejuvenate your body',
+    gradient: 'from-lilac-400/25 via-gold-300/10 to-transparent',
+    items: [
+      {
+        id: 'head-massage',
+        name: 'Head & shoulder massage (30 min)',
+        blurb: 'Warm oil, stress release',
         price: 299,
         minutes: 30,
       },
       {
-        id: 'global-colour',
-        name: 'Global hair colour',
-        blurb: 'Ammonia-free, includes colour lock serum',
-        price: 2499,
-        mrp: 3200,
-        minutes: 120,
-        popular: true,
+        id: 'foot-massage',
+        name: 'Foot reflexology (30 min)',
+        blurb: 'Thakaan door, better sleep',
+        price: 399,
+        minutes: 30,
       },
       {
-        id: 'highlights',
-        name: 'Balayage / highlights',
-        blurb: 'Free-hand painting for a sun-kissed finish',
-        price: 3999,
-        minutes: 150,
-      },
-      {
-        id: 'keratin',
-        name: 'Keratin / botox treatment',
-        blurb: 'Frizz-free, salon-smooth hair for up to 5 months',
-        price: 4999,
-        mrp: 6500,
-        minutes: 180,
+        id: 'body-massage',
+        name: 'Full body relaxing massage (60 min)',
+        blurb: 'Aroma oil, women only',
+        price: 1299,
+        minutes: 60,
         popular: true,
       },
+    ],
+  },
+  {
+    id: 'hair',
+    name: 'Hair Styling',
+    glyph: '💇‍♀️',
+    tagline: 'Style and treat your hair',
+    gradient: 'from-lilac-500/30 via-rose-400/10 to-transparent',
+    items: [
       {
         id: 'hair-spa',
-        name: 'Hair spa & scalp detox',
-        blurb: 'Deep conditioning with steam + head massage',
+        name: 'Hair spa',
+        blurb: 'Deep conditioning + head massage',
+        price: 799,
+        minutes: 60,
+        popular: true,
+      },
+      {
+        id: 'blow-dry',
+        name: 'Blow-dry / curls / straightening',
+        blurb: 'Party-ready finish with heat protection',
+        price: 499,
+        minutes: 40,
+      },
+      {
+        id: 'party-hairstyle',
+        name: 'Party hairstyle',
+        blurb: 'Bun, braid ya open-hair look',
+        price: 799,
+        minutes: 45,
+      },
+      {
+        id: 'root-touchup',
+        name: 'Root touch-up (hair colour)',
+        blurb: 'Ammonia-free colour, roots only',
         price: 899,
         minutes: 60,
       },
     ],
   },
   {
-    id: 'skin',
-    name: 'Skin Bar',
+    id: 'facials',
+    name: 'Facials',
     glyph: '✨',
-    tagline: 'Facials, peels & glow rituals',
+    tagline: 'Revitalise and nourish your skin',
     gradient: 'from-rose-500/30 via-rose-400/10 to-transparent',
     items: [
       {
         id: 'clean-up',
-        name: 'Express clean-up',
-        blurb: '30-minute refresh before any event',
-        price: 699,
-        minutes: 30,
-      },
-      {
-        id: 'hydra-facial',
-        name: 'Hydra glow facial',
-        blurb: 'Deep cleanse + hydration + LED glow',
-        price: 1999,
-        mrp: 2600,
-        minutes: 75,
-        popular: true,
-      },
-      {
-        id: 'derma-peel',
-        name: 'Dermatologist-grade peel',
-        blurb: 'For pigmentation, tan and acne marks',
-        price: 2499,
-        minutes: 60,
+        name: 'Clean-up',
+        blurb: 'Deep cleanse + scrub + mask — 40 minute refresh',
+        price: 599,
+        minutes: 40,
       },
       {
         id: 'dtan',
         name: 'D-tan face & neck',
-        blurb: 'Instant brightening, wedding-season favourite',
-        price: 599,
+        blurb: 'Instant brightening',
+        price: 499,
         minutes: 30,
+      },
+      {
+        id: 'fruit-facial',
+        name: 'Fruit facial',
+        blurb: 'Natural glow, all skin types',
+        price: 899,
+        minutes: 60,
+      },
+      {
+        id: 'gold-facial',
+        name: 'Gold / glow facial',
+        blurb: 'Party ya function se pehle ka favourite',
+        price: 1499,
+        mrp: 1799,
+        minutes: 75,
+        popular: true,
+      },
+    ],
+  },
+  {
+    id: 'body',
+    name: 'Body Treatments',
+    glyph: '🌸',
+    tagline: 'Refresh and rejuvenate your skin',
+    gradient: 'from-gold-500/25 via-lilac-300/10 to-transparent',
+    items: [
+      {
+        id: 'body-polishing',
+        name: 'Full body polishing',
+        blurb: 'Scrub + pack + moisturise — even-tone glow',
+        price: 2499,
+        mrp: 2999,
+        minutes: 90,
+        popular: true,
+      },
+      {
+        id: 'body-dtan',
+        name: 'Full body D-tan',
+        blurb: 'Sun tan removal for arms, legs & back',
+        price: 1499,
+        minutes: 60,
+      },
+      {
+        id: 'back-polish',
+        name: 'Back polishing',
+        blurb: 'Backless outfit se pehle ka must',
+        price: 799,
+        minutes: 40,
       },
     ],
   },
   {
     id: 'makeup',
-    name: 'Makeup & Bridal',
-    glyph: '👰',
-    tagline: 'HD, airbrush & bridal looks',
+    name: 'Makeup',
+    glyph: '💄',
+    tagline: 'Glam up for every occasion',
     gradient: 'from-gold-500/30 via-gold-300/10 to-transparent',
     items: [
       {
         id: 'party-makeup',
-        name: 'Party / guest makeup',
-        blurb: 'HD base with lashes and hairstyling',
+        name: 'Party makeup',
+        blurb: 'HD base + lashes, hairstyle alag',
         price: 2499,
         minutes: 75,
+        popular: true,
       },
       {
         id: 'engagement-makeup',
-        name: 'Engagement makeup',
-        blurb: 'Airbrush finish, saree/lehenga draping included',
-        price: 5999,
+        name: 'Engagement / reception makeup',
+        blurb: 'HD finish + hairstyle + draping',
+        price: 4999,
         minutes: 120,
-        popular: true,
       },
       {
         id: 'bridal-makeup',
         name: 'Bridal makeup (full look)',
-        blurb: 'Trial + HD/airbrush + hair + draping + touch-up kit',
-        price: 14999,
-        mrp: 18999,
+        blurb: 'Trial + HD makeup + hairstyle + draping + touch-up',
+        price: 11999,
+        mrp: 14999,
         minutes: 180,
         popular: true,
       },
-    ],
-  },
-  {
-    id: 'nails',
-    name: 'Nail Lounge',
-    glyph: '💅',
-    tagline: 'Extensions, gel & nail art',
-    gradient: 'from-rose-400/30 via-lilac-400/10 to-transparent',
-    items: [
       {
-        id: 'gel-polish',
-        name: 'Gel polish',
-        blurb: 'Chip-free shine for 3+ weeks',
-        price: 999,
-        minutes: 45,
-      },
-      {
-        id: 'nail-extension',
-        name: 'Acrylic nail extensions',
-        blurb: 'Custom length + shape with free basic art',
-        price: 2199,
-        mrp: 2800,
-        minutes: 105,
-        popular: true,
-      },
-      {
-        id: 'mani-pedi',
-        name: 'Luxe manicure + pedicure',
-        blurb: 'Scrub, mask, massage & paraffin dip',
-        price: 1499,
-        minutes: 75,
+        id: 'saree-draping',
+        name: 'Saree / dupatta draping',
+        blurb: 'Neat pleats, pinned to last all day',
+        price: 399,
+        minutes: 20,
       },
     ],
   },
   {
-    id: 'grooming',
-    name: 'Waxing & Threading',
-    glyph: '🪞',
-    tagline: 'Rica, chocolate & painless waxing',
-    gradient: 'from-gold-400/25 via-rose-300/10 to-transparent',
+    id: 'consultation',
+    name: 'Skin Consultation',
+    glyph: '📋',
+    tagline: 'Personalised skin care advice',
+    gradient: 'from-lilac-400/30 via-rose-300/10 to-transparent',
     items: [
       {
-        id: 'full-arms-legs',
-        name: 'Rica full arms + full legs',
-        blurb: 'Low-temperature wax, less pain',
-        price: 1099,
-        minutes: 60,
-        popular: true,
-      },
-      {
-        id: 'full-body-wax',
-        name: 'Full body waxing',
-        blurb: 'Includes underarms and back',
-        price: 2799,
-        minutes: 110,
-      },
-      {
-        id: 'threading',
-        name: 'Eyebrow + upper lip threading',
-        blurb: 'Precision shaping by senior artist',
-        price: 99,
-        minutes: 15,
-      },
-    ],
-  },
-  {
-    id: 'spa',
-    name: 'Spa & Body',
-    glyph: '🌿',
-    tagline: 'Massage, polishing & detox',
-    gradient: 'from-lilac-400/25 via-gold-300/10 to-transparent',
-    items: [
-      {
-        id: 'body-massage',
-        name: 'Aroma relaxation massage (60 min)',
-        blurb: 'Full body, therapist of your preferred gender',
-        price: 1999,
-        minutes: 60,
-      },
-      {
-        id: 'body-polish',
-        name: 'Body polishing & de-tan',
-        blurb: 'Even-tone glow for bridal prep',
-        price: 3499,
-        minutes: 90,
+        id: 'skin-consultation',
+        name: 'Personal skin consultation',
+        blurb: 'Skin type analysis + home-care routine. Kisi bhi facial ke saath free.',
+        price: 199,
+        minutes: 20,
       },
     ],
   },
@@ -395,102 +553,96 @@ export const categories: ServiceCategory[] = [
 
 export const packages: Package[] = [
   {
-    id: 'glow-monthly',
-    name: 'Glow Member (Monthly)',
-    price: 1499,
-    mrp: 2400,
+    id: 'monthly-care',
+    name: 'Monthly Divine Care',
+    price: 1599,
+    mrp: 2177,
     badge: 'Best value',
     highlight: true,
     bestFor: 'Har mahine grooming karne wali working women & students',
-    validity: '30 days from first visit',
-    seatsLeft: 8,
-    payment: 'Pay once — UPI / card / cash',
+    validity: '30 days, 1–2 sittings',
+    payment: 'Pay once — UPI / cash',
     includes: [
-      '1 haircut + blow dry',
-      '1 clean-up or D-tan facial',
-      '1 eyebrow + upper lip threading',
-      'Flat 10% off on every other service',
-      'Priority weekend slot booking',
-      'Free hair & skin consultation',
+      'Eyebrow + upper lip threading',
+      'Rica full arms + full legs wax',
+      'Fruit facial',
+      'Head & shoulder massage',
+      'Free skin consultation',
     ],
     usps: [
       {
-        title: 'Save ₹900 every month',
-        detail: 'Same services individually cost ₹2,400. Ek visit me hi paisa vasool.',
+        title: 'Save ₹578 every month',
+        detail: 'Yahi services alag lene par ₹2,177 lagta hai.',
       },
       {
-        title: 'Zero waiting, priority slots',
-        detail: 'Members ko weekend aur evening ke reserved slots pehle milte hain.',
+        title: 'Ghar par, aapke time par',
+        detail: 'Ek hi visit me sab — parlour jaane aur wait karne ki zaroorat nahi.',
       },
       {
-        title: 'Same senior stylist every time',
-        detail: 'Aapke baal aur skin ka record maintain hota hai, result consistent rehta hai.',
+        title: 'Same artist, same result',
+        detail: 'Diksha aapki skin aur preference yaad rakhti hain, har baar consistent result.',
       },
     ],
   },
   {
-    id: 'bridal-pro',
-    name: 'Bridal Pre-Wedding Pack',
-    price: 24999,
-    mrp: 32000,
+    id: 'party-ready',
+    name: 'Party Ready Glow',
+    price: 3299,
+    mrp: 3977,
     badge: 'Most booked',
-    bestFor: 'Brides jinki shaadi 45–90 din me hai',
-    validity: '4 months, transferable to sister/mother',
+    bestFor: 'Shaadi ke guest, birthday, office party ya photoshoot',
+    validity: 'Same day / 1 day before the event',
+    payment: 'Pay once — UPI / cash',
+    includes: [
+      'Clean-up (1 day pehle ya same day)',
+      'Party makeup (HD base + lashes)',
+      'Party hairstyle',
+      'Eyebrow + upper lip threading',
+    ],
+    usps: [
+      {
+        title: 'Save ₹678',
+        detail: 'Alag-alag booking par ₹3,977 padta hai.',
+      },
+      {
+        title: 'Look pehle discuss',
+        detail: 'Outfit ki photo WhatsApp karo — makeup aur hairstyle uske hisaab se plan hoga.',
+      },
+      {
+        title: 'Venue / ghar par ready',
+        detail: 'Ghar se hi tayyar hokar nikliye, koi bhaag-daud nahi.',
+      },
+    ],
+  },
+  {
+    id: 'bridal-divine',
+    name: 'Bridal Divine Pack',
+    price: 18999,
+    mrp: 22991,
+    bestFor: 'Brides jinki shaadi 30–90 din me hai',
+    validity: '3 months before the wedding',
     seatsLeft: 4,
     payment: '2 easy instalments possible',
     includes: [
-      '4 glow facials + 2 dermat-grade peels',
-      'Full body polishing + de-tan',
-      '3 hair spa sittings + colour touch-up',
-      'Bridal HD/airbrush makeup with trial',
-      'Complimentary mehendi-day hairstyling',
-      'Saree/lehenga draping on all functions',
-      'Dedicated bridal manager on WhatsApp',
+      'Bridal makeup with trial',
+      '3 gold / glow facials (pre-wedding)',
+      'Full body polishing',
+      'Full body Rica wax',
+      'Spa manicure + pedicure',
+      'Draping for 2 pre-wedding functions',
     ],
     usps: [
       {
-        title: '90-day glow calendar',
-        detail:
-          'Har sitting ki date pehle se plan hoti hai — last-minute panic aur breakout ka risk zero.',
+        title: 'Pre-wedding glow plan',
+        detail: 'Har sitting ki date pehle se fix — last-minute breakout ka risk kam.',
       },
       {
-        title: 'Trial se pehle final look lock',
-        detail: 'Makeup trial included hai, so shaadi wale din koi surprise nahi.',
+        title: 'Trial se look lock',
+        detail: 'Makeup trial included, so shaadi wale din koi surprise nahi.',
       },
       {
-        title: 'Save ₹7,000 + free hairstyling',
-        detail: 'Individual booking par yahi sab ₹32,000 padta hai.',
-      },
-    ],
-  },
-  {
-    id: 'gents-club',
-    name: 'Gents Grooming Club',
-    price: 999,
-    mrp: 1600,
-    bestFor: 'Office-going men jinko monthly clean look chahiye',
-    validity: '45 days',
-    seatsLeft: 12,
-    payment: 'Pay once — UPI / card / cash',
-    includes: [
-      '2 haircuts (senior stylist)',
-      '1 beard design + hot towel finish',
-      '1 charcoal de-tan facial',
-      'Free head massage on every visit',
-      '10% off on hair colour & spa',
-    ],
-    usps: [
-      {
-        title: 'Fixed 15-min slots',
-        detail: 'App se slot book karo, seedha chair par baitho — no queue.',
-      },
-      {
-        title: 'Save ₹600 + free massage',
-        detail: 'Do haircut aur ek facial alag lene par ₹1,600 lagta hai.',
-      },
-      {
-        title: 'Same barber, same style',
-        detail: 'Aapka fade aur beard shape record ho jata hai, result repeat hota hai.',
+        title: 'Limited brides per month',
+        detail: 'Ek hi artist hai, isliye mahine me gini-chuni bridal bookings li jaati hain.',
       },
     ],
   },
@@ -500,23 +652,47 @@ export const packages: Package[] = [
 export const packageUsps = [
   {
     glyph: '💸',
-    title: 'Upto 38% saving',
-    detail: 'Package rate always individual rate se kam hota hai — likhit me, no fine print.',
+    title: 'Upto 27% saving',
+    detail: 'Package rate hamesha individual rate se kam — likhit me, no fine print.',
   },
   {
-    glyph: '⚡',
-    title: 'Priority booking',
-    detail: 'Members ke liye peak-hour slots reserve rehte hain.',
+    glyph: '🏡',
+    title: 'Ek visit, sab kuch',
+    detail: 'Saari services ek hi appointment me, aapke ghar par.',
   },
   {
     glyph: '🎁',
-    title: 'Free add-ons',
-    detail: 'Head massage, consultation aur touch-up bilkul free.',
+    title: 'Free consultation',
+    detail: 'Har package ke saath skin consultation bilkul free.',
   },
   {
-    glyph: '🔁',
-    title: 'Transferable & flexible',
-    detail: 'Family member ko de sakte ho, sittings apni marzi se schedule karo.',
+    glyph: '📅',
+    title: 'Flexible sittings',
+    detail: 'Sittings apni suvidha ke hisaab se schedule karo.',
+  },
+];
+
+/** "How it works" steps — explains the solo / doorstep model in 4 steps. */
+export const howItWorks = [
+  {
+    glyph: '💫',
+    title: 'Service choose karo',
+    detail: 'Menu se ek ya zyada service select karo — price turant dikhega.',
+  },
+  {
+    glyph: '📍',
+    title: 'Slot & location',
+    detail: 'Date, time aur jagah chuno — aapka ghar ya studio.',
+  },
+  {
+    glyph: '💬',
+    title: 'WhatsApp par confirm',
+    detail: 'Booking details seedha Diksha ke WhatsApp par jaati hain, wahi confirm karti hain.',
+  },
+  {
+    glyph: '🌸',
+    title: 'Relax & glow',
+    detail: 'Diksha sanitised kit ke saath time par pahunchti hain. Aap bas relax karo.',
   },
 ];
 
@@ -535,117 +711,68 @@ function endOfMonth(monthsAhead = 0) {
 
 export const offers: Offer[] = [
   {
-    id: 'first-visit',
-    title: '25% OFF first visit',
-    detail: 'Naye customers ke liye kisi bhi ek service par. App se book karo.',
-    code: 'GLOW25',
+    id: 'first-service',
+    title: '10% OFF your first service',
+    detail: 'Divine Touch ko discover karne ke liye shukriya! Pehli booking par flat 10% off.',
+    code: 'DIVINE10',
     expires: endOfMonth(0),
     tone: 'gold',
   },
   {
-    id: 'weekday-happy',
-    title: 'Weekday Happy Hours',
-    detail: 'Mon–Thu, 11 AM–3 PM: hair spa + threading combo at ₹899.',
-    code: 'HAPPY899',
+    id: 'weekday-glow',
+    title: 'Weekday Glow',
+    detail: 'Mon–Thu, 11 AM–4 PM ke slots par kisi bhi service par 15% off.',
+    code: 'WEEKDAY15',
     expires: endOfMonth(0),
     tone: 'rose',
   },
   {
     id: 'bridal-early',
     title: 'Bridal early-bird',
-    detail: 'Shaadi 60+ din door hai? Bridal pack par ₹3,000 off.',
-    code: 'DULHAN3000',
+    detail: 'Shaadi 60+ din door hai? Bridal Divine Pack par extra 10% off.',
+    code: 'BRIDE10',
     expires: endOfMonth(1),
     tone: 'lilac',
   },
 ];
 
-export const stylists: Stylist[] = [
-  {
-    id: 'st-1',
-    name: 'Aarti Sharma', // TODO
-    role: 'Creative Director – Hair',
-    experience: '11 yrs',
-    specialities: ['Balayage', 'Keratin', 'Precision cuts'],
-  },
-  {
-    id: 'st-2',
-    name: 'Rahul Verma', // TODO
-    role: 'Senior Stylist',
-    experience: '8 yrs',
-    specialities: ['Men’s grooming', 'Beard design', 'Fades'],
-  },
-  {
-    id: 'st-3',
-    name: 'Neha Kapoor', // TODO
-    role: 'Bridal Makeup Artist',
-    experience: '9 yrs',
-    specialities: ['Airbrush', 'HD bridal', 'Draping'],
-  },
-  {
-    id: 'st-4',
-    name: 'Simran Kaur', // TODO
-    role: 'Skin & Nail Specialist',
-    experience: '6 yrs',
-    specialities: ['Hydra facial', 'Peels', 'Nail art'],
-  },
-];
-
-export const testimonials: Testimonial[] = [
-  {
-    id: 't1',
-    name: 'Priya M.',
-    service: 'Keratin treatment',
-    rating: 5,
-    text: 'Hair itna smooth pehle kabhi nahi hua. Staff ne pura process samjhaya aur after-care tips bhi diye.',
-  },
-  {
-    id: 't2',
-    name: 'Ankit R.',
-    service: 'Haircut & beard',
-    rating: 5,
-    text: 'Booking WhatsApp par 1 minute me ho gayi, zero waiting. Best grooming experience in the area.',
-  },
-  {
-    id: 't3',
-    name: 'Sneha & family',
-    service: 'Bridal package',
-    rating: 5,
-    text: 'Meri shaadi ka look sabne notice kiya. Trial se lekar final day tak sab perfectly planned tha.',
-  },
-  {
-    id: 't4',
-    name: 'Ritu S.',
-    service: 'Hydra glow facial',
-    rating: 5,
-    text: 'Skin literally glowing thi next day. Products original hai, yeh clearly dikhta hai.',
-  },
-];
+/**
+ * Real client reviews only. Jaise hi pehle reviews aayein (WhatsApp / Instagram
+ * / Google), yahan add karo. Khaali rahega to section "pehla review" CTA dikhayega.
+ *
+ * Example:
+ *   { id: 't1', name: 'Priya M.', service: 'Party makeup', rating: 5, text: '...' },
+ */
+export const testimonials: Testimonial[] = [];
 
 export const faqs = [
   {
     q: 'Appointment kaise book karein?',
-    a: 'Website ya app se service select karo, date-time choose karo, aur “Confirm on WhatsApp” dabao. Aapki booking summary seedha hamare WhatsApp par aa jayegi aur hum 10 minute me confirm kar denge.',
+    a: 'Website ya app se service select karo, date-time aur location (ghar / studio) choose karo, aur “Confirm on WhatsApp” dabao. Aapki booking details seedha Diksha ke WhatsApp par aa jayengi aur woh jaldi confirm kar dengi.',
   },
   {
-    q: 'Walk-in allowed hai?',
-    a: 'Haan, lekin weekend aur evening slots jaldi bhar jaate hain. Pre-booking karne par waiting nahi hoti aur app users ko priority slot milta hai.',
+    q: 'Kya aap ghar par aate ho?',
+    a: 'Haan! Divine Touch ki saari services home visit par available hain. Diksha apna poora sanitised kit, disposables aur products saath laati hain — aapko bas ek chair aur thodi jagah chahiye.',
   },
   {
-    q: 'Products original hote hain?',
-    a: 'Bilkul. Hum sirf authorised distributors se L’Oréal, Schwarzkopf, Kérastase aur O3+ mangwate hain. Aap chahen to product ka box aur batch number check kar sakte hain.',
+    q: 'Travel charge lagta hai?',
+    a: 'Area ke hisaab se chhota sa travel charge ho sakta hai, jo booking confirm karte waqt pehle hi bata diya jata hai. Koi hidden charge nahi.', // TODO: confirm
+  },
+  {
+    q: 'Products kaunse use hote hain?',
+    a: 'Sirf branded, skin-safe aur premium quality products. Agar aapki skin sensitive hai ya kisi cheez se allergy hai to booking ke notes me zaroor likhein.',
   },
   {
     q: 'Bridal booking kitne pehle karni chahiye?',
-    a: 'Peak wedding season (Oct–Feb) me 45–60 din pehle. Early-bird booking par ₹3,000 tak discount bhi milta hai.',
+    a: 'Kam se kam 30–60 din pehle, kyunki ek hi artist hone ki wajah se har mahine limited bridal bookings li jaati hain. 60+ din pehle book karne par early-bird discount bhi milta hai.',
   },
   {
-    q: 'Payment options kya hain?',
-    a: 'UPI, cards, aur cash — sab accept karte hain. Membership aur bridal packages par installment bhi possible hai.',
+    q: 'Payment kaise karna hai?',
+    a: 'UPI aur cash dono accept hote hain. Bridal pack ke liye booking amount lekar slot reserve kiya jata hai, baaki 2 instalments me.', // TODO: confirm
   },
   {
-    q: 'Home service milti hai?',
-    a: 'Bridal aur party makeup ke liye home/venue service available hai (travel charges alag). WhatsApp par pin location bhejiye, hum quote de denge.',
+    q: 'Booking cancel / reschedule kar sakte hain?',
+    a: 'Haan, kam se kam 4 ghante pehle WhatsApp par bata dijiye. Ek artist ki schedule hoti hai, isliye time par batana zaroori hai.', // TODO: confirm
   },
 ];
 
@@ -664,10 +791,18 @@ export const formatINR = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
+/** Resolves a file in `public/` against the deployed base path. */
+export const asset = (src: string) =>
+  /^https?:\/\//.test(src) ? src : `${import.meta.env.BASE_URL}${src.replace(/^\/+/, '')}`;
+
+/** Service modes that are switched on, in display order. */
+export const enabledModes = (Object.keys(salon.serviceModes) as ServiceMode[]).filter(
+  (m) => salon.serviceModes[m].enabled,
+);
 
 /**
  * Gallery tiles. Drop real photos into `public/images/` and set `src`
- * (e.g. src: 'images/balayage.jpg'). Until then a styled gradient tile with
+ * (e.g. src: 'images/bridal-1.jpg'). Until then a styled gradient tile with
  * the label is shown, so the layout never looks broken.
  */
 export const gallery: {
@@ -677,10 +812,10 @@ export const gallery: {
   src?: string;
   tall?: boolean;
 }[] = [
-  { id: 'g1', label: 'Balayage transformation', tag: 'Hair colour', tall: true },
-  { id: 'g2', label: 'Bridal HD look', tag: 'Bridal' },
-  { id: 'g3', label: 'Keratin smooth finish', tag: 'Hair care' },
-  { id: 'g4', label: 'Glass-skin facial', tag: 'Skin', tall: true },
-  { id: 'g5', label: 'Almond nail extensions', tag: 'Nails' },
-  { id: 'g6', label: 'Men’s textured fade', tag: 'Grooming' },
+  { id: 'g1', label: 'Bridal glam look', tag: 'Makeup', tall: true },
+  { id: 'g2', label: 'Defined brows', tag: 'Eyebrows' },
+  { id: 'g3', label: 'Glow facial results', tag: 'Facials' },
+  { id: 'g4', label: 'Party hairstyle', tag: 'Hair styling', tall: true },
+  { id: 'g5', label: 'Spa mani-pedi', tag: 'Nails' },
+  { id: 'g6', label: 'Engagement look', tag: 'Makeup' },
 ];
