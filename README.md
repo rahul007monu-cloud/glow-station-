@@ -9,9 +9,9 @@ consultations at home or at the studio. The same site installs on any phone as
 an app (PWA). There is no backend and no monthly server cost: each booking
 reaches Diksha's WhatsApp with every detail pre-filled.
 
-**Live demo:** https://rahul007monu-cloud.github.io/glow-station-/
-**Ad landing page:** https://rahul007monu-cloud.github.io/glow-station-/offer
-**Owner dashboard:** https://rahul007monu-cloud.github.io/glow-station-/admin (default PIN `1234`)
+**Live demo:** https://divinetouch-theta.vercel.app/
+**Ad landing page:** https://divinetouch-theta.vercel.app/offer
+**Owner dashboard:** https://divinetouch-theta.vercel.app/admin (default PIN `1234`)
 
 ---
 
