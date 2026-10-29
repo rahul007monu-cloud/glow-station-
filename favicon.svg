@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fdf8ec"/>
+      <stop offset="45%" stop-color="#e7c35d"/>
+      <stop offset="100%" stop-color="#a77616"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3d7dc"/>
+      <stop offset="100%" stop-color="#d68fa0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#43201d"/>
+      <stop offset="60%" stop-color="#211a17"/>
+      <stop offset="100%" stop-color="#0b0908"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" fill="url(#glow)"/>
+  <path d="M12.992969721705606 51.007030278294394 A26.88 26.88 0 1 1 51.007030278294394 51.007030278294394" fill="none" stroke="url(#gold)" stroke-width="1.28" stroke-linecap="round"/>
+  <text x="26.88" y="39.68" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-weight="600"
+        font-size="25.6" fill="url(#gold)">D</text>
+  <text x="40.32" y="43.519999999999996" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-style="italic"
+        font-size="23.04" fill="url(#pink)">T</text>
+  <path d="M46.08 12.8l1.536 3.968 3.968 1.536-3.968 1.536-1.536 3.968-1.536-3.968-3.968-1.536 3.968-1.536z"
+        fill="#fdf8ec" opacity="0.92"/>
+</svg>
