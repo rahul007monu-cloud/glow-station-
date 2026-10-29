@@ -34,6 +34,11 @@ export type ServiceCategory = {
   tagline: string;
   /** Tailwind gradient classes for the animated card. */
   gradient: string;
+  /**
+   * Photo for the 3D cards. Abhi CC0 stock photo hai — Diksha ki apni photo
+   * `public/images/` me daal kar yahan path badal do (e.g. 'images/my-facial.jpg').
+   */
+  photo: string;
   items: ServiceItem[];
 };
 
@@ -235,6 +240,7 @@ export const categories: ServiceCategory[] = [
     glyph: '👁️',
     tagline: 'Shape and define your brows',
     gradient: 'from-lilac-500/30 via-lilac-400/10 to-transparent',
+    photo: 'images/stock/facial.jpg',
     items: [
       {
         id: 'eyebrow-threading',
@@ -273,6 +279,7 @@ export const categories: ServiceCategory[] = [
     glyph: '🍯',
     tagline: 'Smooth, flawless skin',
     gradient: 'from-gold-400/25 via-rose-300/10 to-transparent',
+    photo: 'images/stock/nails-2.jpg',
     items: [
       {
         id: 'arms-legs-rica',
@@ -320,6 +327,7 @@ export const categories: ServiceCategory[] = [
     glyph: '💅',
     tagline: 'Expert hand and foot care',
     gradient: 'from-rose-400/30 via-lilac-400/10 to-transparent',
+    photo: 'images/stock/nails.jpg',
     items: [
       {
         id: 'classic-manicure',
@@ -359,6 +367,7 @@ export const categories: ServiceCategory[] = [
     glyph: '💆‍♀️',
     tagline: 'Relax and rejuvenate your body',
     gradient: 'from-lilac-400/25 via-gold-300/10 to-transparent',
+    photo: 'images/stock/skin.jpg',
     items: [
       {
         id: 'head-massage',
@@ -390,6 +399,7 @@ export const categories: ServiceCategory[] = [
     glyph: '💇‍♀️',
     tagline: 'Style and treat your hair',
     gradient: 'from-lilac-500/30 via-rose-400/10 to-transparent',
+    photo: 'images/stock/bridal.jpg',
     items: [
       {
         id: 'hair-spa',
@@ -428,6 +438,7 @@ export const categories: ServiceCategory[] = [
     glyph: '✨',
     tagline: 'Revitalise and nourish your skin',
     gradient: 'from-rose-500/30 via-rose-400/10 to-transparent',
+    photo: 'images/stock/spa.jpg',
     items: [
       {
         id: 'clean-up',
@@ -467,6 +478,7 @@ export const categories: ServiceCategory[] = [
     glyph: '🌸',
     tagline: 'Refresh and rejuvenate your skin',
     gradient: 'from-gold-500/25 via-lilac-300/10 to-transparent',
+    photo: 'images/stock/skin.jpg',
     items: [
       {
         id: 'body-polishing',
@@ -499,6 +511,7 @@ export const categories: ServiceCategory[] = [
     glyph: '💄',
     tagline: 'Glam up for every occasion',
     gradient: 'from-gold-500/30 via-gold-300/10 to-transparent',
+    photo: 'images/stock/bridal-2.jpg',
     items: [
       {
         id: 'party-makeup',
@@ -539,6 +552,7 @@ export const categories: ServiceCategory[] = [
     glyph: '📋',
     tagline: 'Personalised skin care advice',
     gradient: 'from-lilac-400/30 via-rose-300/10 to-transparent',
+    photo: 'images/stock/facial.jpg',
     items: [
       {
         id: 'skin-consultation',
@@ -812,10 +826,77 @@ export const gallery: {
   src?: string;
   tall?: boolean;
 }[] = [
-  { id: 'g1', label: 'Bridal glam look', tag: 'Makeup', tall: true },
-  { id: 'g2', label: 'Defined brows', tag: 'Eyebrows' },
-  { id: 'g3', label: 'Glow facial results', tag: 'Facials' },
-  { id: 'g4', label: 'Party hairstyle', tag: 'Hair styling', tall: true },
-  { id: 'g5', label: 'Spa mani-pedi', tag: 'Nails' },
-  { id: 'g6', label: 'Engagement look', tag: 'Makeup' },
+  // TODO: Diksha ke kaam ki asli photos `public/images/` me daal ke `src` badlo.
+  { id: 'g1', label: 'Bridal glam look', tag: 'Makeup', src: 'images/stock/bridal-2.jpg', tall: true },
+  { id: 'g2', label: 'Bridal braid with flowers', tag: 'Hair styling', src: 'images/stock/bridal.jpg' },
+  { id: 'g3', label: 'Glow facial results', tag: 'Facials', src: 'images/stock/facial.jpg' },
+  { id: 'g4', label: 'Nail art & gel polish', tag: 'Manicure', src: 'images/stock/nails.jpg', tall: true },
+  { id: 'g5', label: 'Skin care ritual', tag: 'Body treatments', src: 'images/stock/skin.jpg' },
+  { id: 'g6', label: 'Personal skin consultation', tag: 'Skin', src: 'images/stock/spa.jpg' },
+  { id: 'g7', label: 'Hand care', tag: 'Manicure', src: 'images/stock/nails-2.jpg' },
 ];
+
+/**
+ * Scroll story: har scene scroll karne par khulta hai aur uske options ek-ek
+ * karke "open" hote hain. `categoryIds` se services aur prices apne aap aate hain.
+ */
+export const story: {
+  id: string;
+  title: string;
+  script: string;
+  line: string;
+  photo: string;
+  categoryIds: string[];
+}[] = [
+  {
+    id: 'brows',
+    title: 'Brows &',
+    script: 'Smooth skin',
+    line: 'Face shape ke hisaab se brows, aur Rica wax se kam dard wali smooth skin.',
+    photo: 'images/stock/spa.jpg',
+    categoryIds: ['eyebrows', 'waxing'],
+  },
+  {
+    id: 'glow',
+    title: 'Facials &',
+    script: 'Glow',
+    line: 'Pehle skin consultation, phir aapki skin ke liye sahi facial.',
+    photo: 'images/stock/facial.jpg',
+    categoryIds: ['facials', 'consultation'],
+  },
+  {
+    id: 'hands',
+    title: 'Hands &',
+    script: 'Feet',
+    line: 'Spa manicure-pedicure aur gel polish — ghar baithe salon finish.',
+    photo: 'images/stock/nails.jpg',
+    categoryIds: ['mani-pedi'],
+  },
+  {
+    id: 'relax',
+    title: 'Relax &',
+    script: 'Rejuvenate',
+    line: 'Massage aur body polishing — thakaan door, skin even-tone.',
+    photo: 'images/stock/skin.jpg',
+    categoryIds: ['massage', 'body'],
+  },
+  {
+    id: 'hair',
+    title: 'Hair',
+    script: 'Styling',
+    line: 'Hair spa se lekar party hairstyle tak — har occasion ke liye.',
+    photo: 'images/stock/bridal.jpg',
+    categoryIds: ['hair'],
+  },
+  {
+    id: 'glam',
+    title: 'Makeup &',
+    script: 'Bridal',
+    line: 'Party glam se lekar aapke big day tak — trial ke saath look lock.',
+    photo: 'images/stock/bridal-2.jpg',
+    categoryIds: ['makeup'],
+  },
+];
+
+/** Optional film. Diksha ka apna video `public/media/divine.mp4` me daalo — scroll ke saath chalega. */
+export const MEDIA = { film: 'media/divine.mp4' } as const;

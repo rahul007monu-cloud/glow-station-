@@ -1,3 +1,6 @@
+import ExplodedMenu from '@/components/sections/ExplodedMenu';
+import ScrollFilm from '@/components/sections/ScrollFilm';
+import ScrollStory from '@/components/sections/ScrollStory';
 import About from '@/components/sections/About';
 import Contact from '@/components/sections/Contact';
 import FAQ from '@/components/sections/FAQ';
@@ -15,6 +18,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      {/* 3D: the emblem explodes into the 9 service cards */}
+      <ExplodedMenu />
+      {/* Scroll story: each scene opens its service options one by one */}
+      <ScrollStory />
+      {/* Scroll-scrubbed film (only once public/media/divine.mp4 is uploaded) */}
+      <ScrollFilm />
       <Services />
       <HowItWorks />
       <Offers />
