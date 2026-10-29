@@ -11,8 +11,8 @@ import { telLink } from '@/lib/booking';
 import { useInstallPrompt, useScrolled } from '@/lib/hooks';
 
 const links = [
+  { label: 'Experience', href: '#experience' },
   { label: 'Services', href: '#services' },
-  { label: 'How it works', href: '#how-it-works' },
   { label: 'Packages', href: '#packages' },
   { label: 'Offers', href: '#offers' },
   { label: 'About Diksha', href: '#about' },
