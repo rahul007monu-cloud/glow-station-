@@ -31,12 +31,12 @@ export default function Logo({ className = 'h-10 w-10' }: { className?: string }
             <stop offset="100%" stopColor="#a77616" />
           </linearGradient>
           <linearGradient id="dtPink" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fbcfe8" />
-            <stop offset="100%" stopColor="#f062b8" />
+            <stop offset="0%" stopColor="#f3d7dc" />
+            <stop offset="100%" stopColor="#d68fa0" />
           </linearGradient>
           <radialGradient id="dtBg" cx="50%" cy="35%" r="70%">
-            <stop offset="0%" stopColor="#2a1450" />
-            <stop offset="100%" stopColor="#0d0618" />
+            <stop offset="0%" stopColor="#2a1a16" />
+            <stop offset="100%" stopColor="#0b0908" />
           </radialGradient>
         </defs>
         <circle cx="32" cy="32" r="30" fill="url(#dtBg)" />

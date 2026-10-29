@@ -4,7 +4,7 @@ import Logo from '@/components/layout/Logo';
 import { salon } from '@/data/salon';
 
 /**
- * Velvet curtains in the flyer's purple part on the first visit of a session,
+ * Espresso velvet curtains on the first visit of a session,
  * revealing the Divine Touch mark. Runs once per tab so it never feels slow.
  */
 export default function CurtainIntro() {
@@ -37,7 +37,7 @@ export default function CurtainIntro() {
               className={`absolute top-0 h-full w-1/2 ${side === 'left' ? 'left-0' : 'right-0'}`}
               style={{
                 backgroundImage:
-                  'repeating-linear-gradient(90deg, rgba(0,0,0,0.28) 0 2px, transparent 2px 46px), linear-gradient(100deg, #2a0f4a 0%, #4b1670 40%, #6a1b78 70%, #2a0f4a 100%)',
+                  'repeating-linear-gradient(90deg, rgba(0,0,0,0.28) 0 2px, transparent 2px 46px), linear-gradient(100deg, #1b0e0c 0%, #43201d 40%, #61312b 70%, #1b0e0c 100%)',
                 boxShadow:
                   side === 'left'
                     ? 'inset -18px 0 40px rgba(231,195,93,0.35)'

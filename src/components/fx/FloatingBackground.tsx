@@ -12,10 +12,10 @@ type Blob = {
 };
 
 const BLOBS: Blob[] = [
-  { size: 420, top: '-8%', left: '-6%', hue: 'rgba(169,125,255,0.35)', delay: 0, duration: 18 },
-  { size: 320, top: '18%', left: '78%', hue: 'rgba(241,119,165,0.32)', delay: 1.4, duration: 22 },
+  { size: 420, top: '-8%', left: '-6%', hue: 'rgba(202,144,125,0.35)', delay: 0, duration: 18 },
+  { size: 320, top: '18%', left: '78%', hue: 'rgba(214,143,160,0.32)', delay: 1.4, duration: 22 },
   { size: 260, top: '58%', left: '4%', hue: 'rgba(223,177,52,0.28)', delay: 0.8, duration: 26 },
-  { size: 380, top: '72%', left: '62%', hue: 'rgba(139,92,246,0.22)', delay: 2.1, duration: 20 },
+  { size: 380, top: '72%', left: '62%', hue: 'rgba(166,101,86,0.22)', delay: 2.1, duration: 20 },
 ];
 
 /**

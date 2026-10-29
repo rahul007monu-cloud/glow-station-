@@ -5,9 +5,9 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: '#0d0618',
-          soft: '#160a28',
-          card: '#1f0f38',
+          DEFAULT: '#0b0908',
+          soft: '#15110f',
+          card: '#211a17',
         },
         gold: {
           50: '#fdf8ec',
@@ -21,17 +21,17 @@ export default {
           800: '#5c3d11',
           900: '#3b280c',
         },
-        // Divine Touch flyer: hot magenta + royal purple on deep plum.
+        // Espresso noir + champagne gold + dusty rose. The lilac token now carries warm copper tones.
         rose: {
-          200: '#fbcfe8',
-          300: '#f9a8d4',
-          400: '#f062b8',
-          500: '#d6339f',
+          200: '#f3d7dc',
+          300: '#e8b8c2',
+          400: '#d68fa0',
+          500: '#b9677a',
         },
         lilac: {
-          300: '#d0a8ff',
-          400: '#b06cff',
-          500: '#8f3ef0',
+          300: '#e6c0b1',
+          400: '#ca907d',
+          500: '#a66556',
         },
       },
       fontFamily: {
@@ -41,7 +41,7 @@ export default {
       },
       boxShadow: {
         glow: '0 0 40px -8px rgba(223, 177, 52, 0.45)',
-        'glow-rose': '0 0 44px -10px rgba(240, 98, 184, 0.55)',
+        'glow-rose': '0 0 44px -10px rgba(214, 143, 160, 0.48)',
         float: '0 30px 60px -24px rgba(0, 0, 0, 0.75)',
         inset: 'inset 0 1px 0 0 rgba(255,255,255,0.08)',
       },
@@ -49,7 +49,7 @@ export default {
         'gold-sheen':
           'linear-gradient(110deg, #815714 0%, #e7c35d 28%, #fdf8ec 45%, #e7c35d 62%, #a77616 100%)',
         'aurora':
-          'radial-gradient(60% 60% at 15% 10%, rgba(143,62,240,0.42) 0%, transparent 60%), radial-gradient(50% 50% at 85% 15%, rgba(214,51,159,0.38) 0%, transparent 60%), radial-gradient(60% 60% at 50% 100%, rgba(223,177,52,0.22) 0%, transparent 65%)',
+          'radial-gradient(60% 60% at 15% 10%, rgba(166,101,86,0.42) 0%, transparent 60%), radial-gradient(50% 50% at 85% 15%, rgba(185,103,122,0.38) 0%, transparent 60%), radial-gradient(60% 60% at 50% 100%, rgba(223,177,52,0.22) 0%, transparent 65%)',
         'glass':
           'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.05) 100%)',
       },
