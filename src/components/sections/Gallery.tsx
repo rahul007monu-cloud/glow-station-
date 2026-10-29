@@ -3,7 +3,7 @@ import { Camera, Instagram } from 'lucide-react';
 import Reveal from '@/components/fx/Reveal';
 import { LinkButton } from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
-import { gallery, salon } from '@/data/salon';
+import { asset, gallery, salon } from '@/data/salon';
 
 const tints = [
   'from-lilac-500/40 via-rose-400/20',
@@ -21,7 +21,7 @@ export default function Gallery() {
       eyebrow="Lookbook"
       title="Our"
       highlight="transformations"
-      subtitle="Real clients, real results. Roz naye looks Instagram par post hote hain."
+      subtitle="Diksha ke kaam ki jhalak. Latest looks ke liye Instagram follow karo."
     >
       <div className="grid auto-rows-[11rem] grid-cols-2 gap-4 sm:auto-rows-[13rem] md:grid-cols-3">
         {gallery.map((item, i) => (
@@ -38,7 +38,7 @@ export default function Gallery() {
           >
             {item.src ? (
               <img
-                src={item.src}
+                src={asset(item.src)}
                 alt={item.label}
                 loading="lazy"
                 className="h-full w-full object-cover transition duration-700 group-hover:scale-105"

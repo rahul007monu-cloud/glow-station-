@@ -27,15 +27,18 @@ export function TextField({
 export function TextArea({
   label,
   hint,
+  error,
+  required,
   ...rest
 }: LabelProps & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-white/55">
-        {label}
+        {label} {required && <span className="text-rose-400">*</span>}
       </span>
       <textarea className={`${control} min-h-[92px] resize-y`} {...rest} />
-      {hint && <span className="mt-1 block text-xs text-white/40">{hint}</span>}
+      {hint && !error && <span className="mt-1 block text-xs text-white/40">{hint}</span>}
+      {error && <span className="mt-1 block text-xs text-rose-400">{error}</span>}
     </label>
   );
 }

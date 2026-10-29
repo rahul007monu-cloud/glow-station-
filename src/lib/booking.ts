@@ -1,9 +1,14 @@
-import { allServices, formatINR, salon } from '@/data/salon';
+import { allServices, enabledModes, formatINR, salon, type ServiceMode } from '@/data/salon';
 import { attribution, attributionLabel } from '@/lib/analytics';
 import { KEYS, read, write } from '@/lib/storage';
 
 export type BookingDraft = {
   serviceIds: string[];
+  /** Where the service happens: client's home or the studio. */
+  mode: ServiceMode;
+  /** Required for home visits: full address / area + landmark. */
+  address: string;
+  /** Legacy field from older saved bookings. */
   stylistId?: string;
   date: string; // yyyy-mm-dd
   time: string; // "4:30 PM"
@@ -25,6 +30,8 @@ export type BookingRecord = BookingDraft & {
 
 export const emptyDraft: BookingDraft = {
   serviceIds: [],
+  mode: enabledModes[0] ?? 'home',
+  address: '',
   date: '',
   time: '',
   name: '',
@@ -51,10 +58,10 @@ export function minutesOf(serviceIds: string[]) {
 
 /** Known coupon codes -> percentage off. Keep in sync with `offers`. */
 const COUPONS: Record<string, number> = {
-  GLOW25: 25,
-  HAPPY899: 15,
-  DULHAN3000: 10,
-  FRIEND20: salon.referral.friendDiscount,
+  [salon.welcomeOffer.code]: 10,
+  WEEKDAY15: 15,
+  BRIDE10: 10,
+  [salon.referral.code]: salon.referral.friendDiscount,
 };
 
 export function couponDiscount(code: string, subtotal: number) {
@@ -130,7 +137,7 @@ export function saveBooking(draft: BookingDraft): BookingRecord {
   const { amount } = couponDiscount(draft.couponCode, subtotal);
   const record: BookingRecord = {
     ...draft,
-    id: `GS-${Date.now().toString(36).toUpperCase()}`,
+    id: `DT-${Date.now().toString(36).toUpperCase()}`,
     createdAt: new Date().toISOString(),
     total: subtotal - amount,
     estimatedMinutes: minutesOf(draft.serviceIds),
@@ -165,7 +172,8 @@ export function bookingsToCSV(rows: BookingRecord[]) {
     'Services',
     'Date',
     'Time',
-    'Stylist',
+    'Location',
+    'Address',
     'Coupon',
     'Total (INR)',
     'Duration (min)',
@@ -183,7 +191,8 @@ export function bookingsToCSV(rows: BookingRecord[]) {
       b.serviceNames.join(' + '),
       b.date,
       b.time,
-      b.stylistId ?? 'Any',
+      modeLabel(b),
+      (b.address ?? '').replace(/\n/g, ' '),
       b.couponCode || '-',
       b.total,
       b.estimatedMinutes,
@@ -200,7 +209,7 @@ export function bookingsToCSV(rows: BookingRecord[]) {
 /* ── WhatsApp handoff ─────────────────────────────────────────────────── */
 
 /**
- * The salon has no server, so the confirmed booking is delivered as a
+ * Divine Touch has no server, so the confirmed booking is delivered as a
  * pre-filled WhatsApp message. Owner ko sab detail ek message me mil jati hai.
  */
 export function bookingMessage(record: BookingRecord) {
@@ -214,16 +223,24 @@ export function bookingMessage(record: BookingRecord) {
     `💫 Service: ${record.serviceNames.join(' + ')}`,
     `📅 Date: ${prettyDate(record.date)}`,
     `⏰ Time: ${record.time}`,
-    record.stylistId ? `✂️ Stylist: ${record.stylistId}` : '',
+    `📍 Location: ${modeLabel(record)}`,
+    record.mode === 'home' && record.address ? `🏠 Address: ${record.address}` : '',
     `⏳ Approx duration: ${record.estimatedMinutes} min`,
     record.couponCode ? `🎟️ Coupon: ${record.couponCode}` : '',
     `💰 Estimated total: ${formatINR(record.total)}`,
     record.notes ? `📝 Notes: ${record.notes}` : '',
     '',
     `_Source: ${record.source}${a.fbclid ? ' (paid ad click)' : ''}_`,
-    '_Sent from the Glow Station app_',
+    `_Sent from the ${salon.legalName} app_`,
   ];
   return lines.filter(Boolean).join('\n');
+}
+
+/** Human label for where the service happens (handles old records too). */
+export function modeLabel(b: Pick<BookingDraft, 'mode' | 'stylistId'>) {
+  if (b.mode === 'home') return 'Home visit';
+  if (b.mode === 'studio') return 'At studio';
+  return b.stylistId ? `Stylist: ${b.stylistId}` : '-';
 }
 
 export function waLink(message: string, phone = salon.whatsapp) {

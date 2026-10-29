@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://glowstationluxesalon.com/sitemap.xml
+Sitemap: https://rahul007monu-cloud.github.io/glow-station-/sitemap.xml

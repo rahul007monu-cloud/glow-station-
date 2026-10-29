@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUp, MessageCircle, Phone, Plus, Star, X } from 'lucide-react';
+import { ArrowUp, Instagram, MessageCircle, Phone, Plus, Star, X } from 'lucide-react';
 import { useState } from 'react';
 import { salon } from '@/data/salon';
 import { track } from '@/lib/analytics';
 import { telLink, waLink } from '@/lib/booking';
 import { useScrolled } from '@/lib/hooks';
 
-const quickMessage = `Hi ${salon.legalName}! Mujhe appointment ke baare me jaankari chahiye.`;
+const quickMessage = `Hi ${salon.owner}! ${salon.legalName} ki appointment ke baare me jaankari chahiye.`;
 
 /**
  * Floating action cluster (desktop right edge / above the mobile dock).
@@ -33,14 +33,23 @@ export default function FloatingActions() {
       className: 'bg-gold-sheen text-ink',
       onClick: () => track('Contact', { method: 'call', placement: 'fab' }),
     },
-    {
-      label: 'Review us',
-      href: salon.googleReviewLink,
-      external: true,
-      icon: <Star size={18} />,
-      className: 'bg-white/[0.12] text-white',
-      onClick: () => track('Contact', { method: 'google-review', placement: 'fab' }),
-    },
+    salon.googleReviewLink
+      ? {
+          label: 'Review us',
+          href: salon.googleReviewLink,
+          external: true,
+          icon: <Star size={18} />,
+          className: 'bg-white/[0.12] text-white',
+          onClick: () => track('Contact', { method: 'google-review', placement: 'fab' }),
+        }
+      : {
+          label: 'Instagram',
+          href: salon.instagram,
+          external: true,
+          icon: <Instagram size={18} />,
+          className: 'bg-gradient-to-r from-lilac-500 to-rose-500 text-white',
+          onClick: () => track('Contact', { method: 'instagram', placement: 'fab' }),
+        },
   ];
 
   return (

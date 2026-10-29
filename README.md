@@ -1,8 +1,13 @@
-# Glow Station Luxe Salon — Website + PWA
+# Divine Touch by Diksha Gupta — Website + installable app (PWA)
 
-Animated "floating" theme website that also installs as an app (PWA) on any
-phone. No backend, no monthly server cost: bookings are delivered to the
-salon's WhatsApp with every detail pre-filled.
+*Where Beauty Meets Perfection · Enhance. Elegance. Empower.*
+
+Website for **Divine Touch**, an individual beauty startup run by Diksha Gupta
+(this is a solo professional, not a parlour). Clients book eyebrows, waxing,
+mani-pedi, massages, hair styling, facials, body treatments, makeup and skin
+consultations at home or at the studio. The same site installs on any phone as
+an app (PWA). There is no backend and no monthly server cost: each booking
+reaches Diksha's WhatsApp with every detail pre-filled.
 
 **Live demo:** https://rahul007monu-cloud.github.io/glow-station-/
 **Ad landing page:** https://rahul007monu-cloud.github.io/glow-station-/offer
@@ -14,25 +19,24 @@ salon's WhatsApp with every detail pre-filled.
 
 | Area | What it does for the business |
 | --- | --- |
-| Animated floating theme | Aurora background, drifting orbs, 3D tilt cards, glass UI — premium feel that justifies premium pricing |
-| Service menu | 6 categories, 21 services, search, transparent starting prices |
-| **Packages with USPs** | Savings maths (`Aap bachate ho ₹901`), validity, seats-left scarcity, and a pay-per-visit vs member comparison |
-| Booking flow | 3 steps → WhatsApp message with name, phone, services, slot, coupon, total and lead source |
-| Offers | Copyable coupon codes with live countdown timers |
-| Loyalty card | 6 visits = free reward, points tracker, saved on the customer's phone |
-| Refer & earn | Auto-generated code, one-tap native share / WhatsApp |
-| Welcome popup | One-time 25% first-visit offer (once per device) |
-| Reviews | Auto-scrolling testimonials + Google review CTA |
-| PWA | Installable, works offline, app shortcuts (Book / Offers / Loyalty) |
+| Brand theme | Purple/magenta + gold from the Divine Touch flyer, script "Touch" wordmark, floating animated UI |
+| The Divine Experience | 9 service categories from the flyer, 32 services, search, starting prices |
+| Home or studio booking | 3 steps → choose services, date/time + **home visit or studio** (address for home), then WhatsApp |
+| How it works | 4-step explainer so first-time clients trust a solo, doorstep service |
+| Meet Diksha | Artist profile (bio, experience, certificates, photo) instead of a "team" |
+| Packages | Monthly Divine Care, Party Ready Glow, Bridal Divine Pack, with savings maths |
+| Offers | `DIVINE10` 10% off the first service (from the flyer), weekday and bridal codes, live countdown |
+| Loyalty & referral | 6 visits = free fruit facial, refer & earn `FRIEND10` |
+| Reviews | Real reviews only. Until the first one is added, shows a "share feedback" card |
+| **Installable app** | Android/desktop: one-tap install banner + menu option. iPhone: Share → Add to Home Screen guide. Works offline, app shortcuts (Book / Offers / Rewards) |
 | Marketing | Meta Pixel + GA4 events, UTM & `fbclid` capture, dedicated `/offer` ad page |
-| Owner dashboard | All booking requests, status tags, CSV export |
-| SEO | LocalBusiness JSON-LD, OG image, sitemap, robots |
+| Owner dashboard | All booking requests with location/address, status tags, CSV export |
 
 ## Editing content (no coding needed)
 
 Everything the customer reads lives in **[`src/data/salon.ts`](src/data/salon.ts)**
-— phone number, address, hours, services, prices, packages, offers, staff,
-testimonials, FAQs. Change a value, save, and the whole site updates.
+— phone, service areas, home/studio modes, hours, services, prices, packages,
+offers, Diksha's profile, reviews, FAQs and the logo path. Change a value, save, and the whole site updates.
 
 Every placeholder that still needs real information is marked `// TODO`.
 See [`docs/CONTENT_GUIDE.md`](docs/CONTENT_GUIDE.md).

@@ -27,10 +27,10 @@ export default function Services() {
   return (
     <Section
       id="services"
-      eyebrow="Menu"
+      eyebrow="The Divine Experience"
       title="Services &"
       highlight="starting prices"
-      subtitle="Transparent pricing — koi hidden charge nahi. Final price hair length, product aur add-ons par depend karta hai; consultation free hai."
+      subtitle="9 tarah ki services, transparent starting prices. Final price hair length aur add-ons par depend karta hai — skin consultation kisi bhi facial ke saath free."
     >
       {/* Search */}
       <Reveal className="mx-auto mb-8 max-w-md">

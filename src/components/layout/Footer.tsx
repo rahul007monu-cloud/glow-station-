@@ -1,6 +1,6 @@
 import { Clock, Instagram, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Logo from '@/components/layout/Logo';
+import Logo, { Wordmark } from '@/components/layout/Logo';
 import { salon } from '@/data/salon';
 import { telLink, waLink } from '@/lib/booking';
 
@@ -12,36 +12,28 @@ export default function Footer() {
       <div className="shell grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
-            <Logo className="h-11 w-11" />
-            <div>
-              <p className="font-display text-2xl text-white">{salon.name}</p>
-              <p className="text-[0.65rem] uppercase tracking-[0.32em] text-gold-300/80">
-                {salon.suffix}
-              </p>
-            </div>
+            <Logo className="h-12 w-12" />
+            <Wordmark size="lg" />
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/55">{salon.intro}</p>
+          <p className="script mt-4 text-2xl text-gold-200">{salon.motto}</p>
+          <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/55">{salon.intro}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             <span className="chip">
-              <ShieldCheck size={13} className="text-gold-300" /> Hygiene certified
+              <ShieldCheck size={13} className="text-gold-300" /> Hygienic & safe
             </span>
-            <span className="chip">★ {salon.stats[0].value} rated</span>
-            <span className="chip">Since {salon.establishedYear}</span>
+            <span className="chip">🏡 Home service</span>
+            <span className="chip">✨ Satisfaction guaranteed</span>
           </div>
         </div>
 
         <div>
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
-            Visit us
+            Where & when
           </h3>
           <ul className="space-y-3 text-sm text-white/60">
             <li className="flex gap-2.5">
               <MapPin size={16} className="mt-0.5 shrink-0 text-gold-300" />
-              <a href={salon.mapsLink} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                {salon.address.line1}, {salon.address.line2}
-                <br />
-                {salon.address.city}, {salon.address.state} – {salon.address.pincode}
-              </a>
+              <span>{salon.serviceAreas.join(', ')}</span>
             </li>
             <li className="flex gap-2.5">
               <Clock size={16} className="mt-0.5 shrink-0 text-gold-300" />
@@ -49,8 +41,6 @@ export default function Footer() {
                 Mon–Fri {salon.hours.weekdays}
                 <br />
                 Sat–Sun {salon.hours.weekends}
-                <br />
-                <span className="text-white/40">{salon.hours.closedDay}</span>
               </span>
             </li>
           </ul>
@@ -58,7 +48,7 @@ export default function Footer() {
 
         <div>
           <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
-            Reach us
+            Connect with us
           </h3>
           <ul className="space-y-3 text-sm text-white/60">
             <li>
@@ -68,7 +58,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href={waLink(`Hi ${salon.legalName}, mujhe booking karni hai.`)}
+                href={waLink(`Hi ${salon.owner}, mujhe booking karni hai.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 hover:text-white"
@@ -86,11 +76,13 @@ export default function Footer() {
                 <Instagram size={16} className="text-rose-400" /> {salon.instagramHandle}
               </a>
             </li>
-            <li>
-              <a href={`mailto:${salon.email}`} className="flex items-center gap-2.5 hover:text-white">
-                <Mail size={16} className="text-gold-300" /> {salon.email}
-              </a>
-            </li>
+            {salon.email && (
+              <li>
+                <a href={`mailto:${salon.email}`} className="flex items-center gap-2.5 hover:text-white">
+                  <Mail size={16} className="text-gold-300" /> {salon.email}
+                </a>
+              </li>
+            )}
           </ul>
 
           <div className="mt-6 flex flex-wrap gap-3 text-xs text-white/35">
@@ -112,8 +104,9 @@ export default function Footer() {
 
       <div className="hairline mt-12" />
       <p className="shell mt-6 text-center text-xs text-white/35">
-        © {year} {salon.legalName}. All rights reserved. · Prices are starting prices and may vary
-        with hair length, product choice and service add-ons.
+        © {year} {salon.legalName} by {salon.owner}. All rights reserved. · Prices are starting
+        prices and may vary with hair length, products and add-ons. Home-visit travel charges, if
+        any, are shared before confirmation.
       </p>
     </footer>
   );
